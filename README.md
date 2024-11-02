@@ -46,25 +46,25 @@ Avant de partir, il trie ses tâches par date limite pour s'assurer qu'il n'a pa
 - En tant qu'utilisateur je souhaite pouvoir mettre une date de début à ma tâche afin de savoir quand je dois la commencer.
   
 ### Triées par ordre logique
--1 En tant qu'utilisateur je souhaite pouvoir me connecter à l'application afin de pouvoir accéder à l'accueil.
+1. En tant qu'utilisateur je souhaite pouvoir me connecter à l'application afin de pouvoir accéder à l'accueil.
 
--2 En tant qu'utilisateur je souhaite pouvoir créer un compte afin de m'authentifier à l'application.
--3 En tant qu'utilisateur je souhaite pouvoir consulter mon profil afin de pouvoir vérifier mes informations.
--4 En tant qu'utilisateur je souhaite pouvoir modifier mon profil afin de changer mes informations.
+2. En tant qu'utilisateur je souhaite pouvoir créer un compte afin de m'authentifier à l'application.
+3. En tant qu'utilisateur je souhaite pouvoir consulter mon profil afin de pouvoir vérifier mes informations.
+4. En tant qu'utilisateur je souhaite pouvoir modifier mon profil afin de changer mes informations.
 
--5 En tant qu'utilisateur je souhaite pouvoir voir mes tâches afin de savoir ce que j'ai à faire.
--6 En tant qu'utilisateur je souhaite pouvoir supprimer une tâche comme bon il me semble.
--7 En tant qu'utilisateur je souhaite pouvoir assigner un statut à mes tâches afin de jauger leur avancement.
--8 En tant qu'utilisateur je souhaite pouvoir assigner un niveau d'importance à mes tâches afin de déterminer leur urgence.
--9 En tant qu'utilisateur je souhaite pouvoir modifier mes tâches pour mettre à jour leur statut, leur importance et leur description.
--10 En tant qu'utilisateur je souhaite pouvoir mettre une deadline sur une tâche afin de savoir combien de temps il reste pour valider la tâche.
--11 En tant qu'utilisateur je souhaite pouvoir mettre une date de début à ma tâche afin de savoir quand je dois la commencer.
--12 En tant qu'utilisateur je souhaite pouvoir trier mes tâches par ordre d'importance ou de date limite afin de pouvoir mieux m'organiser.
+5. En tant qu'utilisateur je souhaite pouvoir voir mes tâches afin de savoir ce que j'ai à faire.
+6. En tant qu'utilisateur je souhaite pouvoir supprimer une tâche comme bon il me semble.
+7. En tant qu'utilisateur je souhaite pouvoir assigner un statut à mes tâches afin de jauger leur avancement.
+8. En tant qu'utilisateur je souhaite pouvoir assigner un niveau d'importance à mes tâches afin de déterminer leur urgence.
+9. En tant qu'utilisateur je souhaite pouvoir modifier mes tâches pour mettre à jour leur statut, leur importance et leur description.
+10. En tant qu'utilisateur je souhaite pouvoir mettre une deadline sur une tâche afin de savoir combien de temps il reste pour valider la tâche.
+11. En tant qu'utilisateur je souhaite pouvoir mettre une date de début à ma tâche afin de savoir quand je dois la commencer.
+12. En tant qu'utilisateur je souhaite pouvoir trier mes tâches par ordre d'importance ou de date limite afin de pouvoir mieux m'organiser.
 
--13 En tant qu'utilisateur je souhaite pouvoir créer des sous tâches afin de détailler leurs étapes.
--14 En tant qu'utilisateur je souhaite pouvoir indiquer qu'une sous tâche est faite afin de la valider.
+13. En tant qu'utilisateur je souhaite pouvoir créer des sous tâches afin de détailler leurs étapes.
+14. En tant qu'utilisateur je souhaite pouvoir indiquer qu'une sous tâche est faite afin de la valider.
 
--15 En tant qu'utilisateur je souhaite pouvoir créer des groupes afin de mutualiser les tâches avec autrui.
--16 En tant qu'utilisateur je souhaite pouvoir ajouter des membres dans mes groupes.
--17 En tant qu'utilisateur je souhaite attitrer des tâches à des utilisateurs afin de répartir le travail.
--18 En tant qu'utilisateur je souhaite rechercher des groupes afin de naviguer plus rapidement dans l'application.
+15. En tant qu'utilisateur je souhaite pouvoir créer des groupes afin de mutualiser les tâches avec autrui.
+16. En tant qu'utilisateur je souhaite pouvoir ajouter des membres dans mes groupes.
+17. En tant qu'utilisateur je souhaite attitrer des tâches à des utilisateurs afin de répartir le travail.
+18. En tant qu'utilisateur je souhaite rechercher des groupes afin de naviguer plus rapidement dans l'application.
