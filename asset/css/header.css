@@ -1,0 +1,43 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 10vw;
+    background-color: #f0f0f0;
+    padding: 2rem 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.hour {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 10vw;
+    height: 100vh;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    padding: 2rem;
+    text-align: center;
+    width: 100%;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+    background-color: #ddd;
+}
+
+
+.nav-button:last-of-type {
+    margin-top: auto; /* Espace les autres boutons en haut, place "Support" en bas */
+}

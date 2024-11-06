@@ -1,18 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EduarToDO</title>
 
     <!---------------------- CSS ---------------------->
-    <link rel="stylesheet" href="../asset/css/style.css">
+    <link rel="stylesheet" href="../asset/css/header.css" />
+    <link rel="stylesheet" href="../asset/css/main.css" />
+    <link rel="stylesheet" href="../asset/css/team.css" />
+    <link rel="stylesheet" href="../asset/css/style.css" />
 
     <!---------------------- JS ---------------------->
-    <script src="../asset/js/script.js" defer></script>
+    <script src="../asset/js/header.js" defer></script>
+    <script src="../asset/js/main.js" defer></script>
 
+    <script src="../asset/js/moveTask.js" defer></script>
+    <script src="../asset/js/addTask.js" defer></script>
+
+    <script src="../asset/js/script.js" defer></script>
+  
 </head>
-<body>
-    
-</body>
+  <body>
+    <header class="header">
+      <div class="hour" id="hour">20:43</div>
+      <nav class="sidebar">
+        <button class="nav-button">Dashboard</button>
+        <button class="nav-button">My Team</button>
+        <button class="nav-button">Calendar</button>
+        <button class="nav-button">Profile</button>
+        <button class="nav-button">Support</button>
+      </nav>
+    </header>
+    <main>
+      <div class="title-bar">
+        <div class="date" id="date"></div>
+        <div class="search-container">
+          <input type="text" class="search" placeholder="Search" />
+        </div>
+        <button class="profile"></button>
+      </div>
+
+      <div id="team">
+        <div class="info">
+          <div class="team-name">Team Name</div>
+          <div class="option-team">
+            <button class="filter">
+              <img
+                src="../asset/svg/filter.svg"
+                alt="Filter Icon"
+                class="filter-icon"
+              />
+              <span>Filters</span>
+            </button>
+            <div class="members">
+              <!-- Membres fictifs pour l'exemple -->
+              <div class="member-circle"></div>
+              <div class="member-circle"></div>
+              <div class="member-circle"></div>
+            </div>
+            <button class="share">
+              <img
+                src="../asset/svg/person-fill-add.svg"
+                alt="Share Icon"
+                class="share-icon"
+              />
+              Share
+            </button>
+            <div class="option">
+              <img
+                src="../asset/svg/Option.svg"
+                alt="Option Icon"
+                class="option-icon"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="board">
+          <div class="status">
+            <div class="InQueue">
+              <div class="title-status">
+                In Queue
+                <img
+                  src="../asset/svg/options-status.svg"
+                  alt="Options Icon"
+                  class="options-icon-status"
+                />
+              </div>
+              <div class="Tasks">
+              </div>
+            </div>
+            <button class="add-task">Add task</button>
+          </div>
+
+          <div class="status">
+            <div class="InProgress">
+              <div class="title-status">
+                In Progress
+                <img
+                  src="../asset/svg/options-status.svg"
+                  alt="Options Icon"
+                  class="options-icon-status"
+                />
+              </div>
+              <div class="Tasks"></div>
+            </div>
+            <button class="add-task">Add task</button>
+          </div>
+
+          <div class="status">
+            <div class="OnReview">
+              <div class="title-status">
+                On Review
+                <img
+                  src="../asset/svg/options-status.svg"
+                  alt="Options Icon"
+                  class="options-icon-status"
+                />
+              </div>
+              <div class="Tasks"></div>
+            </div>
+            <button class="add-task">Add task</button>
+          </div>
+
+          <div class="status">
+            <div class="Done">
+              <div class="title-status">
+                Done
+                <img
+                  src="../asset/svg/options-status.svg"
+                  alt="Options Icon"
+                  class="options-icon-status"
+                />
+              </div>
+              <div class="Tasks"></div>
+            </div>
+            <button class="add-task">Add task</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>

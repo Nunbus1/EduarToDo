@@ -1,0 +1,214 @@
+#team {
+  display: flex;
+  flex-direction: column;
+  background-color: #d9d9d9;
+  border-radius: 8px;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 1rem auto;
+  max-width: 90%;
+  overflow: hidden;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #c4c4c4;
+  padding: 0.5rem 1rem;
+  border-radius: 8px 8px 0 0;
+}
+
+.team-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.option-team {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.members {
+  display: flex;
+  gap: -1rem;
+}
+
+.member-circle {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #1e90ff;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+.share {
+  background-color: #ebe7e7;
+  border: none;
+  border-radius: 8px;
+  padding: 0.3rem 0.7rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.option {
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.board {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #e5e5e5;
+  border-radius: 8px;
+  overflow-y: auto;
+}
+
+.status {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 20vw;
+  gap: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.title-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #333;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+}
+
+.options-icon-status {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.Tasks {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-radius: 0px 0px 8px 8px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+.task {
+    background-color: #f0f0f0;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.upperInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    color: #333;
+}
+
+.lowerInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.members {
+    display: flex;
+    gap: 0.2rem;
+    margin-left: 0.5rem;
+}
+
+.member-circle {
+    width: 1rem;
+    height: 1rem;
+    background-color: #1e90ff;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.priority {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+.options-icon-status {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+}
+
+.deadLine {
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.checkList {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #555;
+}
+
+.checkList img {
+    width: 1rem;
+    height: 1rem;
+}
+
+.add-task {
+  background-color: #333;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.add-task:hover {
+  background-color: #555;
+}
+
+.status.hovered {
+    background-color: #d1e7fd;
+    border: 2px dashed #1e90ff;
+}
