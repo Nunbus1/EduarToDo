@@ -36,7 +36,7 @@ function dragOver(event) {
 
 function dragEnter(event) {
     event.preventDefault();
-    event.target.classList.add('hovered'); // Ajoute une classe pour l'effet visuel
+    event.target.classList.add('hovered');
 }
 
 function dragLeave(event) {
@@ -46,16 +46,23 @@ function dragLeave(event) {
 function dragDrop(event) {
     event.target.classList.remove('hovered');
     if (event.target.classList.contains('Tasks')) {
-        event.target.appendChild(draggedTask); // Dépose la tâche dans la section `.Tasks`
+        event.target.appendChild(draggedTask);
         updateStatusHeight(event.target);
     }
 }
 
 function updateStatusHeight(tasksContainer) {
     const taskCount = tasksContainer.children.length;
+
+    
+    const calculatedHeight = taskCount * 4;
+    const maxHeight = 50 * (window.innerHeight / 100);
+
     if (taskCount > 0) {
-        tasksContainer.style.maxHeight = `${taskCount * 4}rem`; // Ajuste la hauteur en fonction du nombre de tâches
+        tasksContainer.style.maxHeight = `${Math.min(calculatedHeight * 16, maxHeight)}px`;
+        tasksContainer.style.minHeight = 'initial';
     } else {
-        tasksContainer.style.maxHeight = 'initial'; // Taille minimale lorsqu'il n'y a aucune tâche
+        tasksContainer.style.maxHeight = 'initial';
+        tasksContainer.style.minHeight = '5rem';
     }
 }
