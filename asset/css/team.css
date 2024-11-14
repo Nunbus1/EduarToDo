@@ -1,3 +1,5 @@
+
+
 #team {
   display: flex;
   flex-direction: column;
@@ -135,6 +137,10 @@
     gap: 0.5rem;
 }
 
+.task:hover {
+  background-color: #dfdfdf;
+}
+
 .upperInfo {
     display: flex;
     align-items: center;
@@ -165,15 +171,33 @@
     border: 1px solid white;
 }
 
-.priority {
-    background-color: #ff4d4d;
-    color: white;
-    padding: 0.2rem 0.5rem;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    margin-left: 0.5rem;
+.priority-High {
+  background-color: var(--priority-high);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
+
+.priority-Mid {
+  background-color: var(--priority-mid);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.priority-Low {
+  background-color: var(--priority-low);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
 
 .options-icon-status {
     width: 1rem;
@@ -216,4 +240,26 @@
 .status.hovered {
     background-color: #d1e7fd;
     border: 2px dashed #1e90ff;
+}
+
+#datePicker {
+  display: none;
+}
+
+.date-button {
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #eee;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  color: #333;
+  font-size: 1rem;
+  max-width: 200px;
+}
+
+.date-button::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  color: #333;
 }

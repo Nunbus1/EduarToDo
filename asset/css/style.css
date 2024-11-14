@@ -10,3 +10,8 @@ body {
     background-color: #E8E8E8;
 }
 
+:root {
+    --priority-high: #ff4d4d; /* Rouge pour High */
+    --priority-mid: #ffa500; /* Orange pour Mid */
+    --priority-low: #4caf50; /* Vert pour Low */
+}
