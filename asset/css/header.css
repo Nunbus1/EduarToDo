@@ -41,3 +41,7 @@
 .nav-button:last-of-type {
     margin-top: auto; /* Espace les autres boutons en haut, place "Support" en bas */
 }
+
+.section{
+    display: none;
+}

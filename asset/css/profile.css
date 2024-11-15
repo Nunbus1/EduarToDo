@@ -1,0 +1,54 @@
+.name{
+    text-align: center;
+}
+
+.profile-image > img{
+    max-width: 20%;
+    clip-path:ellipse(33% 50%);
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.row{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+/* Base styles */
+
+.profile-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-image {
+    margin-bottom: 20px;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    margin-top: 2%;
+}
+
+.logout-button{
+    width: 20%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: red;
+    color: white;
+    border: 0;
+    margin: auto;
+    margin-top: 2%;
+}
