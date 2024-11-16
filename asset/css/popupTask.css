@@ -1,0 +1,149 @@
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    max-width: 45rem;
+    background: #ffffff;
+    border-radius: 0.625rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+    padding: 1.25rem;
+    z-index: 1001;
+}
+
+/* Overlay pour le fond */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* Partie équipe */
+.popupteam {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    background-color: #a3e4ff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.teamPicture {
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 50%;
+    background-color: #ddd;
+}
+
+.teamDescription {
+    font-size: 1.2rem;
+}
+
+/* Partie tâche */
+.TaskInfo{
+    flex: 2;
+}
+
+.popuptask {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.taskName {
+    text-align: center;
+    font-size: 1.5rem;
+    color: white;
+    padding: 0.625rem;
+    border-radius: 0.5rem;
+    margin: 0.625rem 0;
+}
+
+.Task-Desc-Checklist {
+    display: flex;
+    gap: 1.25rem;
+    flex: 1;
+}
+
+.taskDescription, .taskChecklist {
+    background-color: #f8f8f8;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    flex: 1;
+}
+
+.taskChecklist {
+    border: 0.063rem solid #ccc;
+    
+}
+
+/* Boutons de date */
+.taskOption {
+    display: flex;
+    gap: 0.625rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.date-button {
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.5rem;
+    background-color: #eee;
+    border: 0.063rem solid #ccc;
+    cursor: pointer;
+}
+
+/* Section priorité et statut */
+.priority-status {
+    background-color: #f8f8f8;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    flex: 0.3;
+}
+
+.priority-status h4 {
+    font-weight: bold;
+}
+
+.priority-status .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+}
+
+.priority-status label {
+    display: flex;
+    align-items: center;
+    gap: 0.313rem;
+}
+
+.priority-status label input {
+    margin-right: 0.313rem;
+}
+
+/* Boutons Edit et Delete */
+.taskOption button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.313rem;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+

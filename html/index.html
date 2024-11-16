@@ -1,18 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EduarToDO</title>
 
     <!---------------------- CSS ---------------------->
-    <link rel="stylesheet" href="../asset/css/style.css">
+    <link rel="stylesheet" href="../asset/css/header.css" />
+    <link rel="stylesheet" href="../asset/css/main.css" />
+    <link rel="stylesheet" href="../asset/css/team.css" />
+    <link rel="stylesheet" href="../asset/css/popupTask.css" />
+    <link rel="stylesheet" href="../asset/css/style.css" />
+    <link rel="stylesheet" href="../asset/css/profile.css" />
 
     <!---------------------- JS ---------------------->
-    <script src="../asset/js/script.js" defer></script>
+    <script src="../asset/js/header.js" defer></script>
+    <script src="../asset/js/main.js" defer></script>
 
+    <script src="../asset/js/moveTask.js" defer></script>
+    <script src="../asset/js/addTask.js" defer></script>
+    <script src="../asset/js/popupTask.js" defer></script>
+
+    <script src="../asset/js/script.js" defer></script>
+  
 </head>
-<body>
+  <body>
+    <header class="header">
+      <div class="hour" id="hour">20:43</div>
+      <nav class="sidebar">
+        <button class="nav-button" data-section="dashboard">Dashboard</button>
+        <button class="nav-button" data-section="team">My Team</button>
+        <button class="nav-button" data-section="calendar">Calendar</button>
+        <button class="nav-button" data-section="profile">Profile</button>
+        <button class="nav-button" data-section="support">Support</button>
+      </nav>
+    </header>
+    <main>
+      <div class="title-bar">
+        <div class="date" id="date"></div>
+        <div class="search-container">
+          <input type="text" class="search" placeholder="Search" />
+        </div>
+        <button class="profile"></button>
+      </div>
+
+      <div id="team" class="section">
+        <div class="info">
+          <div class="team-name">Team Name</div>
+          <div class="option-team">
+            <button class="filter">
+              <img
+                src="../asset/svg/filter.svg"
+                alt="Filter Icon"
+                class="filter-icon"
+              />
+              <span>Filters</span>
+            </button>
+            <div class="members">
+              <!-- Membres fictifs pour l'exemple -->
+              <div class="member-circle"></div>
+              <div class="member-circle"></div>
+              <div class="member-circle"></div>
+            </div>
+            <button class="share">
+              <img
+                src="../asset/svg/person-fill-add.svg"
+                alt="Share Icon"
+                class="share-icon"
+              />
+              Share
+            </button>
+            <div class="option">
+              <img
+                src="../asset/svg/Option.svg"
+                alt="Option Icon"
+                class="option-icon"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="board">
+          <div class="status">
+            <div class="InQueue">
+              <div class="title-status">
+                In Queue
+                <img
+                  src="../asset/svg/options-status.svg"
+                  alt="Options Icon"
+                  class="options-icon-status"
+                />
+              </div>
+              <div class="Tasks">
+              </div>
+            </div>
+            <button class="add-task">Add task</button>
+          </div>
+
+          <div class="status">
+            <div class="InProgress">
+              <div class="title-status">
+                In Progress
+                <img
+                  src="../asset/svg/options-status.svg"
+                  alt="Options Icon"
+                  class="options-icon-status"
+                />
+              </div>
+              <div class="Tasks"></div>
+            </div>
+            <button class="add-task">Add task</button>
+          </div>
+
+          <div class="status">
+            <div class="OnReview">
+              <div class="title-status">
+                On Review
+                <img
+                  src="../asset/svg/options-status.svg"
+                  alt="Options Icon"
+                  class="options-icon-status"
+                />
+              </div>
+              <div class="Tasks"></div>
+            </div>
+            <button class="add-task">Add task</button>
+          </div>
+
+          <div class="status">
+            <div class="Done">
+              <div class="title-status">
+                Done
+                <img
+                  src="../asset/svg/options-status.svg"
+                  alt="Options Icon"
+                  class="options-icon-status"
+                />
+              </div>
+              <div class="Tasks"></div>
+            </div>
+            <button class="add-task">Add task</button>
+          </div>
+        </div>
+      </div>
+      <div class="popup-overlay"></div>
+
+      <div class="popup-overlay" onclick="closePopup()"></div>
+
+      <div class="popup">
+          <!-- Section Equipe -->
+           <!-- Bouton de fermeture -->
+          <button class="close-btn" onclick="closePopup()">X</button>
+          <div class="popupteam">
+              <div class="teamPicture"></div>
+              <div class="teamDescription">
+                  <strong>Team Name</strong>
+                  <p>Team description lorem</p>
+              </div>
+          </div>
+          
+          <!-- Section Tâche -->
+          <div class="popuptask">
+              <div class="TaskInfo">
+                  <div class="taskName"></div>
+                  <div class="Task-Desc-Checklist">
+                      <div class="taskDescription">
+                          <h4>Task Description</h4>
+                          <p>Description de la tâche</p>
+                      </div>
+                      <div class="taskChecklist">
+                          <h4>Checklist</h4>
+                          <ul>
+                            <li><input type="checkbox" class="check-item" /> <span class="check-text">little task 1</span></li>
+                            <li><input type="checkbox" class="check-item" checked /> <span class="check-text"><s>little task 2</s></span></li>
+                          </ul>
+                      </div>
+                  </div>
+                  
+                    <div class="taskOption">
+                      <input type="date" class="date-button creation" id="creationInput">
+                      <input type="date" class="date-button deadline" id="deadlineInput">
+                  </div>
+              </div>
+      
+              <!-- Section Priorité et Statut -->
+              <div class="priority-status">
+                <h4>Priority:</h4>
+                <div class="options">
+                    <label><input type="radio" name="priority" value="Low"> Low</label>
+                    <label><input type="radio" name="priority" value="Mid"> Mid</label>
+                    <label><input type="radio" name="priority" value="High" checked> High</label>
+                </div>
+      
+                  <h4>Status :</h4>
+                  <div class="options">
+                      <label><input type="checkbox"> In Queue</label>
+                      <label><input type="checkbox"> In Progress</label>
+                      <label><input type="checkbox" checked> On Review</label>
+                      <label><input type="checkbox"> Done</label>
+                  </div>
+      
+                  <button class="edit-btn">Edit</button>
+                  <button class="delete-btn">Delete</button>
+              </div>
+          </div>
+      </div>
+
+      <div id="profile" class="profile-container section">
+        <h1>Profile</h1>
+        <div class="profile-content">
+          <div class="profile-image">
+            <img src="../asset/img/cat.jpg">
+          </div>
+          <div class="profile-form">
+            <div class="row">
+              <label for="first-name">First Name :</label>
+              <input type="text" id="first-name" placeholder="Enter First Name">
+                  
+              <label for="last-name">Last Name :</label>
+              <input type="text" id="last-name" placeholder="Enter Last Name">
+            </div>
+            
+            <div class="row">
+              <label for="email">Email :</label>
+              <input type="email" id="email" placeholder="Enter Email">
+                  
+              <label for="password">Password :</label>
+              <input type="password" id="password" placeholder="Enter Password">
+            </div>
+            <button class="logout-button">Log out</button>
+          </div>
+        </div>
+      </div>
+    </main>
     
-</body>
+  </body>
 </html>
