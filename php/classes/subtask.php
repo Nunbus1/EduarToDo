@@ -43,7 +43,7 @@ class Subtask extends Database{
      * @param  mixed $id Id de la sous-tache
      * @return Array Array contenant les informations d'une sous-tache
      */
-    public function dbInfoTask($id){
+    public function dbInfoSubtask($id){
         $query = 'SELECT * FROM subtask WHERE id = :id';
         $params = array(
             'id' => $id
@@ -51,4 +51,3 @@ class Subtask extends Database{
         return $this->fetchRequest($query, $params);
     }        
 }
-

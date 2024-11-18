@@ -1,6 +1,6 @@
 <?php
 
-require_once('databae.php');
+require_once('database.php');
 
 class User extends Database{
     /**
@@ -8,7 +8,7 @@ class User extends Database{
      *
      * @param  mixed $mail Adresse email de l'utilisateur
      * @param  mixed $password Mot de passe de l'utilisateur
-     * @return void Résultat de la requête
+     * @return String Adresse mail de l'utilisateur
      */
     public function dbCheckUser($mail, $password){
         $password = hash('sha256', $password);
@@ -17,7 +17,7 @@ class User extends Database{
             'email' => $mail,
             'password' => $password
         );
-        return $this->fetchRequest($query, $params);
+        return $this->fetchRequest($query, $params)['mail'];
     }
 
     /**
@@ -27,18 +27,16 @@ class User extends Database{
      * @param  mixed $first Prénom de l'utilisateur
      * @param  mixed $last Nom de l'utilisateur
      * @param  mixed $password Mot de passe de l'utilisateur
-     * @param  mixed $picture Chemin vers la photo de profil de l'utilisateur
      * @return void Résultat de la requête
      */
-    public function dbCreateUser($mail, $first, $last, $password, $picture){
+    public function dbCreateUser($mail, $first, $last, $password){
         $password = hash('sha256', $password);
-        $query = 'INSERT INTO user (mail, first, last, password, picture) VALUES (:mail, :first, :last, :password, :picture)';
+        $query = 'INSERT INTO user (mail, first, last, password) VALUES (:mail, :first, :last, :password)';
         $params = array(
             'mail' => $mail,
             'first' => $first,
             'last' => $last,
             'password' => $password,
-            'picture' => $picture
         );
         return $this->fetchRequest($query, $params);
     }
@@ -50,18 +48,16 @@ class User extends Database{
      * @param  mixed $first Prénom de l'utilisateur
      * @param  mixed $last Nom de l'utilisateur
      * @param  mixed $password Mot de passe de l'utilisateur
-     * @param  mixed $picture Chemin vers la photo de profil de l'utilisateur
      * @return void Résultat de la requête
      */
-    public function dbUpdateUser($mail, $first, $last, $password, $picture){
+    public function dbUpdateUser($mail, $first, $last, $password){
         $password = hash('sha256', $_password);
-        $query = 'UPDATE user SET first = :first, last = :last, password = :password, picture = :picture WHERE mail = :mail';
+        $query = 'UPDATE user SET first = :first, last = :last, password = :password WHERE mail = :mail';
         $params = array(
             'mail' => $mail,
             'first' => $first,
             'last' => $last,
-            'password' => $password,
-            'picture' => $picture
+            'password' => $password
         );
         return $this->fetchRequest($query, $params);
     }

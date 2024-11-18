@@ -8,17 +8,16 @@ class Team extends Database{
      *
      * @param  mixed $name Intitulé de la team
      * @param  mixed $description Description de la team
-     * @param  mixed $picture Chemin vers l'image de profil de la team
-     * @return void Résultat de la requête
+     * @return String Id de la tache créée
      */
-    public function dbCreateTeam($name, $description, $picture){
-        $query = 'INSERT INTO team (name, description, picture) VALUES (:name, :description, :picture)';
+    public function dbCreateTeam($name, $description){
+        $query = 'INSERT INTO team (name, description) VALUES (:name, :description)';
         $params = array(
             'name' => $name,
-            'description' => $description,
-            'picture' => $picture
+            'description' => $description
         );
-        return $this->fetchRequest($query, $params);
+        $this->fetchRequest($query, $params);
+        return $this->lastInsertId();
     }
 
     /**
@@ -26,16 +25,14 @@ class Team extends Database{
      *
      * @param  mixed $name Nom de la team
      * @param  mixed $description Description de la team
-     * @param  mixed $picture Chemin vers la photo de profil de la team
      * @param  mixed $id Id de la team
      * @return void Résultat de la requête
      */
-    public function dbUpdateTeam($name, $description, $picture, $id){
-        $query = 'UPDATE team SET name = :name, description = :description, picture = :picture WHERE id = :id';
+    public function dbUpdateTeam($name, $description, $id){
+        $query = 'UPDATE team SET name = :name, description = :description WHERE id = :id';
         $params = array(
             'name' => $name,
             'description' => $description,
-            'picture' => $picture,
             'id' => $id
         );
         return $this->fetchRequest($query, $params);

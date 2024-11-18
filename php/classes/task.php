@@ -63,7 +63,11 @@ class Task extends Database{
      * @return Array Array contenant les informations d'une tache
      */
     public function dbInfoTask($id){
-        $query = 'SELECT * FROM task WHERE id = :id';
+        $query = 'SELECT task.name, task.description, task.deadline, task.start_date, task.significance, task.status, team.name, subtask.name, subtask.status 
+        FROM task
+        JOIN team ON team.id = task.id_team 
+        JOIN subtask ON subtask.id_task = task.id 
+        WHERE task.id = :id';
         $params = array(
             'id' => $id
         );

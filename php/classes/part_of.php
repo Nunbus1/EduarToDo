@@ -20,12 +20,12 @@ class Part_of extends Database{
     }
 
     /**
-     * Méthode pour savoir quel utilisateur fait partie d'une team dans la base de données
+     * Méthode pour savoir quels utilisateurs font partie d'une team dans la base de données
      *
      * @param  mixed $id Id de la team
      * @return Array Array contenant les informations d'un utilisateur
      */
-    public function dbInfoAssigned_to($id){
+    public function dbInfoPartTeam($id){
         $query = 'SELECT user.first, user.last FROM user
         JOIN part_of ON part_of.mail = user.mail
         JOIN task ON part_of.id = task.id
@@ -42,7 +42,7 @@ class Part_of extends Database{
      * @param  mixed $mail Adresse email de l'utilisateur
      * @return Array Array contenant les informations d'une team
      */
-    public function dbInfoTodo($mail){
+    public function dbInfoMemberOf($mail){
         $query = 'SELECT team.name FROM team
         JOIN part_of ON part_of.id = team.id 
         JOIN user ON part_of.mail = user.mail 
