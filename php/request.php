@@ -8,7 +8,6 @@ require_once('classes/track.php');
 require_once('classes/user.php');
 require_once('inc/data_encode.php');
 require_once('inc/utilities.php');
-//require_once('inc/debug.php');
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $request = substr($_SERVER['PATH_INFO'], 1);

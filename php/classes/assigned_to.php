@@ -43,9 +43,10 @@ class Assigned_to extends Database{
      * @return Array Array contenant les informations d'une tache
      */
     public function dbInfoTodo($mail){
-        $query = 'SELECT task.name FROM task
+        $query = 'SELECT task.name, task.deadline, task.start_date, task.significance, task.status subtask.name, subtask.status FROM task
         JOIN assigned_to ON assigned_to.id = task.id 
         JOIN user ON assigned_to.mail = user.mail 
+        JOIN subtask ON subtask.id_task = task.id
         WHERE user.mail = :mail';
         $params = array(
             'mail' => $mail
