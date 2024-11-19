@@ -14,51 +14,51 @@ $request = substr($_SERVER['PATH_INFO'], 1);
 $request = explode('/', $request);
 $requestRessource = array_shift($request);
 
-$login = null;
+// $login = null;
 
 // Vérification de l'utilisateur
-if ($requestRessource == 'connexion') {
-    $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
-    $mail = $_SERVER['PHP_AUTH_USER'];
-    $password = $_SERVER['PHP_AUTH_PW'];
+// if ($requestRessource == 'connexion') {
+//     $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
+//     $mail = $_SERVER['PHP_AUTH_USER'];
+//     $password = $_SERVER['PHP_AUTH_PW'];
 
-    // Vérification des données envoyées
-    if (!checkInput(isset($mail) && isset($password), 400)) 
-        return;
+//     // Vérification des données envoyées
+//     if (!checkInput(isset($mail) && isset($password), 400)) 
+//         return;
     
-    // Vérification que l'utilisateur existe
-    if ($db->dbCheckUser($mail, $password)) {
-        // Création du token
-        $token = base64_encode(openssl_random_pseudo_bytes(32));
-        // Envoi du token
-        header('Content-Type: application/json; charset=utf-8');
-        header('Cache-control: no-store, no-cache, must-revalidate');
-        header('Pragma: no-cache');
-        echo ($token);
-    } 
+//     // Vérification que l'utilisateur existe
+//     if ($db->dbCheckUser($mail, $password)) {
+//         // Création du token
+//         $token = base64_encode(openssl_random_pseudo_bytes(32));
+//         // Envoi du token
+//         header('Content-Type: application/json; charset=utf-8');
+//         header('Cache-control: no-store, no-cache, must-revalidate');
+//         header('Pragma: no-cache');
+//         echo ($token);
+//     } 
     
-    else 
-        sendError(401);
+//     else 
+//         sendError(401);
   
-} 
+// } 
 
-else {
-    $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
-    $headers = getallheaders();
-    $token = $headers['Authorization'];
+// else {
+//     $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
+//     $headers = getallheaders();
+//     $token = $headers['Authorization'];
 
-    if (preg_match('/Bearer (.*)/', $token, $tab)) 
-        $token = $tab[1];
+//     if (preg_match('/Bearer (.*)/', $token, $tab)) 
+//         $token = $tab[1];
     
-    if ($token != null) {
-        $login = $db->dbVerifyToken($token);
+//     if ($token != null) {
+//         $login = $db->dbVerifyToken($token);
 
-        // Vérification que l'utilisateur existe
-        if (!$login) 
-            $login = null;
+//         // Vérification que l'utilisateur existe
+//         if (!$login) 
+//             $login = null;
         
-    }
-  }
+//     }
+// }
 
 // Gestion des requêtes utilisateur
 if ($requestRessource == 'user') {  
@@ -66,11 +66,11 @@ if ($requestRessource == 'user') {
     switch ($requestMethod) {
     case 'GET':
         // Vérification qu'on est bien connecté
-        if (!checkVariable($login, 401)) 
-            break;
+        // if (!checkVariable($_GET['mail'], 401)) 
+        //     break;
         
         // Récupération des données de l'utilisateur
-        $data = $db->dbInfoUser($login);
+        $data = $db->dbInfoUser($_GET['mail']);
         // Vérification que l'utilisateur existe
         checkData($data, 200, 404);
         break;
@@ -78,12 +78,12 @@ if ($requestRessource == 'user') {
     case 'POST':
         // Vérification des données envoyées
         if (!checkInput(isset($_POST['mail']) && isset($_POST['first']) && isset($_POST['last']) && isset($_POST['password']), 400)) 
-        break;
+            break;
 
         // Si l'utlisateur n'existe pas déjà
         if ($db->dbInfoUser($_POST['mail']) == false) {
-        $data = $db->dbCreateUser($_POST['mail'], $_POST['first'], $_POST['last'], $_POST['password']);
-        sendJsonData($data, 201);
+            $data = $db->dbCreateUser($_POST['mail'], $_POST['first'], $_POST['last'], $_POST['password']);
+            sendJsonData($data, 201);
         } 
 
         else  // Sinon retourner erreur conflit
@@ -93,8 +93,8 @@ if ($requestRessource == 'user') {
 
     case 'PUT':
         // Vérification que l'utilisateur est bien connecté
-        if (!checkVariable($login, 401)) 
-            break;
+        // if (!checkVariable($_PUT['mail'], 401)) 
+        //     break;
         
         // Récupération des données envoyées
         parse_str(file_get_contents('php://input'), $_PUT);
@@ -114,30 +114,30 @@ if ($requestRessource == "teams") {
     switch ($requestMethod) {
         case 'GET':
             // Vérification qu'on est bien connecté
-            if (!checkVariable($login, 401)) 
-                break;
+            // if (!checkVariable($_GET['mail'], 401)) 
+            //     break;
             
             // Récupération des noms des teams dont l'utilisateur fait partie
-            $data = $db->dbInfoMemberOf($login);
+            $data = $db->dbInfoMemberOf($_GET['mail']);
             // Vérification que l'utilisateur fait bien partie d'au moins une team
             checkData($data, 200, 404);
             break;
 
         case 'POST':
             // Vérification qu'on est bien connecté
-            if (!checkVariable($login, 401)) 
-                break;
+            // if (!checkVariable($login, 401)) 
+            //     break;
             
             // Création de la nouvelle team
             $team_id = $team->dbCreateTeam($_POST['name'], $_POST['description']);
-            $data = $data->dbCreateAssociation($team_id, $login);
+            $data = $data->dbCreateAssociation($team_id, $_POST['mail']);
             sendJsonData($data, 201);
             break;
 
         case 'PUT':
             // Vérification qu'on est bien connecté
-            if (!checkVariable($login, 401) || !checkInput(isset($_PUT['name'])) || !checkInput(isset($_PUT['description'])) || !checkInput(isset($_PUT['id']), 400)) 
-                break;
+            // if (!checkVariable($login, 401) || !checkInput(isset($_PUT['name'])) || !checkInput(isset($_PUT['description'])) || !checkInput(isset($_PUT['id']), 400)) 
+            //     break;
 
             // Modification de la team
             $data = $team->dbUpdateTeam($_PUT['name'], $_PUT['description'], $_PUT['id']);
@@ -155,8 +155,8 @@ if ($requestRessource == "subtask") {
     switch ($requestMethod) {
         case 'POST':
             // Vérification qu'on est bien connecté
-            if (!checkVariable($login, 401)) 
-                break;
+            // if (!checkVariable($login, 401)) 
+            //     break;
 
             // Vérification que toutes les infos sont définies
             if (!isset($_POST['name']) || !isset($_POST['status']) || !isset($_POST['id_task']))
@@ -169,8 +169,8 @@ if ($requestRessource == "subtask") {
         
         case 'PUT':
             // Vérification qu'on est bien connecté
-            if (!checkVariable($login, 401)) 
-                break;
+            // if (!checkVariable($login, 401)) 
+            //     break;
 
             // Vérification que les éléments nécessaire sont définis
             if (!isset($_PUT['status']) || !isset($_PUT['id']))
@@ -192,8 +192,8 @@ if ($requestRessource == "part_of") {
     switch ($requestMethod) {
         case 'GET':
             // Vérification qu'on est bien connecté
-            if (!checkVariable($login, 401)) 
-                break;
+            // if (!checkVariable($login, 401)) 
+            //     break;
 
             // Vérification que les éléments nécessaire sont définis
             if (!isset($_GET['id']))
@@ -216,8 +216,8 @@ if ($requestRessource == "task") {
     switch ($requestMethod) {
         case 'GET':
             // Vérification qu'on est bien connecté
-            if (!checkVariable($login, 401)) 
-                break;
+            // if (!checkVariable($login, 401)) 
+            //     break;
 
             // Vérification que les éléments nécessaire sont définis
             if (!isset($_GET['id']))
@@ -229,25 +229,25 @@ if ($requestRessource == "task") {
 
         case 'POST':
             // Vérification qu'on est bien connecté
-            if (!checkVariable($login, 401)) 
-                break;
+            // if (!checkVariable($login, 401)) 
+            //     break;
 
             // Vérification que les éléments nécessaire sont définis
-            if (!isset($_POST['name']) || !isset($_POST['description']) || !isset($_POST['deadline']) || !isset($_POST['start_date']) || !isset($_POST['significance']) || !isset($_POST['status']) || !isset($_POST['id_team']))
+            if (!isset($_POST['mail'], $_POST['name']) || !isset($_POST['description']) || !isset($_POST['deadline']) || !isset($_POST['start_date']) || !isset($_POST['significance']) || !isset($_POST['status']) || !isset($_POST['id_team']))
                 break;
 
             // Création d'une nouvelle tache
             $id_task = $db->dbCreateTask($_POST['name'], $_POST['description'], $_POST['deadline'], $_POST['start_date'], $_POST['significance'], $_POST['status'], $_POST['id_team']);
             
             // Assignation de la tache a l'utilisateur qui l'a créée
-            $data = $db->dbCreateAssociation($id_task, $login);
+            $data = $db->dbCreateAssociation($id_task, $_POST['mail']);
             sendJsonData($data, 200);
             break;
 
         case 'PUT':
             // Vérification qu'on est bien connecté
-            if (!checkVariable($login, 401)) 
-                break;
+            // if (!checkVariable($login, 401)) 
+            //     break;
 
             // Vérification que les éléments nécessaire sont définis
             if (!isset($_PUT['name']) || !isset($_PUT['description']) || !isset($_PUT['deadline']) || !isset($_PUT['start_date']) || !isset($_PUT['significance']) || !isset($_PUT['status']) || !isset($_PUT['id']))
@@ -269,10 +269,10 @@ if ($requestRessource == "todo") {
     switch ($requestMethod) {
         case 'GET':
         // Vérification qu'on est bien connecté
-        if (!checkVariable($login, 401)) 
-            break;
+        // if (!checkVariable($login, 401)) 
+        //     break;
         
-        $data = $db->dbInfoTodo($login);
+        $data = $db->dbInfoTodo($_GET['mail']);
         sendJsonData($data, 200);        
         break;
 
