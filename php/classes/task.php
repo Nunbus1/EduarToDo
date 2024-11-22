@@ -84,16 +84,22 @@ class Task extends Database {
      * @param  mixed $id_team Id de l'équipe
      * @return Array Liste des tâches de l'équipe
      */
-    public function dbGetTasksByTeam($id_team){
+    public function dbGetTasksByTeamId($teamId){
+        // if (!is_int($teamId)) {
+        //     throw new InvalidArgumentException("L'ID de l'équipe doit être un entier.");
+        // }
         $query = 'SELECT task.id, task.name, task.description, task.deadline, task.start_date, task.significance, task.status 
                   FROM task
-                  JOIN team ON task.id_team = :id_team';
+                  WHERE task.id_team = :teamId';
+
         $params = array(
-            'id_team' => $id_team
+            'teamId' => $teamId
+
         );
+    
         return $this->fetchRequest($query, $params);
     }
-    
+
 
     /**
      * Méthode pour supprimer une tâche dans la base de données
@@ -112,19 +118,20 @@ class Task extends Database {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'getTasks') {
     $task = new Task();
-    $teamName = $_GET['team'] ?? null;
+    $teamId = $_GET['team'] ?? null; // Récupère l'ID de la team depuis les paramètres GET
 
-    if ($teamName) {
-        $tasks = $task->dbGetTasksByTeam($teamName);
+    if ($teamId) {
+        // Appelle la méthode pour récupérer les tâches en fonction du team ID
+        $tasks = $task->dbGetTasksByTeamId($teamId); // Assurez-vous que cette méthode existe dans la classe Task
         if ($tasks) {
             echo json_encode(['success' => true, 'tasks' => $tasks]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Aucune tâche trouvée pour cette équipe.']);
         }
     } else {
-        echo json_encode(['success' => false, 'message' => 'Aucun nom d\'équipe fourni.']);
+        echo json_encode(['success' => false, 'message' => 'Aucun ID de team fourni.']);
     }
-    exit; // Ajoutez `exit` pour arrêter tout autre contenu après cette réponse
+    exit; // Arrête le script après avoir envoyé la réponse
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'addTask') {
