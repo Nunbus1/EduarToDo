@@ -5,6 +5,24 @@ const apiUrl = "http://localhost/EduarToDo/php/classes/task.php"; // URL du back
  * @return {string} - La date au format YYYY-MM-DD
  */
 
+// Met à jour l'URL pour inclure l'ID de la team
+function updateTeamInURL(teamId) {
+    const currentUrl = window.location.href.split('?')[0]; // Supprime les éventuels paramètres actuels
+    const newUrl = `${currentUrl}?teamId=${encodeURIComponent(teamId)}`;
+    window.history.pushState({ path: newUrl }, '', newUrl);
+}
+
+// Appelle cette fonction lors du chargement de la page ou quand la team change
+document.addEventListener("DOMContentLoaded", () => {
+    const activeTeamId = 1; // Remplace par une méthode pour récupérer dynamiquement l'ID de la team
+    updateTeamInURL(activeTeamId);
+});
+
+function getTeamFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('teamId'); // Renvoie l'ID de l'équipe
+}
+
 
 // Fonction pour ouvrir une popup de création
 function openTaskCreationPopup() {
@@ -83,23 +101,17 @@ function addTaskToDB(taskData) {
     
 }
 
-// Fonction pour extraire l'équipe depuis l'URL
-function getTeamFromURL() {
-    const urlSegments = window.location.pathname.split("/");
-    // console.log(urlSegments[urlSegments.length - 1] || null);
-    return urlSegments[urlSegments.length - 1] || null;
-}
 
 // Fonction pour charger les tâches d'une équipe
 function loadTasksForTeam() {
-    const teamName = getTeamFromURL();
-    if (!teamName) {
+    const teamId = getTeamFromURL();
+    if (!teamId) {
         console.error("Aucune équipe trouvée dans l'URL.");
         return;
     }
     //console.log(`${apiUrl}?action=getTasks&team=${encodeURIComponent(teamName)}`);
     
-    fetch(`${apiUrl}?action=getTasks&team=${encodeURIComponent(teamName)}`)
+    fetch(`${apiUrl}?action=getTasks&team=${encodeURIComponent(teamId)}`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error("Erreur réseau ou problème serveur.");
@@ -145,6 +157,8 @@ function displayTask(task) {
     `;
     taskContainer.appendChild(newTaskElement);
 }
+
+
 
 // Ajout d'un événement pour le bouton "Add task"
 const addTaskButton = document.querySelector(".add-task");
