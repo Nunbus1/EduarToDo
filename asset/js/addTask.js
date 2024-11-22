@@ -4,26 +4,6 @@ const apiUrl = "http://localhost/EduarToDo/php/classes/task.php"; // URL du back
  * @param {string} date - La date au format DD/MM/YYYY
  * @return {string} - La date au format YYYY-MM-DD
  */
-
-// Met à jour l'URL pour inclure l'ID de la team
-function updateTeamInURL(teamId) {
-    const currentUrl = window.location.href.split('?')[0]; // Supprime les éventuels paramètres actuels
-    const newUrl = `${currentUrl}?teamId=${encodeURIComponent(teamId)}`;
-    window.history.pushState({ path: newUrl }, '', newUrl);
-}
-
-// Appelle cette fonction lors du chargement de la page ou quand la team change
-document.addEventListener("DOMContentLoaded", () => {
-    const activeTeamId = 1; // Remplace par une méthode pour récupérer dynamiquement l'ID de la team
-    updateTeamInURL(activeTeamId);
-});
-
-function getTeamFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('teamId'); // Renvoie l'ID de l'équipe
-}
-
-
 // Fonction pour ouvrir une popup de création
 function openTaskCreationPopup() {
     const taskName = prompt("Entrez le nom de la tâche :");
@@ -158,6 +138,23 @@ function displayTask(task) {
     taskContainer.appendChild(newTaskElement);
 }
 
+// Met à jour l'URL pour inclure l'ID de la team
+function updateTeamInURL(teamId) {
+    const currentUrl = window.location.href.split('?')[0]; // Supprime les éventuels paramètres actuels
+    const newUrl = `${currentUrl}?teamId=${encodeURIComponent(teamId)}`;
+    window.history.pushState({ path: newUrl }, '', newUrl);
+}
+
+// Appelle cette fonction lors du chargement de la page ou quand la team change
+document.addEventListener("DOMContentLoaded", () => {
+    const activeTeamId = 1; // Remplace par une méthode pour récupérer dynamiquement l'ID de la team
+    updateTeamInURL(activeTeamId);
+});
+
+function getTeamFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('teamId'); // Renvoie l'ID de l'équipe
+}
 
 
 // Ajout d'un événement pour le bouton "Add task"

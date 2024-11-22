@@ -1,7 +1,7 @@
 <?php
 
-require_once('inc/constants.php'); // Contient les constantes de connexion à la base de données
-require_once('inc/data_encode.php'); // Contient les Méthodes pour envoyer des données au format JSON
+require_once('../inc/constants.php'); // Contient les constantes de connexion à la base de données
+require_once('../inc/data_encode.php'); // Contient les Méthodes pour envoyer des données au format JSON
 
 /**
  * Classe pour gérer les requêtes  à la base de données
