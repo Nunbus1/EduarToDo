@@ -81,20 +81,15 @@ class Task extends Database {
     /**
      * Méthode pour récupérer toutes les tâches d'une équipe
      *
-     * @param  mixed $teamName Nom de l'équipe
+     * @param  mixed $id_team Id de l'équipe
      * @return Array Liste des tâches de l'équipe
      */
-    public function dbGetTasksByTeam($teamName){
-        //$teamName = trim($teamName); // Supprime les espaces inutiles
-        if (!is_string($teamName)) {
-            throw new InvalidArgumentException("Le nom de l'équipe doit être une chaîne de caractères.");
-        }
+    public function dbGetTasksByTeam($id_team){
         $query = 'SELECT task.id, task.name, task.description, task.deadline, task.start_date, task.significance, task.status 
                   FROM task
-                  JOIN team ON team.id = task.id_team
-                  WHERE team.name = :teamName';
+                  JOIN team ON task.id_team = :id_team';
         $params = array(
-            'teamName' => $teamName
+            'id_team' => $id_team
         );
         return $this->fetchRequest($query, $params);
     }

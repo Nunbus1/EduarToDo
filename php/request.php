@@ -215,17 +215,39 @@ if ($requestRessource == "task") {
     $assigned = new Assigned_to(); // Création de l'objet Assigned_to qui contient les méthodes pour gérer les associations entre taches et utilisateurs
     switch ($requestMethod) {
         case 'GET':
-            // Vérification qu'on est bien connecté
-            // if (!checkVariable($login, 401)) 
-            //     break;
-
-            // Vérification que les éléments nécessaire sont définis
-            if (!isset($_GET['id']))
+            if (!isset($_GET['action'])){
                 break;
+            }
 
-            $data = $db->dbInfoTask($_GET['id']);
-            sendJsonData($data, 200);
-            break;
+            switch ($_GET['action']){
+
+                case 'getTasks':
+                    // Vérification qu'on est bien connecté
+                    // if (!checkVariable($login, 401)) 
+                    //     break;
+
+                    // Vérification que les éléments nécessaire sont définis
+                    if (!isset($_GET['id']))
+                        break;
+
+                    $data = $db->dbGetTasksByTeam($_GET['id']);
+                    sendJsonData($data, 200);
+                    break;
+
+                case 'getTasks':
+                    // Vérification qu'on est bien connecté
+                    // if (!checkVariable($login, 401)) 
+                    //     break;
+
+                    // Vérification que les éléments nécessaire sont définis
+                    if (!isset($_GET['id']))
+                        break;
+
+                    $data = $db->dbInfoTask($_GET['id']);
+                    sendJsonData($data, 200);
+                    break;
+            }
+            
 
         case 'POST':
             // Vérification qu'on est bien connecté
