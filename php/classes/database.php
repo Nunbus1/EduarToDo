@@ -18,6 +18,7 @@ class Database{
   {
     try {
       $this->db = new PDO('mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+      echo 'patate';
     }
     
     catch (PDOException $e) {
