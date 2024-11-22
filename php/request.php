@@ -1,13 +1,13 @@
 <?php
 
-require_once('classes/album.php');
-require_once('classes/artist.php');
-require_once('classes/listened.php');
-require_once('classes/playlist.php');
-require_once('classes/track.php');
+require_once('classes/assigned_to.php');
+require_once('classes/database.php');
+require_once('classes/part_of.php');
+require_once('classes/subtask.php');
+require_once('classes/task.php');
+require_once('classes/team.php');
 require_once('classes/user.php');
-require_once('inc/data_encode.php');
-require_once('inc/utilities.php');
+require_once('inc/constants.php');
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $request = substr($_SERVER['PATH_INFO'], 1);
@@ -227,14 +227,15 @@ if ($requestRessource == "task") {
                     //     break;
 
                     // Vérification que les éléments nécessaire sont définis
-                    if (!isset($_GET['id']))
+                    if (!isset($_GET['id'])){
+                        echo 'blabla';
                         break;
-
+                    }
                     $data = $db->dbGetTasksByTeam($_GET['id']);
                     sendJsonData($data, 200);
                     break;
 
-                case 'getTasks':
+                case 'getInfosTask':
                     // Vérification qu'on est bien connecté
                     // if (!checkVariable($login, 401)) 
                     //     break;
@@ -245,6 +246,9 @@ if ($requestRessource == "task") {
 
                     $data = $db->dbInfoTask($_GET['id']);
                     sendJsonData($data, 200);
+                    break;
+                    
+                default:
                     break;
             }
             
