@@ -73,7 +73,7 @@ class Database{
   public function fetchRequest($query, $params = null)
   {
     $stmt = $this->request($query, $params);
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
   }
 
@@ -92,4 +92,13 @@ class Database{
     }
     return $params;
   }
+  public function testConnection() {
+    try {
+        $this->getPDO(); // Supposons que votre méthode interne retourne un objet PDO
+        echo "Connexion réussie à la base de données via database.php !";
+    } catch (PDOException $e) {
+        echo "Erreur de connexion : " . $e->getMessage();
+    }
+}
+
 }

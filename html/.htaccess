@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /EduarToDo/html/
+
+# Si le fichier ou le dossier n'existe pas, redirige vers index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]

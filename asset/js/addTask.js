@@ -1,55 +1,156 @@
-function addTask(event) {
-    const button = event.target;
-    const statusContainer = button.closest(".status");
-    const tasksContainer = statusContainer.querySelector(".Tasks");
+const apiUrl = "http://localhost/EduarToDo/php/classes/task.php"; // URL du backend
+/**
+ * Convertit une date au format DD/MM/YYYY en YYYY-MM-DD
+ * @param {string} date - La date au format DD/MM/YYYY
+ * @return {string} - La date au format YYYY-MM-DD
+ */
 
-    const taskName = "Task name";
-    const priority = "High";
-    const deadline = "12/12/2024";
-    const nbrCheckListValide = "2";
 
-    const taskId = `task-${Date.now()}`;
-    const newTask = document.createElement("div");
-    newTask.classList.add("task");
-    newTask.setAttribute("draggable", "true");
-    newTask.setAttribute("id", taskId);
-    newTask.setAttribute("data-task-name", taskName);
-    newTask.setAttribute("data-priority", priority);
-    newTask.setAttribute("data-deadline", deadline);
+// Fonction pour ouvrir une popup de création
+function openTaskCreationPopup() {
+    const taskName = prompt("Entrez le nom de la tâche :");
+    const deadline = "10/12/2024";
+    const startDate = "01/12/2024";
+    const significance = "Low";
+    const status = "";
+    const teamName = getTeamFromURL();
 
-    // Initialisation de la checklist pour chaque tâche
-    const initialChecklist = [];
-    newTask.setAttribute("data-checklist", JSON.stringify([]));
+    if (!teamName) {
+        alert("Impossible de créer une tâche : aucune équipe trouvée dans l'URL.");
+        return;
+    }
 
-    newTask.innerHTML = `
+    if (taskName && deadline && startDate) {
+        // Prépare les données pour le backend
+        const newTask = {
+            name: taskName,
+            description: "taskDescription",
+            deadline: deadline,
+            start_date: startDate,
+            significance: significance,
+            status: status,
+            id_team: 1 // Utilisation du nom de l'équipe depuis l'URL
+        };
+        addTaskToDB(newTask);
+    } else {
+        alert("Tous les champs doivent être remplis !");
+    }
+}
+function convertDateToSQLFormat(date) {
+    const [day, month, year] = date.split('/');
+    return `${year}-${month}-${day}`; // Retourne la date au format SQL
+}
+
+// Fonction pour ajouter une tâche dans la BDD via AJAX
+function addTaskToDB(taskData) {
+    console.log("Données envoyées :", taskData);
+    taskData.deadline = convertDateToSQLFormat(taskData.deadline);
+    taskData.start_date = convertDateToSQLFormat(taskData.start_date);
+    console.log("Données envoyées au serveur :", {
+        action: "addTask",
+        task: taskData,
+    });
+
+    fetch(apiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            action: "addTask",
+            task: taskData,
+        }),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Erreur réseau ou problème serveur.");
+            }
+            return response.text(); // Récupère la réponse brute
+        })
+        .then((text) => {
+            console.log("Réponse brute :", text);
+            const data = JSON.parse(text); // Parse le JSON ici
+            if (data.success) {
+                console.log("Tâche ajoutée avec succès :", data.message);
+                displayTask(data.task); // Afficher la tâche nouvellement ajoutée
+            } else {
+                console.error("Erreur lors de l'ajout de la tâche :", data.message);
+            }
+        })
+        .catch((error) => {
+            console.error("Erreur :", error.message);
+        });
+    
+}
+
+// Fonction pour extraire l'équipe depuis l'URL
+function getTeamFromURL() {
+    const urlSegments = window.location.pathname.split("/");
+    // console.log(urlSegments[urlSegments.length - 1] || null);
+    return urlSegments[urlSegments.length - 1] || null;
+}
+
+// Fonction pour charger les tâches d'une équipe
+function loadTasksForTeam() {
+    const teamName = getTeamFromURL();
+    if (!teamName) {
+        console.error("Aucune équipe trouvée dans l'URL.");
+        return;
+    }
+    //console.log(`${apiUrl}?action=getTasks&team=${encodeURIComponent(teamName)}`);
+    
+    fetch(`${apiUrl}?action=getTasks&team=${encodeURIComponent(teamName)}`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Erreur réseau ou problème serveur.");
+            }
+            return response.json(); // Parse la réponse JSON
+        })
+        .then((data) => {
+            if (data.success) {
+                console.log("Tâches chargées pour l'équipe :", data.tasks);
+                data.tasks.forEach((task) => displayTask(task)); // Affiche chaque tâche
+            } else {
+                console.error("Erreur :", data.message);
+            }
+        })
+        .catch((error) =>
+            console.error("Erreur lors du chargement des tâches :", error)
+        );
+}
+
+// Fonction pour afficher une tâche dans l'interface
+function displayTask(task) {
+    const taskContainer = document.querySelector(".Tasks");
+    const newTaskElement = document.createElement("div");
+    newTaskElement.className = "task";
+    newTaskElement.innerHTML = `
         <div class="upperInfo">
-            ${taskName}
+            ${task.name}
             <div class="members">
                 <div class="member-circle"></div>
                 <div class="member-circle"></div>
                 <div class="member-circle"></div>
             </div>
-            <div class="priority priority-${priority}">${priority}</div>
+            <div class="priority priority-${task.significance}">${task.significance}</div>
             <img src="../asset/svg/Vector.svg" alt="Options Icon" class="options-icon-status" />
         </div>
         <div class="lowerInfo">
-             <div class="deadline-display">${deadline}</div>
+            <div class="deadline-display">${task.deadline}</div>
             <div class="checkList">
                 <img src="../asset/svg/Union.svg" alt="Options Icon" class="options-icon-status" />
-                <span class="nbr-checklist-completed">0</span>/<span class="nbr-checklist-total">${initialChecklist.length}</span>
+                0/0
             </div>
         </div>
     `;
-
-    newTask.addEventListener("dragstart", dragStart);
-    newTask.addEventListener("dragend", dragEnd);
-
-    newTask.addEventListener("click", () => openPopup(newTask));
-
-    tasksContainer.appendChild(newTask);
-
-    updateStatusHeight(tasksContainer);
+    taskContainer.appendChild(newTaskElement);
 }
 
-const addTaskButtons = document.querySelectorAll(".add-task");
-addTaskButtons.forEach((button) => button.addEventListener("click", addTask));
+// Ajout d'un événement pour le bouton "Add task"
+const addTaskButton = document.querySelector(".add-task");
+if (addTaskButton) {
+    addTaskButton.addEventListener("click", openTaskCreationPopup);
+}
+
+// Charge les tâches dès que la page est prête
+document.addEventListener("DOMContentLoaded", loadTasksForTeam);
