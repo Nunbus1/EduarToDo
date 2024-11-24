@@ -7,13 +7,13 @@ require_once('classes/subtask.php');
 require_once('classes/task.php');
 require_once('classes/team.php');
 require_once('classes/user.php');
-require_once('inc/constants.php');
+// require_once('inc/constants.php');
+require_once('inc/utilities.php');
+require_once('inc/data_encode.php');
 
+$requestRessource = $_GET['resource'] ?? null; // Utilise ?resource=task
+$action = $_GET['action'] ?? null; 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
-$request = substr($_SERVER['PATH_INFO'], 1);
-$request = explode('/', $request);
-$requestRessource = array_shift($request);
-
 // $login = null;
 
 // Vérification de l'utilisateur
@@ -201,94 +201,156 @@ if ($requestRessource == "part_of") {
 
             $data = $db->dbInfoPartTeam($_GET['id']);
             sendJsonData($data, 200);
-            break;
+        break;
 
-        default:
-            // Requête non implémentée
-            sendError(501);
-            break;
-        }
+    default:
+        // Requête non implémentée
+        sendError(501);
+        break;
     }
+}
 
 if ($requestRessource == "task") {
-    $db = new Task(); // Création de l'objet Task qui contient les méthodes pour gérer les taches
-    $assigned = new Assigned_to(); // Création de l'objet Assigned_to qui contient les méthodes pour gérer les associations entre taches et utilisateurs
+    $db = new Task(); // Création de l'objet Task qui contient les méthodes pour gérer les tâches
+
     switch ($requestMethod) {
         case 'GET':
-            if (!isset($_GET['action'])){
+            if (!isset($_GET['action'])) {
+                sendError(400, 'Action non spécifiée.');
                 break;
             }
 
-            switch ($_GET['action']){
-
+            switch ($_GET['action']) {
                 case 'getTasks':
-                    // Vérification qu'on est bien connecté
-                    // if (!checkVariable($login, 401)) 
-                    //     break;
-
-                    // Vérification que les éléments nécessaire sont définis
-                    if (!isset($_GET['id'])){
-                        echo 'blabla';
+                    // Récupération des tâches d'une équipe via l'ID de la team
+                    if (!isset($_GET['id'])) {
+                        sendError(400, 'Aucun ID de team fourni.');
                         break;
                     }
-                    $data = $db->dbGetTasksByTeam($_GET['id']);
-                    sendJsonData($data, 200);
+
+                    $teamId = intval($_GET['id']); // Sécurisation de l'entrée
+                    $tasks = $db->dbGetTasksByTeamId($teamId);
+
+                    if ($tasks) {
+                        sendJsonData(['success' => true, 'tasks' => $tasks], 200);
+                    } else {
+                        sendJsonData(['success' => false, 'message' => 'Aucune tâche trouvée pour cette équipe.'], 404);
+                    }
                     break;
 
-                case 'getInfosTask':
-                    // Vérification qu'on est bien connecté
-                    // if (!checkVariable($login, 401)) 
-                    //     break;
-
-                    // Vérification que les éléments nécessaire sont définis
-                    if (!isset($_GET['id']))
+                case 'getTaskInfo':
+                    // Récupération des informations d'une tâche spécifique via son ID
+                    if (!isset($_GET['id'])) {
+                        sendError(400, 'Aucun ID de tâche fourni.');
                         break;
+                    }
 
-                    $data = $db->dbInfoTask($_GET['id']);
-                    sendJsonData($data, 200);
+                    $taskId = intval($_GET['id']);
+                    $taskInfo = $db->dbInfoTask($taskId);
+
+                    if ($taskInfo) {
+                        sendJsonData(['success' => true, 'task' => $taskInfo], 200);
+                    } else {
+                        sendJsonData(['success' => false, 'message' => 'Tâche non trouvée.'], 404);
+                    }
                     break;
-                    
+
                 default:
+                    sendError(400, 'Action non reconnue.');
                     break;
             }
-            
-
-        case 'POST':
-            // Vérification qu'on est bien connecté
-            // if (!checkVariable($login, 401)) 
-            //     break;
-
-            // Vérification que les éléments nécessaire sont définis
-            if (!isset($_POST['mail'], $_POST['name']) || !isset($_POST['description']) || !isset($_POST['deadline']) || !isset($_POST['start_date']) || !isset($_POST['significance']) || !isset($_POST['status']) || !isset($_POST['id_team']))
-                break;
-
-            // Création d'une nouvelle tache
-            $id_task = $db->dbCreateTask($_POST['name'], $_POST['description'], $_POST['deadline'], $_POST['start_date'], $_POST['significance'], $_POST['status'], $_POST['id_team']);
-            
-            // Assignation de la tache a l'utilisateur qui l'a créée
-            $data = $db->dbCreateAssociation($id_task, $_POST['mail']);
-            sendJsonData($data, 200);
             break;
 
-        case 'PUT':
-            // Vérification qu'on est bien connecté
-            // if (!checkVariable($login, 401)) 
-            //     break;
-
-            // Vérification que les éléments nécessaire sont définis
-            if (!isset($_PUT['name']) || !isset($_PUT['description']) || !isset($_PUT['deadline']) || !isset($_PUT['start_date']) || !isset($_PUT['significance']) || !isset($_PUT['status']) || !isset($_PUT['id']))
+            case 'POST':
+                // Vérification des données envoyées
+                if (!isset($_POST['action']) || $_POST['action'] !== 'addTask') {
+                    sendJsonData(['success' => false, 'message' => 'Action non spécifiée ou incorrecte.'], 400);
+                    break;
+                }
+            
+                // Vérification des données nécessaires pour créer une tâche
+                if (!checkInput(isset($_POST['name']) && isset($_POST['description']) && isset($_POST['deadline']) &&
+                    isset($_POST['start_date']) && isset($_POST['significance']) && isset($_POST['status']) && isset($_POST['id_team']), 400)) {
+                    break;
+                }
+            
+                // Extraction des données envoyées
+                $name = $_POST['name'];
+                $description = $_POST['description'];
+                $deadline = $_POST['deadline'];
+                $start_date = $_POST['start_date'];
+                $significance = $_POST['significance'];
+                $status = $_POST['status'];
+                $id_team = intval($_POST['id_team']);
+            
+                // Vérification si une tâche similaire n'existe pas déjà (optionnel, selon vos besoins)
+                if (!$db->dbCheckTaskExists($name, $id_team)) {
+                    // Création de la tâche
+                    $id_task = $db->dbCreateTask($name, $description, $deadline, $start_date, $significance, $status, $id_team);
+            
+                    if ($id_task) {
+                        // Retourne le succès avec l'ID de la tâche
+                        sendJsonData(['success' => true, 'message' => 'Tâche créée avec succès.', 'id' => $id_task], 201);
+                    } else {
+                        // Retourne une erreur si la création a échoué
+                        sendJsonData(['success' => false, 'message' => 'Erreur lors de la création de la tâche.'], 500);
+                    }
+                } else {
+                    // Tâche existante (optionnel)
+                    sendJsonData(['success' => false, 'message' => 'Une tâche avec ce nom existe déjà dans cette équipe.'], 409);
+                }
                 break;
 
-            $data = $db->dbCreateTask($_PUT['name'], $_PUT['description'], $_PUT['deadline'], $_PUT['start_date'], $_PUT['significance'], $_PUT['status'], $_PUT['id']);
-            sendJsonData($data, 200); 
+        case 'PUT':
+            // Modification d'une tâche existante
+            parse_str(file_get_contents('php://input'), $_PUT);
+            if (!isset($_PUT['name']) || !isset($_PUT['description']) || !isset($_PUT['deadline']) ||
+                !isset($_PUT['start_date']) || !isset($_PUT['significance']) || !isset($_PUT['status']) || !isset($_PUT['id'])) {
+                sendError(400, 'Données incomplètes pour modifier une tâche.');
+                break;
+            }
+
+            $isUpdated = $db->dbUpdateTask(
+                $_PUT['name'],
+                $_PUT['description'],
+                $_PUT['deadline'],
+                $_PUT['start_date'],
+                $_PUT['significance'],
+                $_PUT['status'],
+                intval($_PUT['id'])
+            );
+
+            if ($isUpdated) {
+                sendJsonData(['success' => true, 'message' => 'Tâche mise à jour avec succès.'], 200);
+            } else {
+                sendError(500, 'Erreur lors de la mise à jour de la tâche.');
+            }
+            break;
+
+        case 'DELETE':
+            // Suppression d'une tâche
+            parse_str(file_get_contents('php://input'), $_DELETE);
+            if (!isset($_DELETE['id'])) {
+                sendError(400, 'ID de tâche non fourni.');
+                break;
+            }
+
+            $isDeleted = $db->dbDeleteTask(intval($_DELETE['id']));
+
+            if ($isDeleted) {
+                sendJsonData(['success' => true, 'message' => 'Tâche supprimée avec succès.'], 200);
+            } else {
+                sendError(500, 'Erreur lors de la suppression de la tâche.');
+            }
             break;
 
         default:
-            // Requête non implémentée
-            sendError(501);
+            sendError(501, 'Méthode non implémentée.');
             break;
-        }
+    }
 }
+
+    
 
 if ($requestRessource == "todo") {
     $db = new Assigned_to(); // Création de l'objet Assigned_to qui contient les fonctions pour gérer les associations entre taches et utilisateurs
@@ -308,3 +370,7 @@ if ($requestRessource == "todo") {
         break;
     }
 }
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);

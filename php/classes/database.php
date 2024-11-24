@@ -1,7 +1,7 @@
 <?php
 
-require_once('../inc/constants.php'); // Contient les constantes de connexion à la base de données
-require_once('../inc/data_encode.php'); // Contient les Méthodes pour envoyer des données au format JSON
+require_once('inc/constants.php'); // Contient les constantes de connexion à la base de données
+require_once('inc/data_encode.php'); // Contient les Méthodes pour envoyer des données au format JSON
 
 /**
  * Classe pour gérer les requêtes  à la base de données
@@ -18,7 +18,6 @@ class Database{
   {
     try {
       $this->db = new PDO('mysql:host=' . DB_HOST . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
-      echo 'patate';
     }
     
     catch (PDOException $e) {
