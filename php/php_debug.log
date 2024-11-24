@@ -320,3 +320,738 @@ Erreur lors de la création de la tâche
 Méthode reçue : GET
 Méthode reçue : GET
 Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate1
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate1
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate1
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => superU
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => superU
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => superU
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => sui
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => sui
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => sui
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => 
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => On Review
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => On Review
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => On Review
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : POST
+Données POST reçues : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+
+Données extraites : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Erreur lors de la création de la tâche
+Méthode reçue : GET
+Méthode reçue : GET
+Méthode reçue : GET

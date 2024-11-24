@@ -1,3 +1,4 @@
+const tasksContainers = document.querySelectorAll(".Tasks");
 function loadTasksForTeam() {
     const teamId = getTeamFromURL();
     if (!teamId) {
@@ -5,7 +6,7 @@ function loadTasksForTeam() {
         return;
     }
     clearTasks();
-    
+
 
     // Utilisation de ajaxRequest
     ajaxRequest(
@@ -15,6 +16,7 @@ function loadTasksForTeam() {
             if (response.success) {
                 //console.log("Tâches chargées pour l'équipe :", response.tasks);
                 response.tasks.forEach((task) => displayTask(task)); // Affiche chaque tâche
+                initializeDragAndDrop();
             } else {
                 console.error("Erreur :", response.message);
             }
@@ -30,9 +32,24 @@ function clearTasks() {
     });
 }
 
-// Fonction pour afficher une tâche dans l'interface
 function displayTask(task) {
-    const taskContainer = document.querySelector(".Tasks"); // Assurez-vous que la classe `.Tasks` existe
+    // Trouver le bon conteneur `Tasks` basé sur le status de la tâche
+    const statusContainers = document.querySelectorAll(".status");
+    let taskContainer = null;
+
+    statusContainers.forEach((statusContainer) => {
+        const titleStatus = statusContainer.querySelector(".title-status").textContent.trim();
+        if (titleStatus === task.status) {
+            taskContainer = statusContainer.querySelector(".Tasks");
+        }
+    });
+
+    if (!taskContainer) {
+        console.error(`Aucun conteneur trouvé pour le status : ${task.status}`);
+        return;
+    }
+
+    // Crée un nouvel élément pour la tâche
     const newTaskElement = document.createElement("div");
     newTaskElement.className = "task";
     newTaskElement.setAttribute("draggable", "true");
@@ -54,8 +71,14 @@ function displayTask(task) {
             </div>
         </div>
     `;
+
+    // Ajoute la tâche au bon conteneur
     taskContainer.appendChild(newTaskElement);
+
+    // Réinitialise les événements de drag-and-drop pour inclure la nouvelle tâche
+    initializeDragAndDrop();
 }
+
 
 // Met à jour l'URL pour inclure l'ID de la team
 function updateTeamInURL(teamId) {
