@@ -5,31 +5,38 @@ require_once('database.php');
 class Task extends Database {
 
     /**
-     * Méthode pour créer une tâche dans la base de données
-     *
-     * @param  mixed $name Intitulé de la tâche
-     * @param  mixed $description Description de la tâche
-     * @param  mixed $deadline Date limite pour effectuer la tâche
-     * @param  mixed $start_date Date à laquelle la tâche doit être commencée
-     * @param  mixed $significance Importance de la tâche
-     * @param  mixed $status État d'avancement de la tâche
-     * @param  mixed $id_team Id de la team dans laquelle la tâche a été créée
-     * @return void Résultat de la requête
-     */
-    public function dbCreateTask($name, $description, $deadline, $start_date, $significance, $status, $id_team) {
-        $query = 'INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
-                  VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)';
-        $params = [
-            'name' => $name,
-            'description' => $description,
-            'deadline' => $deadline,
-            'start_date' => $start_date,
-            'significance' => $significance,
-            'status' => $status,
-            'id_team' => $id_team
-        ];
-        return $this->fetchRequest($query, $params);
-    }
+ * Fonction pour créer une tâche dans la base de données
+ *
+ * @param string $name Nom de la tâche
+ * @param string $description Description de la tâche
+ * @param string $deadline Date limite
+ * @param string $start_date Date de début
+ * @param string $significance Importance
+ * @param string $status Statut de la tâche
+ * @param int $id_team ID de l'équipe associée
+ * @return int|false L'ID de la tâche créée ou false en cas d'erreur
+ */
+public function dbCreateTask($name, $description, $deadline, $start_date, $significance, $status, $id_team) {
+    $query = 'INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)';
+    $params = array(
+        'name' => $name,
+        'description' => $description,
+        'deadline' => $deadline,
+        'start_date' => $start_date,
+        'significance' => $significance,
+        'status' => $status,
+        'id_team' => $id_team,
+    );
+
+    file_put_contents('php_debug.log', "Requête SQL : $query\nParamètres : " . print_r($params, true), FILE_APPEND);
+
+    $result = $this->fetchRequest($query, $params);
+    file_put_contents('php_debug.log', "Résultat de la requête : " . print_r($result, true), FILE_APPEND);
+
+    return $result;
+}
+
 
     /**
      * Méthode pour mettre à jour une tâche dans la base de données
@@ -109,7 +116,3 @@ class Task extends Database {
         return $this->fetchRequest($query, $params);
     }
 }
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);

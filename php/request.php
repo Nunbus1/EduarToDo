@@ -11,11 +11,15 @@ require_once('classes/user.php');
 require_once('inc/utilities.php');
 require_once('inc/data_encode.php');
 
-$requestRessource = $_GET['resource'] ?? null; // Utilise ?resource=task
-$action = $_GET['action'] ?? null; 
+// $requestRessource = $_GET['resource'] ?? null; // Utilise ?resource=task
+// $action = $_GET['action'] ?? null; 
+// $requestMethod = $_SERVER['REQUEST_METHOD'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
+$request = substr($_SERVER['PATH_INFO'], 1);
+$request = explode('/', $request);
+$requestRessource = array_shift($request);
 // $login = null;
-
+file_put_contents('C:/wamp64/www/EduarToDo/php/php_debug.log', "Méthode reçue : " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
 // Vérification de l'utilisateur
 // if ($requestRessource == 'connexion') {
 //     $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
@@ -261,45 +265,38 @@ if ($requestRessource == "task") {
             }
             break;
 
-            case 'POST':
-                // Vérification des données envoyées
-                if (!isset($_POST['action']) || $_POST['action'] !== 'addTask') {
-                    sendJsonData(['success' => false, 'message' => 'Action non spécifiée ou incorrecte.'], 400);
-                    break;
-                }
-            
-                // Vérification des données nécessaires pour créer une tâche
-                if (!checkInput(isset($_POST['name']) && isset($_POST['description']) && isset($_POST['deadline']) &&
-                    isset($_POST['start_date']) && isset($_POST['significance']) && isset($_POST['status']) && isset($_POST['id_team']), 400)) {
-                    break;
-                }
-            
-                // Extraction des données envoyées
-                $name = $_POST['name'];
-                $description = $_POST['description'];
-                $deadline = $_POST['deadline'];
-                $start_date = $_POST['start_date'];
-                $significance = $_POST['significance'];
-                $status = $_POST['status'];
-                $id_team = intval($_POST['id_team']);
-            
-                // Vérification si une tâche similaire n'existe pas déjà (optionnel, selon vos besoins)
-                if (!$db->dbCheckTaskExists($name, $id_team)) {
-                    // Création de la tâche
-                    $id_task = $db->dbCreateTask($name, $description, $deadline, $start_date, $significance, $status, $id_team);
-            
-                    if ($id_task) {
-                        // Retourne le succès avec l'ID de la tâche
-                        sendJsonData(['success' => true, 'message' => 'Tâche créée avec succès.', 'id' => $id_task], 201);
-                    } else {
-                        // Retourne une erreur si la création a échoué
-                        sendJsonData(['success' => false, 'message' => 'Erreur lors de la création de la tâche.'], 500);
-                    }
-                } else {
-                    // Tâche existante (optionnel)
-                    sendJsonData(['success' => false, 'message' => 'Une tâche avec ce nom existe déjà dans cette équipe.'], 409);
-                }
+        case 'POST':
+            file_put_contents('php_debug.log', "Données POST reçues : " . print_r($_POST, true) . "\n", FILE_APPEND);
+        
+            // Vérification des données nécessaires
+            if (!isset($_POST['name'], $_POST['description'], $_POST['deadline'], $_POST['start_date'], $_POST['significance'], $_POST['status'], $_POST['id_team'])) {
+                file_put_contents('php_debug.log', "Données POST manquantes\n", FILE_APPEND);
+                sendJsonData(['success' => false, 'message' => 'Données de tâche incomplètes.'], 400);
                 break;
+            }
+            
+            // Extraction des données
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+            $deadline = $_POST['deadline'];
+            $start_date = $_POST['start_date'];
+            $significance = $_POST['significance'];
+            $status = $_POST['status'];
+            $id_team = intval($_POST['id_team']);
+            
+            file_put_contents('php_debug.log', "Données extraites : " . print_r(compact('name', 'description', 'deadline', 'start_date', 'significance', 'status', 'id_team'), true) . "\n", FILE_APPEND);
+            
+            // Création de la tâche
+            $data = $db->dbCreateTask($name, $description, $deadline, $start_date, $significance, $status, $id_team);
+            
+            if ($data) {
+                file_put_contents('php_debug.log', "Tâche créée avec succès\n", FILE_APPEND);
+            sendJsonData(['success' => true, 'message' => 'Tâche créée avec succès.', 'id_task' => $data], 201);
+            } else {
+                file_put_contents('php_debug.log', "Erreur lors de la création de la tâche\n", FILE_APPEND);
+                sendJsonData(['success' => false, 'message' => 'Erreur lors de la création de la tâche.'], 500);
+            }
+        break;
 
         case 'PUT':
             // Modification d'une tâche existante
@@ -345,6 +342,7 @@ if ($requestRessource == "task") {
             break;
 
         default:
+            echo "Méthode inconnue";
             sendError(501, 'Méthode non implémentée.');
             break;
     }
