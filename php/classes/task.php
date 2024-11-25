@@ -50,17 +50,25 @@ class Task extends Database {
      * @param  mixed $id Id de la tâche
      * @return void Résultat de la requête
      */
-    public function dbUpdateTask($name, $description, $deadline, $start_date, $significance, $status, $id) {
-        $query = 'UPDATE task SET name = :name, description = :description, deadline = :deadline, start_date = :start_date, significance = :significance, status = :status WHERE id = :id';
-        $params = array(
+    public function dbUpdateTask($id, $name, $description, $deadline, $start_date, $significance, $status) {
+        $query = 'UPDATE task
+                  SET name = :name, 
+                      description = :description, 
+                      deadline = :deadline, 
+                      start_date = :start_date, 
+                      significance = :significance, 
+                      status = :status
+                  WHERE id = :id';
+        $params = [
+            'id' => $id,
             'name' => $name,
             'description' => $description,
             'deadline' => $deadline,
             'start_date' => $start_date,
             'significance' => $significance,
             'status' => $status,
-            'id' => $id
-        );
+        ];
+    
         return $this->fetchRequest($query, $params);
     }
 

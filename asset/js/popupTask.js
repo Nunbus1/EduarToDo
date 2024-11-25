@@ -168,54 +168,69 @@ function enableDateInputs() {
 
 // Fonction pour fermer la popup
 function closePopup() {
+    if (isEditing) {
+        alert("Vous devez valider vos modifications avant de quitter la popup.");
+        return; // Empêche la fermeture
+    }
     popup.style.display = "none";
     overlay.style.display = "none";
+    loadTasksForTeam(); // Recharge les tâches après fermeture
 }
 // Ajouter un événement pour fermer la popup en cliquant sur l'overlay
 overlay.addEventListener("click", closePopup);
 
 
-// ------------ edit ---------------------------------//
+//------------------------- edit -------------------------------//
+
 const editButton = document.querySelector(".edit-btn");
-const deleteButton = document.querySelector(".delete-btn");
 const taskNameElement = document.querySelector(".taskName");
 const taskDescriptionElement = document.querySelector(".taskDescription p");
 const priorityInputs = document.querySelectorAll('input[name="priority"]');
-const statusRadios = document.querySelectorAll('.options input[type="radio"]');
+const statusRadios = document.querySelectorAll('.options input[name="status"]');
 const creationInput = document.querySelector("#creationInput");
 const deadlineInput = document.querySelector("#deadlineInput");
-
-// Fonction pour activer ou désactiver les champs d'édition
+let isEditing = false;
+/**
+ * Active ou désactive les champs d'édition.
+ * @param {boolean} enable - Si true, active les champs pour l'édition.
+ */
+// Modifier toggleEditing pour mettre à jour isEditing
 function toggleEditing(enable) {
-    // Activer ou désactiver l'édition du nom
+    isEditing = enable; // Met à jour l'état d'édition
     if (enable) {
-        const editableName = document.createElement("input");
-        editableName.type = "text";
-        editableName.value = taskNameElement.textContent;
-        editableName.className = "editable-name";
-        taskNameElement.replaceWith(editableName);
-    } else {
-        const currentNameInput = document.querySelector(".editable-name");
-        if (currentNameInput) {
-            const updatedName = document.createElement("div");
-            updatedName.className = "taskName";
-            updatedName.textContent = currentNameInput.value;
-            currentNameInput.replaceWith(updatedName);
+        // Activer l'édition pour le nom
+        const currentName = document.querySelector(".taskName");
+        if (currentName) {
+            const editableName = document.createElement("textarea");
+            editableName.className = "editable-name";
+            editableName.textContent = currentName.textContent; // Récupère le contenu actuel
+            currentName.replaceWith(editableName);
         }
-    }
 
-    // Activer ou désactiver l'édition de la description
-    if (enable) {
-        const editableDescription = document.createElement("textarea");
-        editableDescription.value = taskDescriptionElement.textContent;
-        editableDescription.className = "editable-description";
-        taskDescriptionElement.replaceWith(editableDescription);
+        // Activer l'édition pour la description
+        const currentDescription = document.querySelector(".taskDescription p");
+        if (currentDescription) {
+            const editableDescription = document.createElement("textarea");
+            editableDescription.className = "editable-description";
+            editableDescription.textContent = currentDescription.textContent; // Récupère le contenu actuel
+            currentDescription.replaceWith(editableDescription);
+        }
     } else {
-        const currentDescriptionTextarea = document.querySelector(".editable-description");
-        if (currentDescriptionTextarea) {
-            const updatedDescription = document.createElement("p");
-            updatedDescription.textContent = currentDescriptionTextarea.value;
-            taskDescriptionElement.replaceWith(updatedDescription);
+        // Désactiver l'édition pour le nom
+        const editableName = document.querySelector(".editable-name");
+        if (editableName) {
+            const currentName = document.createElement("div");
+            currentName.className = "taskName";
+            currentName.textContent = editableName.value; // Récupère la nouvelle valeur
+            editableName.replaceWith(currentName);
+        }
+
+        // Désactiver l'édition pour la description
+        const editableDescription = document.querySelector(".editable-description");
+        if (editableDescription) {
+            const currentDescription = document.createElement("p");
+            currentDescription.textContent = editableDescription.value; // Récupère la nouvelle valeur
+            editableDescription.replaceWith(currentDescription);
         }
     }
 
@@ -236,28 +251,54 @@ function toggleEditing(enable) {
 
 // Gestionnaire pour le bouton Edit
 editButton.addEventListener("click", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const taskId = urlParams.get("id"); // Récupération de l'ID depuis l'URL
+    if (!taskId) {
+        console.error("Impossible de récupérer l'ID de la tâche.");
+        return;
+    }
+
     if (editButton.textContent === "Edit") {
+        // Activer le mode édition
         toggleEditing(true);
-        editButton.textContent = "Validate"; // Change le bouton en "Validate"
+        editButton.textContent = "Validate";
     } else {
-        // Valider les modifications
+        // Récupérer les modifications et valider
         const updatedTask = {
-            name: document.querySelector(".editable-name").value,
-            description: document.querySelector(".editable-description").value,
-            priority: document.querySelector('input[name="priority"]:checked').value,
-            status: document.querySelector('input[name="status"]:checked').value,
-            creationDate: creationInput.value,
-            deadlineDate: deadlineInput.value,
+            id: taskId,
+            name: document.querySelector(".editable-name")?.value, // Récupère la valeur du textarea
+            description: document.querySelector(".editable-description")?.value, // Récupère la valeur du textarea
+            significance: document.querySelector('input[name="priority"]:checked')?.value,
+            status: document.querySelector('input[name="status"]:checked')?.value,
+            start_date: creationInput.value,
+            deadline: deadlineInput.value,
         };
+
+        // Validation des champs
+        if (!updatedTask.name || !updatedTask.description || !updatedTask.significance || !updatedTask.status) {
+            alert("Tous les champs doivent être remplis.");
+            return;
+        }
 
         console.log("Modifications validées :", updatedTask);
 
-        // Désactiver les champs d'édition
-        toggleEditing(false);
-        editButton.textContent = "Edit"; // Remet le bouton en "Edit"
+        // Envoi des modifications au backend via AJAX
+        ajaxRequest(
+            "PUT",
+            `../php/request.php/task/${taskId}`,
+            (response) => {
+                if (response && response.success) {
+                    console.log("Tâche mise à jour :", response.message);
 
-        // Vous pouvez maintenant envoyer les modifications au backend avec une requête AJAX si nécessaire
-        // Exemple :
-        // ajaxRequest("PUT", `../php/request.php/task/${taskId}`, handleResponse, JSON.stringify(updatedTask));
+                    // Désactiver les champs d'édition
+                    toggleEditing(false);
+                    editButton.textContent = "Edit";
+                    openPopup(taskId);
+                } else {
+                    console.error("Erreur lors de la mise à jour :", response?.message || "Aucune réponse.");
+                }
+            },
+            JSON.stringify(updatedTask)
+        );
     }
 });

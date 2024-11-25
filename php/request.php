@@ -321,34 +321,63 @@ if ($requestRessource == "task") {
         break;
 
         case 'PUT':
-            // Modification d'une tâche existante
-            parse_str(file_get_contents('php://input'), $_PUT);
-            if (!isset($_PUT['name']) || !isset($_PUT['description']) || !isset($_PUT['deadline']) ||
-                !isset($_PUT['start_date']) || !isset($_PUT['significance']) || !isset($_PUT['status']) || !isset($_PUT['id'])) {
+            // Récupération de l'ID de la tâche depuis l'URL
+            $path = $_SERVER['PATH_INFO'] ?? null;
+            if ($path) {
+                $parts = explode('/', trim($path, '/'));
+                $taskId = intval(end($parts)); // Récupère la dernière partie de l'URL comme ID de tâche
+            } else {
+                $taskId = null;
+            }
+        
+            // Lecture du corps de la requête et décodage JSON
+            $rawInput = file_get_contents('php://input');
+            //file_put_contents('php_debug.log', "Données brutes reçues : $rawInput\n", FILE_APPEND);
+        
+            $inputData = json_decode($rawInput, true);
+            if (!$inputData) {
+                sendError(400, 'Données JSON invalides.');
+                break;
+            }
+        
+            //file_put_contents('php_debug.log', "Données décodées : " . print_r($inputData, true) . "\n", FILE_APPEND);
+        
+            // Vérification des données reçues
+            if (!isset(
+                $inputData['name'],
+                $inputData['description'],
+                $inputData['deadline'],
+                $inputData['start_date'],
+                $inputData['significance'],
+                $inputData['status']
+            )) {
                 sendError(400, 'Données incomplètes pour modifier une tâche.');
                 break;
             }
-
-            $isUpdated = $db->dbUpdateTask(
-                $_PUT['name'],
-                $_PUT['description'],
-                $_PUT['deadline'],
-                $_PUT['start_date'],
-                $_PUT['significance'],
-                $_PUT['status'],
-                intval($_PUT['id'])
+        
+            // Mise à jour de la tâche dans la base de données
+            $data = $db->dbUpdateTask(
+                $taskId, // ID de la tâche
+                $inputData['name'],
+                $inputData['description'],
+                $inputData['deadline'],
+                $inputData['start_date'],
+                $inputData['significance'],
+                $inputData['status']
             );
-
-            if ($isUpdated) {
-                sendJsonData(['success' => true, 'message' => 'Tâche mise à jour avec succès.'], 200);
-            } else {
-                sendError(500, 'Erreur lors de la mise à jour de la tâche.');
-            }
+            
+            // Vérification du résultat et retour de la réponse
+            // if ($data) {
+            sendJsonData(['success' => true, 'message' => 'Tâche mise à jour avec succès.'], 200);
+            // } else {
+            //     file_put_contents('php_debug.log', "fail ");
+            //     sendError(500, 'Erreur lors de la mise à jour de la tâche.');
+            // }
             break;
 
             case 'DELETE':
                 // Log pour le débogage
-                file_put_contents('php_debug.log', "Requête DELETE reçue.\n", FILE_APPEND);
+                //file_put_contents('php_debug.log', "Requête DELETE reçue.\n", FILE_APPEND);
             
                 // Extraire l'ID de la tâche depuis l'URL
                 $path = $_SERVER['PATH_INFO'] ?? null;
@@ -360,22 +389,22 @@ if ($requestRessource == "task") {
                 }
             
                 if (!$taskId) {
-                    file_put_contents('php_debug.log', "Erreur : Aucun ID de tâche fourni.\n", FILE_APPEND);
+                    //file_put_contents('php_debug.log', "Erreur : Aucun ID de tâche fourni.\n", FILE_APPEND);
                     sendError(400, 'ID de tâche non fourni.');
                     break;
                 }
             
                 // Log l'ID de la tâche à supprimer
-                file_put_contents('php_debug.log', "ID de tâche à supprimer : $taskId\n", FILE_APPEND);
+                //file_put_contents('php_debug.log', "ID de tâche à supprimer : $taskId\n", FILE_APPEND);
             
                 // Appeler la méthode pour supprimer la tâche dans la base de données
                 $isDeleted = $db->dbDeleteTask($taskId);
             
                 if ($isDeleted) {
-                    file_put_contents('php_debug.log', "Tâche supprimée avec succès : $taskId\n", FILE_APPEND);
+                    //file_put_contents('php_debug.log', "Tâche supprimée avec succès : $taskId\n", FILE_APPEND);
                     sendJsonData(['success' => true, 'message' => "Tâche supprimée avec succès."], 200);
                 } else {
-                    file_put_contents('php_debug.log', "Erreur : Échec de la suppression de la tâche : $taskId\n", FILE_APPEND);
+                    //file_put_contents('php_debug.log', "Erreur : Échec de la suppression de la tâche : $taskId\n", FILE_APPEND);
                     sendError(500, 'Erreur lors de la suppression de la tâche.');
                 }
                 break;
