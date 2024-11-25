@@ -50,4 +50,18 @@ class Subtask extends Database{
         );
         return $this->fetchRequest($query, $params);
     }        
+
+    /**
+     * Méthode pour récupérer les informations d'une sous-tache dans la base de données
+     *
+     * @param  mixed $id Id de la sous-tache
+     * @return Array Array contenant les informations d'une sous-tache
+     */
+    public function dbInfoSubtaskFromTask($idTask){
+        $query = 'SELECT * FROM subtask WHERE id_task = :idTask';
+        $params = array(
+            'idTask' => $idTask
+        );
+        return $this->fetchRequest($query, $params);
+    }        
 }

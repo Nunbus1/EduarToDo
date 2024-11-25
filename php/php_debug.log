@@ -1,0 +1,30 @@
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+                VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => tet
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Queue
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+                VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => test
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Queue
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)

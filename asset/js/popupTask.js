@@ -9,9 +9,10 @@ function openPopup(taskId) {
     ajaxRequest("GET", "../php/request.php/task", (response) => {
         if (response && response.success) {
             const task = response.task;
+            const subtasks = response.subtasks;
 
             // Mise à jour des éléments de la popup
-            updatePopupContent(task);
+            updatePopupContent(task, subtasks);
             // Affiche la popup
             popup.style.display = "block";
             overlay.style.display = "block";
@@ -22,12 +23,12 @@ function openPopup(taskId) {
     }, data);
 }
 
-function updatePopupContent(task) {
+function updatePopupContent(task, subtasks) {
   
   // Mettre à jour le nom de la tâche
   const taskNameElement = popup.querySelector(".taskName");
   if (taskNameElement) {
-      taskNameElement.textContent = task[0].name || "Nom non défini";
+      taskNameElement.textContent = task[0].task_name || "Nom non défini";
 
       // Supprime les anciennes classes de priorité si elles existent
       taskNameElement.classList.forEach((cls) => {
@@ -41,10 +42,17 @@ function updatePopupContent(task) {
       taskNameElement.classList.add(priorityClass);
   }
 
+  // Mettre à jour le nom de la team
+  const teamName = popup.querySelector(".teamDescription strong");
+  if (teamName) teamName.textContent = task[0].team_name || "Aucun nom";
+
+  // Mettre à jour la description de la team
+  const teamDescription = popup.querySelector(".teamDescription p");
+  if (teamDescription) teamDescription.textContent = task[0].team_description || "Aucune description";
 
   // Mettre à jour la description
   const taskDescriptionElement = popup.querySelector(".taskDescription p");
-  if (taskDescriptionElement) taskDescriptionElement.textContent = task[0].description || "Aucune description.";
+  if (taskDescriptionElement) taskDescriptionElement.textContent = task[0].task_description || "Aucune description.";
 
   // Mettre à jour les dates
   const creationInput = popup.querySelector("#creationInput");
@@ -75,12 +83,12 @@ function updatePopupContent(task) {
   checklistContainer.innerHTML = ""; // Réinitialise la checklist
 
   // Vérifie si des subtasks existent
-  if (task[0].subtasks && Array.isArray(task[0].subtasks)) {
-      task.subtasks.forEach((subtask) => {
+  if (subtasks[0]) {
+      subtasks.forEach((subtask) => {
           const listItem = document.createElement("li");
           listItem.innerHTML = `
-              <input type="checkbox" class="check-item" ${subtask.status === "completed" ? "checked" : ""} />
-              <span class="check-text">${subtask.status === "completed" ? `<s>${subtask.name}</s>` : subtask.name}</span>
+              <input type="checkbox" class="check-item" ${subtask.status === 0 ? "checked" : ""} />
+              <span class="check-text">${subtask.status === 0 ? `<s>${subtask.name}</s>` : subtask.name}</span>
           `;
           checklistContainer.appendChild(listItem);
       });
