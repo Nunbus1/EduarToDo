@@ -30,7 +30,6 @@ function createTask(tasksContainer) {
     const significance = "Low"; // Exemple, vous pouvez demander une saisie utilisateur
     const status = tasksContainer.closest(".status").querySelector(".title-status").textContent.trim(); // Récupère le statut
     const id_team = 1; // À remplacer par un ID d'équipe dynamique si nécessaire
-    console.log(tasksContainer.closest(".status").querySelector(".title-status").textContent.trim());
     // Vérifiez les champs nécessaires
     if (!name || !description || !deadline || !start_date || !id_team) {
         alert("Tous les champs doivent être remplis !");

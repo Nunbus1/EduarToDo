@@ -23,7 +23,6 @@ function openPopup(taskId) {
 }
 
 function updatePopupContent(task) {
-  console.log("Données de la tâche reçues :", task[0].name);
   
   // Mettre à jour le nom de la tâche
   // Mettre à jour le nom de la tâche
@@ -96,6 +95,12 @@ function updatePopupContent(task) {
       emptyMessage.textContent = "Aucune sous-tâche disponible.";
       checklistContainer.appendChild(emptyMessage);
   }
+
+   // Activer le bouton "Delete"
+   const deleteButton = popup.querySelector(".delete-btn");
+   if (deleteButton) {
+       deleteButton.onclick = () => deleteTask(task[0].id);
+   }
 }
 
 
@@ -119,6 +124,28 @@ function attachTaskClickEvents() {
   });
 }
 
+function deleteTask(taskId) {
+  // Requête DELETE pour supprimer la tâche
+  
+  ajaxRequest("DELETE", `../php/request.php/task/${taskId}`, (response) => {
+      if (response && response.success) {
+          //console.log(`Tâche ${taskId} supprimée avec succès.`);
+          
+          // Supprimer la tâche de l'interface
+          const taskElement = document.querySelector(`.task[data-id="${taskId}"]`);
+          if (taskElement) {
+              taskElement.remove();
+          }
+
+          // Fermer la popup
+          closePopup();
+      } else {
+          console.error("Erreur lors de la suppression :", response?.message || "Aucune réponse.");
+          alert("Impossible de supprimer la tâche.");
+      }
+  });
+}
+
 /**
  * Met à jour l'URL avec l'ID de la tâche
  * @param {string} taskId - L'ID de la tâche à ajouter à l'URL
@@ -130,7 +157,7 @@ function updateURLWithTaskId(taskId) {
   const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
   history.pushState({ path: newUrl }, "", newUrl); // Met à jour l'URL sans recharger la page
 
-  console.log("URL mise à jour :", newUrl); // Debug pour vérifier l'URL
+  //console.log("URL mise à jour :", newUrl); // Debug pour vérifier l'URL
 }
 
 // Ajouter un événement pour fermer la popup en cliquant sur l'overlay

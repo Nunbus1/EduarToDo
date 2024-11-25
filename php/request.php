@@ -346,25 +346,42 @@ if ($requestRessource == "task") {
             }
             break;
 
-        case 'DELETE':
-            // Suppression d'une tâche
-            parse_str(file_get_contents('php://input'), $_DELETE);
-            if (!isset($_DELETE['id'])) {
-                sendError(400, 'ID de tâche non fourni.');
+            case 'DELETE':
+                // Log pour le débogage
+                file_put_contents('php_debug.log', "Requête DELETE reçue.\n", FILE_APPEND);
+            
+                // Extraire l'ID de la tâche depuis l'URL
+                $path = $_SERVER['PATH_INFO'] ?? null;
+                if ($path) {
+                    $parts = explode('/', trim($path, '/'));
+                    $taskId = intval(end($parts)); // Récupère la dernière partie de l'URL comme ID de tâche
+                } else {
+                    $taskId = null;
+                }
+            
+                if (!$taskId) {
+                    file_put_contents('php_debug.log', "Erreur : Aucun ID de tâche fourni.\n", FILE_APPEND);
+                    sendError(400, 'ID de tâche non fourni.');
+                    break;
+                }
+            
+                // Log l'ID de la tâche à supprimer
+                file_put_contents('php_debug.log', "ID de tâche à supprimer : $taskId\n", FILE_APPEND);
+            
+                // Appeler la méthode pour supprimer la tâche dans la base de données
+                $isDeleted = $db->dbDeleteTask($taskId);
+            
+                if ($isDeleted) {
+                    file_put_contents('php_debug.log', "Tâche supprimée avec succès : $taskId\n", FILE_APPEND);
+                    sendJsonData(['success' => true, 'message' => "Tâche supprimée avec succès."], 200);
+                } else {
+                    file_put_contents('php_debug.log', "Erreur : Échec de la suppression de la tâche : $taskId\n", FILE_APPEND);
+                    sendError(500, 'Erreur lors de la suppression de la tâche.');
+                }
                 break;
-            }
-
-            $isDeleted = $db->dbDeleteTask(intval($_DELETE['id']));
-
-            if ($isDeleted) {
-                sendJsonData(['success' => true, 'message' => 'Tâche supprimée avec succès.'], 200);
-            } else {
-                sendError(500, 'Erreur lors de la suppression de la tâche.');
-            }
-            break;
+            
 
         default:
-            echo "Méthode inconnue";
             sendError(501, 'Méthode non implémentée.');
             break;
     }

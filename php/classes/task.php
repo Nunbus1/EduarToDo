@@ -103,11 +103,14 @@ class Task extends Database {
      * @param  mixed $id Id de la tâche
      * @return void Résultat de la requête
      */
-    public function dbDeleteTask($id) {
+    public function dbDeleteTask($taskId) {
         $query = 'DELETE FROM task WHERE id = :id';
         $params = array(
-            'id' => $id
+            'id' => $taskId
         );
-        return $this->fetchRequest($query, $params);
+        $result = $this->fetchRequest($query, $params);
+    
+        // Vérifiez que la suppression a effectivement modifié la base
+        return $result !== false && $result > 0;
     }
 }
