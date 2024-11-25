@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduarToDO</title>
+
+    <!---------------------- CSS ---------------------->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css"/>
+
+    <link rel="stylesheet" href="../asset/css/body.css" />
+    <link rel="stylesheet" href="../asset/css/header.css" />
+    <link rel="stylesheet" href="../asset/css/main.css" />
+    <link rel="stylesheet" href="../asset/css/calender.css" />
+
+    <!---------------------- JS ---------------------->
+    <!-- JS: jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- JS: Moment.js (requis pour FullCalendar) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <!-- JS: FullCalendar -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
+
+    <script src="../asset/js/header.js" defer></script>
+    <script src="../asset/js/main.js" defer></script>
+    <script src="../asset/js/ajax.js" defer></script>
+    <script src="../asset/js/calender.js" defer></script>
+    <script src="../asset/js/script.js" defer></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="hour" id="hour">20:43</div>
+      <nav class="sidebar">
+        <button class="nav-button" data-section="dashboard">Dashboard</button>
+        <button class="nav-button" data-section="team">My Team</button>
+        <button class="nav-button" data-section="calendar">Calendar</button>
+        <button class="nav-button" data-section="profile">Profile</button>
+        <button class="nav-button" data-section="support">Support</button>
+      </nav>
+    </header>
+    <main>
+      <div class="title-bar">
+        <div class="date" id="date"></div>
+        <div class="search-container">
+          <input type="text" class="search" placeholder="Search" />
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Calendar Section -->
+        <div id="calendar-container">
+          <div id="calendar"></div>
+        </div>
+
+        <!-- Upcoming Tasks Section -->
+        <div id="upcoming-tasks">
+          <h3>Upcoming Tasks</h3>
+          
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -124,4 +124,9 @@ class Task extends Database {
         // Vérifiez que la suppression a effectivement modifié la base
         return $result !== false && $result > 0;
     }
+
+    public function dbGetAllTasks() {
+        $query = 'SELECT * FROM task';
+        return $this->fetchAllRequest($query); // fetchAllRequest exécute et retourne les résultats.
+    }
 }

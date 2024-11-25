@@ -280,6 +280,23 @@ if ($requestRessource == "task") {
                         }
                         break;
 
+                        case 'getAllTasks':
+                            // Log la requête pour debug
+                            //file_put_contents('php_debug.log', "Requête reçue : getAllTasks\n", FILE_APPEND);
+                        
+                            // Récupérer toutes les tâches
+                            $tasks = $db->dbGetAllTasks();
+                        
+                            // Log les résultats ou l'absence de résultats
+                            if ($tasks) {
+                                //file_put_contents('php_debug.log', "Tâches récupérées : " . print_r($tasks, true) . "\n", FILE_APPEND);
+                                sendJsonData(['success' => true, 'tasks' => $tasks], 200);
+                            } else {
+                                //file_put_contents('php_debug.log', "Aucune tâche trouvée.\n", FILE_APPEND);
+                                sendJsonData(['success' => false, 'message' => 'Aucune tâche trouvée.'], 404);
+                            }
+                            break;
+
                 default:
                     sendError(400, 'Action non reconnue.');
                     break;
