@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduarToDO</title>
+
+    <!---------------------- CSS ---------------------->
+    <link rel="stylesheet" href="../asset/css/body.css" />
+    <link rel="stylesheet" href="../asset/css/header.css" />
+    <link rel="stylesheet" href="../asset/css/main.css" />
+    <link rel="stylesheet" href="../asset/css/profile.css" />
+
+    <!---------------------- JS ---------------------->
+    <script src="../asset/js/header.js" defer></script>
+    <script src="../asset/js/main.js" defer></script>
+    <script src="../asset/js/ajax.js" defer></script>
+    <script src="../asset/js/script.js" defer></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="hour" id="hour">20:43</div>
+      <nav class="sidebar">
+        <button class="nav-button" data-section="dashboard">Dashboard</button>
+        <button class="nav-button" data-section="team">My Team</button>
+        <button class="nav-button" data-section="calendar">Calendar</button>
+        <button class="nav-button" data-section="profile">Profile</button>
+        <button class="nav-button" data-section="support">Support</button>
+      </nav>
+    </header>
+    <main>
+      <div class="title-bar">
+        <div class="date" id="date"></div>
+        <div class="search-container">
+          <input type="text" class="search" placeholder="Search" />
+        </div>
+      </div>
+      <!-- Profile Section -->
+      <div id="profile" class="profile-container">
+        <h1>Profile</h1>
+        <div class="profile-content">
+          <div class="profile-image">
+            <img src="../asset/img/cat.jpg" />
+          </div>
+          <div class="profile-form">
+            <div class="row">
+              <label for="first-name">First Name :</label>
+              <input type="text" id="first-name" placeholder="Enter First Name" />
+
+              <label for="last-name">Last Name :</label>
+              <input type="text" id="last-name" placeholder="Enter Last Name" />
+            </div>
+
+            <div class="row">
+              <label for="email">Email :</label>
+              <input type="email" id="email" placeholder="Enter Email" />
+
+              <label for="password">Password :</label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter Password"
+              />
+            </div>
+            <button class="logout-button">Log out</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

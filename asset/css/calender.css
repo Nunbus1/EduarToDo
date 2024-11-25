@@ -1,0 +1,57 @@
+#calendar {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 10px;
+  }
+
+  .main-content {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
+  
+  #calendar-container {
+    flex: 2;
+    margin-right: 3vw;
+    background-color: #fff;
+    border-radius: 10px;
+  }
+  
+  
+  #upcoming-tasks {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    /* padding-right: 2vw; */
+    width: 10vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #upcoming-tasks h3 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .task:last-child {
+    border-bottom: none;
+  }
+  
+  .task-date {
+    color: #555;
+    font-weight: bold;
+  }
+  
+  .task-name {
+    flex: 1;
+    text-align: right;
+    color: #333;
+  }

@@ -1,0 +1,197 @@
+Requête SQL : SELECT * FROM task
+Paramètres : 
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task
+Paramètres : 
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task WHERE id = :taskId
+Paramètres : Array
+(
+    [taskId] => 42
+)
+
+Requête exécutée avec succès.
+Requête SQL : UPDATE task
+                  SET name = :name, 
+                      description = :description, 
+                      deadline = :deadline, 
+                      start_date = :start_date, 
+                      significance = :significance, 
+                      status = :status
+                  WHERE id = :id
+Paramètres : Array
+(
+    [id] => 42
+    [name] => course mon reuf
+    [description] => ma super description
+    [deadline] => 2024-11-14
+    [start_date] => 2024-11-03
+    [significance] => Mid
+    [status] => In Queue
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task WHERE id = :taskId
+Paramètres : Array
+(
+    [taskId] => 42
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT task.id, task.name, task.description, task.deadline, task.start_date, task.significance, task.status 
+                  FROM task
+                  WHERE task.id_team = :teamId
+Paramètres : Array
+(
+    [teamId] => 1
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task WHERE id = :taskId
+Paramètres : Array
+(
+    [taskId] => 45
+)
+
+Requête exécutée avec succès.
+Requête SQL : UPDATE task
+                  SET name = :name, 
+                      description = :description, 
+                      deadline = :deadline, 
+                      start_date = :start_date, 
+                      significance = :significance, 
+                      status = :status
+                  WHERE id = :id
+Paramètres : Array
+(
+    [id] => 45
+    [name] => patate
+    [description] => une patate
+    [deadline] => 2024-11-09
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task WHERE id = :taskId
+Paramètres : Array
+(
+    [taskId] => 45
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT task.id, task.name, task.description, task.deadline, task.start_date, task.significance, task.status 
+                  FROM task
+                  WHERE task.id_team = :teamId
+Paramètres : Array
+(
+    [teamId] => 1
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task WHERE id = :taskId
+Paramètres : Array
+(
+    [taskId] => 1
+)
+
+Requête exécutée avec succès.
+Requête SQL : UPDATE task
+                  SET name = :name, 
+                      description = :description, 
+                      deadline = :deadline, 
+                      start_date = :start_date, 
+                      significance = :significance, 
+                      status = :status
+                  WHERE id = :id
+Paramètres : Array
+(
+    [id] => 1
+    [name] => manger
+    [description] => bah je dois manger parce que j ai faim
+    [deadline] => 2024-12-25
+    [start_date] => 2024-12-13
+    [significance] => Low
+    [status] => Done
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task WHERE id = :taskId
+Paramètres : Array
+(
+    [taskId] => 1
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT task.id, task.name, task.description, task.deadline, task.start_date, task.significance, task.status 
+                  FROM task
+                  WHERE task.id_team = :teamId
+Paramètres : Array
+(
+    [teamId] => 1
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task
+Paramètres : 
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task
+Paramètres : 
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task
+Paramètres : 
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task WHERE id = :taskId
+Paramètres : Array
+(
+    [taskId] => 45
+)
+
+Requête exécutée avec succès.
+Requête SQL : UPDATE task
+                  SET name = :name, 
+                      description = :description, 
+                      deadline = :deadline, 
+                      start_date = :start_date, 
+                      significance = :significance, 
+                      status = :status
+                  WHERE id = :id
+Paramètres : Array
+(
+    [id] => 45
+    [name] => patate
+    [description] => une patate
+    [deadline] => 2024-11-09
+    [start_date] => 2024-11-01
+    [significance] => High
+    [status] => In Progress
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task WHERE id = :taskId
+Paramètres : Array
+(
+    [taskId] => 45
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT task.id, task.name, task.description, task.deadline, task.start_date, task.significance, task.status 
+                  FROM task
+                  WHERE task.id_team = :teamId
+Paramètres : Array
+(
+    [teamId] => 1
+)
+
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task
+Paramètres : 
+Requête exécutée avec succès.
+Requête SQL : SELECT * FROM task WHERE id = :taskId
+Paramètres : Array
+(
+    [taskId] => 45
+)
+
+Requête exécutée avec succès.
