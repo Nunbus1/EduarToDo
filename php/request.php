@@ -19,7 +19,8 @@ $request = substr($_SERVER['PATH_INFO'], 1);
 $request = explode('/', $request);
 $requestRessource = array_shift($request);
 // $login = null;
-file_put_contents('C:/wamp64/www/EduarToDo/php/php_debug.log', "Méthode reçue : " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
+//file_put_contents('C:/wamp64/www/EduarToDo/php/php_debug.log', "Méthode reçue : " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
+
 // Vérification de l'utilisateur
 // if ($requestRessource == 'connexion') {
 //     $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
@@ -157,6 +158,24 @@ if ($requestRessource == "teams") {
 if ($requestRessource == "subtask") {
     $db = new Subtask(); // Création de l'objet Subtask qui contient les méthodes pour gérer les sous taches
     switch ($requestMethod) {
+        case 'GET':
+            case 'getSubtaskInfo':
+                // Vérification de l'ID de la sous-tâche
+                if (!isset($_GET['id'])) {
+                    sendError(400, 'Aucun ID de sous-tâche fourni.');
+                    break;
+                }
+            
+                $subtaskId = intval($_GET['id']);
+                $subtaskInfo = $db->dbInfoSubtask($subtaskId);
+            
+                if ($subtaskInfo) {
+                    sendJsonData(['success' => true, 'subtask' => $subtaskInfo], 200);
+                } else {
+                    sendJsonData(['success' => false, 'message' => 'Sous-tâche non trouvée.'], 404);
+                }
+                break;
+
         case 'POST':
             // Vérification qu'on est bien connecté
             // if (!checkVariable($login, 401)) 
@@ -242,22 +261,25 @@ if ($requestRessource == "task") {
                     }
                     break;
 
-                case 'getTaskInfo':
-                    // Récupération des informations d'une tâche spécifique via son ID
-                    if (!isset($_GET['id'])) {
-                        sendError(400, 'Aucun ID de tâche fourni.');
+                    case 'getTaskInfo':
+                        if (!isset($_GET['id'])) {
+                            sendError(400, 'Aucun ID de tâche fourni.');
+                            break;
+                        }
+                    
+                        $taskId = intval($_GET['id']);
+                        $taskInfo = $db->dbInfoTask($taskId);
+                    
+                        if ($taskInfo) {
+                            // Ajoute les sous-tâches associées à la tâche
+                            //$subtasks = $db->dbGetSubtasksByTaskId($taskId); // Assurez-vous que cette méthode existe
+                            //$taskInfo['subtasks'] = $subtasks;
+                    
+                            sendJsonData(['success' => true, 'task' => $taskInfo], 200);
+                        } else {
+                            sendJsonData(['success' => false, 'message' => 'Tâche non trouvée.'], 404);
+                        }
                         break;
-                    }
-
-                    $taskId = intval($_GET['id']);
-                    $taskInfo = $db->dbInfoTask($taskId);
-
-                    if ($taskInfo) {
-                        sendJsonData(['success' => true, 'task' => $taskInfo], 200);
-                    } else {
-                        sendJsonData(['success' => false, 'message' => 'Tâche non trouvée.'], 404);
-                    }
-                    break;
 
                 default:
                     sendError(400, 'Action non reconnue.');
@@ -266,11 +288,11 @@ if ($requestRessource == "task") {
             break;
 
         case 'POST':
-            file_put_contents('php_debug.log', "Données POST reçues : " . print_r($_POST, true) . "\n", FILE_APPEND);
+            //file_put_contents('php_debug.log', "Données POST reçues : " . print_r($_POST, true) . "\n", FILE_APPEND);
         
             // Vérification des données nécessaires
             if (!isset($_POST['name'], $_POST['description'], $_POST['deadline'], $_POST['start_date'], $_POST['significance'], $_POST['status'], $_POST['id_team'])) {
-                file_put_contents('php_debug.log', "Données POST manquantes\n", FILE_APPEND);
+                //file_put_contents('php_debug.log', "Données POST manquantes\n", FILE_APPEND);
                 sendJsonData(['success' => false, 'message' => 'Données de tâche incomplètes.'], 400);
                 break;
             }
@@ -284,16 +306,16 @@ if ($requestRessource == "task") {
             $status = $_POST['status'];
             $id_team = intval($_POST['id_team']);
             
-            file_put_contents('php_debug.log', "Données extraites : " . print_r(compact('name', 'description', 'deadline', 'start_date', 'significance', 'status', 'id_team'), true) . "\n", FILE_APPEND);
+            //file_put_contents('php_debug.log', "Données extraites : " . print_r(compact('name', 'description', 'deadline', 'start_date', 'significance', 'status', 'id_team'), true) . "\n", FILE_APPEND);
             
             // Création de la tâche
             $data = $db->dbCreateTask($name, $description, $deadline, $start_date, $significance, $status, $id_team);
             
             if ($data) {
-                file_put_contents('php_debug.log', "Tâche créée avec succès\n", FILE_APPEND);
-            sendJsonData(['success' => true, 'message' => 'Tâche créée avec succès.', 'id_task' => $data], 201);
+                //file_put_contents('php_debug.log', "Tâche créée avec succès\n", FILE_APPEND);
+                sendJsonData(['success' => true, 'message' => 'Tâche créée avec succès.', 'id_task' => $data], 201);
             } else {
-                file_put_contents('php_debug.log', "Erreur lors de la création de la tâche\n", FILE_APPEND);
+                //file_put_contents('php_debug.log', "Erreur lors de la création de la tâche\n", FILE_APPEND);
                 sendJsonData(['success' => false, 'message' => 'Erreur lors de la création de la tâche.'], 500);
             }
         break;

@@ -5,37 +5,37 @@ require_once('database.php');
 class Task extends Database {
 
     /**
- * Fonction pour créer une tâche dans la base de données
- *
- * @param string $name Nom de la tâche
- * @param string $description Description de la tâche
- * @param string $deadline Date limite
- * @param string $start_date Date de début
- * @param string $significance Importance
- * @param string $status Statut de la tâche
- * @param int $id_team ID de l'équipe associée
- * @return int|false L'ID de la tâche créée ou false en cas d'erreur
- */
-public function dbCreateTask($name, $description, $deadline, $start_date, $significance, $status, $id_team) {
-    $query = 'INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
-              VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)';
-    $params = array(
-        'name' => $name,
-        'description' => $description,
-        'deadline' => $deadline,
-        'start_date' => $start_date,
-        'significance' => $significance,
-        'status' => $status,
-        'id_team' => $id_team,
-    );
+     * Fonction pour créer une tâche dans la base de données
+     *
+     * @param string $name Nom de la tâche
+     * @param string $description Description de la tâche
+     * @param string $deadline Date limite
+     * @param string $start_date Date de début
+     * @param string $significance Importance
+     * @param string $status Statut de la tâche
+     * @param int $id_team ID de l'équipe associée
+     * @return int|false L'ID de la tâche créée ou false en cas d'erreur
+     */
+    public function dbCreateTask($name, $description, $deadline, $start_date, $significance, $status, $id_team) {
+        $query = 'INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+                VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)';
+        $params = array(
+            'name' => $name,
+            'description' => $description,
+            'deadline' => $deadline,
+            'start_date' => $start_date,
+            'significance' => $significance,
+            'status' => $status,
+            'id_team' => $id_team,
+        );
 
-    file_put_contents('php_debug.log', "Requête SQL : $query\nParamètres : " . print_r($params, true), FILE_APPEND);
+        file_put_contents('php_debug.log', "Requête SQL : $query\nParamètres : " . print_r($params, true), FILE_APPEND);
 
-    $result = $this->fetchRequest($query, $params);
-    file_put_contents('php_debug.log', "Résultat de la requête : " . print_r($result, true), FILE_APPEND);
+        $result = $this->fetchRequest($query, $params);
+        file_put_contents('php_debug.log', "Résultat de la requête : " . print_r($result, true), FILE_APPEND);
 
-    return $result;
-}
+        return $result;
+    }
 
 
     /**
@@ -70,14 +70,9 @@ public function dbCreateTask($name, $description, $deadline, $start_date, $signi
      * @param  mixed $id Id de la tâche
      * @return Array Array contenant les informations d'une tâche
      */
-    public function dbInfoTask($id) {
-        $query = 'SELECT task.name, task.description, task.deadline, task.start_date, task.significance, task.status, team.name AS team_name 
-                  FROM task
-                  JOIN team ON team.id = task.id_team 
-                  WHERE task.id = :id';
-        $params = array(
-            'id' => $id
-        );
+    public function dbInfoTask($taskId) {
+        $query = 'SELECT * FROM task WHERE id = :taskId';
+        $params = ['taskId' => $taskId];
         return $this->fetchRequest($query, $params);
     }
 

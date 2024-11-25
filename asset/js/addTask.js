@@ -28,7 +28,6 @@ function createTask(tasksContainer) {
     const deadline = "2024-12-31"; // Exemple, vous pouvez demander une date utilisateur
     const start_date = "2024-11-01"; // Exemple, à adapter
     const significance = "Low"; // Exemple, vous pouvez demander une saisie utilisateur
-    //const status = ""; // Exemple, peut être vide par défaut
     const status = tasksContainer.closest(".status").querySelector(".title-status").textContent.trim(); // Récupère le statut
     const id_team = 1; // À remplacer par un ID d'équipe dynamique si nécessaire
     console.log(tasksContainer.closest(".status").querySelector(".title-status").textContent.trim());

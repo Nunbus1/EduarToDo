@@ -17,6 +17,7 @@ function loadTasksForTeam() {
                 //console.log("Tâches chargées pour l'équipe :", response.tasks);
                 response.tasks.forEach((task) => displayTask(task)); // Affiche chaque tâche
                 initializeDragAndDrop();
+                attachTaskClickEvents();
             } else {
                 console.error("Erreur :", response.message);
             }
@@ -49,10 +50,11 @@ function displayTask(task) {
         return;
     }
 
-    // Crée un nouvel élément pour la tâche
+    // Crée un nouvel élément de tâche
     const newTaskElement = document.createElement("div");
     newTaskElement.className = "task";
     newTaskElement.setAttribute("draggable", "true");
+    newTaskElement.setAttribute("data-id", task.id); // Attribue l'ID de la tâche à l'élément
     newTaskElement.innerHTML = `
         <div class="upperInfo">
             ${task.name}
