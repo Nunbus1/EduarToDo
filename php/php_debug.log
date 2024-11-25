@@ -142,3 +142,18 @@ Résultat de la requête : Array
 Requête DELETE reçue.
 ID de tâche à supprimer : 39
 Tâche supprimée avec succès : 39
+Requête SQL : INSERT INTO task (name, description, deadline, start_date, significance, status, id_team)
+                VALUES (:name, :description, :deadline, :start_date, :significance, :status, :id_team)
+Paramètres : Array
+(
+    [name] => patate
+    [description] => Description par défaut de la tâche
+    [deadline] => 2024-12-31
+    [start_date] => 2024-11-01
+    [significance] => Low
+    [status] => In Progress
+    [id_team] => 1
+)
+Résultat de la requête : Array
+(
+)

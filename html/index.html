@@ -180,8 +180,8 @@
                   </div>
                   
                     <div class="taskOption">
-                      <input type="date" class="date-button creation" id="creationInput">
-                      <input type="date" class="date-button deadline" id="deadlineInput">
+                      <input type="date" class="date-button creation" id="creationInput" disabled>
+                      <input type="date" class="date-button deadline" id="deadlineInput" disabled>
                   </div>
               </div>
       
@@ -196,11 +196,11 @@
       
                   <h4>Status :</h4>
                   <div class="options">
-                      <label><input type="checkbox"> In Queue</label>
-                      <label><input type="checkbox"> In Progress</label>
-                      <label><input type="checkbox" checked> On Review</label>
-                      <label><input type="checkbox"> Done</label>
-                  </div>
+                    <label><input type="radio" name="status" value="In Queue"> In Queue</label>
+                    <label><input type="radio" name="status" value="In Progress"> In Progress</label>
+                    <label><input type="radio" name="status" value="On Review" checked> On Review</label>
+                    <label><input type="radio" name="status" value="Done"> Done</label>
+                </div>
       
                   <button class="edit-btn">Edit</button>
                   <button class="delete-btn">Delete</button>
