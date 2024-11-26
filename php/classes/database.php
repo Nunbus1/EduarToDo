@@ -34,45 +34,20 @@ class Database{
    * @return stmt Requête préparée
    */
   function request($query, $params = null)
-{
+  {
     if ($params != null) {
-        $params = $this->sanitize_params($params);
+      $params = $this->sanitize_params($params);
     }
 
     try {
-        // Log de la requête SQL et des paramètres
-        file_put_contents(
-            'php_debug.log',
-            "Requête SQL : $query\n" .
-            "Paramètres : " . print_r($params, true) . "\n",
-            FILE_APPEND
-        );
-
-        $stmt = $this->db->prepare($query);
-        $stmt->execute($params);
-
-        // Log si la requête s'exécute avec succès
-        file_put_contents(
-            'php_debug.log',
-            "Requête exécutée avec succès.\n",
-            FILE_APPEND
-        );
-
-        return $stmt;
+      $stmt = $this->db->prepare($query);
+      $stmt->execute($params);
+      return $stmt;
     } catch (PDOException $e) {
-        // Log détaillé de l'erreur SQL
-        file_put_contents(
-            'php_debug.log',
-            "Erreur requête SQL : " . $e->getMessage() . "\n" .
-            "Requête : $query\n" .
-            "Paramètres : " . print_r($params, true) . "\n",
-            FILE_APPEND
-        );
-
-        error_log('Erreur requête SQL: ' . $e->getMessage());
-        sendError(400, 'Erreur lors de l\'exécution de la requête SQL.');
+      error_log('Erreur requête SQL: ' . $e->getMessage());
+      sendError(400);
     }
-}
+  }
 
   /**
    * Méthode pour faire une requête qui retourne plusieurs données
