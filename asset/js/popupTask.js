@@ -166,16 +166,7 @@ function enableDateInputs() {
 }
 
 
-// Fonction pour fermer la popup
-function closePopup() {
-    if (isEditing) {
-        alert("Vous devez valider vos modifications avant de quitter la popup.");
-        return; // Empêche la fermeture
-    }
-    popup.style.display = "none";
-    overlay.style.display = "none";
-    loadTasksForTeam(); // Recharge les tâches après fermeture
-}
+
 // Ajouter un événement pour fermer la popup en cliquant sur l'overlay
 overlay.addEventListener("click", closePopup);
 

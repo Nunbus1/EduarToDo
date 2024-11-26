@@ -1,57 +1,92 @@
 #calendar {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 0 10px;
-  }
+    max-width: 37.5rem;
+    margin: 4vh auto;
+    padding: 0 0.625rem;
+}
 
-  .main-content {
+.main-content {
     display: flex;
     justify-content: space-between;
     padding-left: 2vw;
     padding-right: 2vw;
-  }
-  
-  #calendar-container {
+}
+
+#calendar-container {
     flex: 2;
     margin-right: 3vw;
     background-color: #fff;
-    border-radius: 10px;
-  }
-  
-  
-  #upcoming-tasks {
+    border-radius: 0.625rem;
+}
+
+#upcoming-tasks {
     flex: 1;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    /* padding-right: 2vw; */
+    border: 0.063rem solid #ddd;
+    border-radius: 0.313rem;
     width: 10vw;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  #upcoming-tasks h3 {
+    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
+    max-height: 80vh; /* Limite la hauteur de la section */
+    display: flex;
+    flex-direction: column;
+}
+
+#upcoming-tasks h3 {
     text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .task {
+    margin: 1vh 0;
+    padding: 1vh 0;
+    border-bottom: 0.063rem solid #ddd; /* Ligne de séparation */
+    position: sticky;
+    top: 0; /* Fixe le titre en haut */
+    z-index: 10; /* Assure que le titre reste au-dessus du contenu */
+}
+
+
+#upcoming-task-container {
+    flex: 1;
+    overflow-y: auto; /* Active le défilement vertical pour les tâches */
+    scrollbar-width: none; /* Masque la barre de défilement sur Firefox */
+}
+
+#upcoming-task-container::-webkit-scrollbar {
+    display: none; /* Masque la barre de défilement sur Chrome/Safari */
+}
+
+
+.upcoming-task {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    border: 0.063rem solid #ddd;
+    width: 80%;
+    border-radius: 0.625rem;
+    margin-bottom: 2vh;
+    margin-left: 1vw;
+    padding: 1vw;
+    box-shadow: 0 0.125rem 0.313rem rgba(0, 0, 0, 0.1);
+}
+
+.upcoming-task .task-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .task:last-child {
-    border-bottom: none;
-  }
-  
-  .task-date {
-    color: #555;
+    margin-bottom: 0.313rem;
+}
+
+.upcoming-task .task-circle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-right: 0.625rem;
+}
+
+.upcoming-task .task-name {
+    font-size: 0.875rem;
     font-weight: bold;
-  }
-  
-  .task-name {
-    flex: 1;
-    text-align: right;
     color: #333;
-  }
+}
+
+.upcoming-task span {
+    font-size: 0.75rem;
+    color: #888;
+}

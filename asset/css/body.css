@@ -15,3 +15,30 @@ body {
     --priority-mid: #ffa500; /* Orange pour Mid */
     --priority-low: #4caf50; /* Vert pour Low */
 }
+
+.priority-High {
+    background-color: var(--priority-high);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+  
+  .priority-Mid {
+    background-color: var(--priority-mid);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+  
+  .priority-Low {
+    background-color: var(--priority-low);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }

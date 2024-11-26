@@ -89,7 +89,7 @@ function dragDrop(event) {
                         status: newStatus,
                         start_date: task[0].start_date,
                         deadline: task[0].deadline,
-                    };                    
+                    };
                     console.log(updatedTask);
                     
                     // Envoyer la mise à jour via PUT

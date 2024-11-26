@@ -2,17 +2,17 @@
 function loadAllTasks() {
     ajaxRequest('GET', '../php/request.php/task', (response) => {
         if (response && response.success) {
-            // Mappez les tâches reçues au format requis par FullCalendar
             const tasks = response.tasks.map(task => ({
-                id: task.id, // Assurez-vous que l'ID de la tâche est inclus
+                id: task.id,
                 title: task.name,
                 start: task.start_date,
                 end: addOneDay(task.deadline),
-                color: getTaskColor(task.significance), // Déterminez une couleur selon le statut (optionnel)
+                color: getTaskColor(task.significance),
             }));
 
-            // Initialiser ou mettre à jour le calendrier
             initializeCalendar(tasks);
+            displayUpcomingTasks(tasks);
+            attachTaskClickEvents();
         } else {
             console.error('Erreur lors du chargement des tâches : ', response.message);
         }},
@@ -22,47 +22,42 @@ function loadAllTasks() {
 
 // Fonction pour ajouter un jour à une date
 function addOneDay(date) {
-    if (!date) return null; // Si pas de date, retourne null
+    if (!date) return null;
     const d = new Date(date);
-    d.setDate(d.getDate() + 1); // Ajoute un jour
-    return d.toISOString().split('T')[0]; // Retourne en format 'YYYY-MM-DD'
+    d.setDate(d.getDate() + 1);
+    return d.toISOString().split('T')[0];
 }
 
 function lessOneDay(date) {
-    if (!date) return null; // Si pas de date, retourne null
+    if (!date) return null;
     const d = new Date(date);
-    d.setDate(d.getDate() - 1); // Ajoute un jour
-    return d.toISOString().split('T')[0]; // Retourne en format 'YYYY-MM-DD'
+    d.setDate(d.getDate() - 1);
+    return d.toISOString().split('T')[0];
 }
 
 // Fonction pour initialiser ou mettre à jour le calendrier
 function initializeCalendar(tasks) {
-    // Si le calendrier existe déjà, détruisez-le avant de le recréer
     if ($('#calendar').length > 0 && $('#calendar').fullCalendar) {
         $('#calendar').fullCalendar('destroy');
     }
 
-    // Initialisation du calendrier avec les tâches
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,basicWeek,basicDay',
         },
-        defaultDate: new Date(), // Date par défaut : aujourd'hui
+        defaultDate: new Date(),
         editable: true,
-        eventLimit: true, // Affiche un "plus" si trop d'événements dans un jour
-        events: tasks, // Liste des tâches
+        eventLimit: true,
+        events: tasks,
         eventClick: function (event) {
-            // Exemple de gestion du clic sur un événement
             alert(`Tâche : ${event.title}\nDébut : ${event.start.format('YYYY-MM-DD')}\nFin : ${event.end ? event.end.format('YYYY-MM-DD') : 'Non définie'}`);
         },
         eventDrop: function (event, delta, revertFunc) {
-            // Gestion du déplacement des tâches
             updateTaskDates(event, revertFunc);
         },
         eventResize: function (event, delta, revertFunc) {
-            // Gestion du redimensionnement des tâches
             updateTaskDates(event, revertFunc);
         },
     });
@@ -84,32 +79,82 @@ function getTaskColor(priority) {
 
 // Fonction pour mettre à jour les dates de début et de fin dans la base de données
 function updateTaskDates(event, revertFunc) {
-    
-    // Étape 1 : Récupérer les détails de la tâche via un GET
+
     ajaxRequest('GET', `../php/request.php/task`, (response) => {
         if (response && response.success) {
-            const task = response.task; // Détails complets de la tâche récupérés
+            const task = response.task; 
             
-            // Mise à jour des nouvelles dates
             task[0].start_date = event.start.format('YYYY-MM-DD');
             task[0].deadline = lessOneDay(event.end.format('YYYY-MM-DD'));
             
-            // Étape 2 : Envoyer les données mises à jour via un PUT
             ajaxRequest('PUT', `../php/request.php/task/${task[0].id}`, (updateResponse) => {
                 if (updateResponse && updateResponse.success) {
-                    //console.log(`Tâche mise à jour avec succès : ID ${task[0].id}`);
+                    loadAllTasks();
                 } else {
                     console.error('Erreur lors de la mise à jour de la tâche : ', updateResponse?.message || 'Aucune réponse.');
                     alert('Erreur lors de la mise à jour des dates. Annulation...');
-                    revertFunc(); // Annuler le déplacement en cas d'erreur
+                    revertFunc(); 
                 }
             }, JSON.stringify(task[0]));
         } else {
             console.error('Erreur lors de la récupération des détails de la tâche : ', response?.message || 'Aucune réponse.');
             alert('Impossible de récupérer les détails de la tâche. Annulation...');
-            revertFunc(); // Annuler le déplacement en cas d'erreur
+            revertFunc(); 
         }
     }, `resource=task&action=getTaskInfo&id=${event.id}`);
+}
+
+function displayUpcomingTasks(tasks) {
+    // Trier les tâches par date de deadline
+    const sortedTasks = tasks.sort((a, b) => new Date(a.end) - new Date(b.end));
+
+    // Sélectionner l'élément contenant les tâches
+    const upcomingTasksContainer = document.getElementById("upcoming-task-container");
+    upcomingTasksContainer.innerHTML = ''; // Réinitialiser le contenu
+
+    // Générer le HTML pour chaque tâche triée
+    sortedTasks.forEach((task) => {
+        
+        const taskElement = document.createElement("div");
+        taskElement.setAttribute("data-id", task.id);
+        taskElement.className = "task";
+        taskElement.classList.add("upcoming-task");
+        taskElement.style.borderLeft = `1vw solid ${task.color}`; // Couleur selon la priorité
+        taskElement.style.backgroundColor =hexToRGBA(task.color, 0.6);
+        taskElement.innerHTML = `
+            <div class="task-header">
+                <div class="task-circle"></div>
+                <span>${task.end}</span>
+            </div>
+            <div class="task-body">
+                <p class="task-name">${task.title}</p>
+            </div>
+        `;
+        upcomingTasksContainer.appendChild(taskElement);
+    });
+}
+
+function hexToRGBA(hex, opacity = 0.2) {
+    // Supprime le `#` s'il est présent
+    hex = hex.replace('#', '');
+    
+    // Convertit le hex en RGB
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+}
+
+// Fonction pour fermer la popup
+function closePopup() {
+    if (isEditing) {
+        alert("Vous devez valider vos modifications avant de quitter la popup.");
+        return; // Empêche la fermeture
+    }
+    popup.style.display = "none";
+    overlay.style.display = "none";
+    loadAllTasks(); // Recharge les tâches après fermeture
 }
 
 // Charger toutes les tâches une fois le DOM prêt

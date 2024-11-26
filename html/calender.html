@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../asset/css/header.css" />
     <link rel="stylesheet" href="../asset/css/main.css" />
     <link rel="stylesheet" href="../asset/css/calender.css" />
+    <link rel="stylesheet" href="../asset/css/popupTask.css" />
 
     <!---------------------- JS ---------------------->
     <!-- JS: jQuery -->
@@ -28,6 +29,7 @@
     <script src="../asset/js/main.js" defer></script>
     <script src="../asset/js/ajax.js" defer></script>
     <script src="../asset/js/calender.js" defer></script>
+    <script src="../asset/js/popupTask.js" defer></script>
     <script src="../asset/js/script.js" defer></script>
   </head>
   <body>
@@ -59,9 +61,75 @@
         <!-- Upcoming Tasks Section -->
         <div id="upcoming-tasks">
           <h3>Upcoming Tasks</h3>
-          
+          <div id="upcoming-task-container">
+            
+          </div>
         </div>
       </div>
+
+      <div class="popup-overlay"></div>
+
+      <div class="popup-overlay" onclick="closePopup()"></div>
+
+      <div class="popup">
+        <!-- Section Equipe -->
+         <!-- Bouton de fermeture -->
+        <button class="close-btn" onclick="closePopup()">X</button>
+        <div class="popupteam">
+            <div class="teamPicture"></div>
+            <div class="teamDescription">
+                <strong>Team Name</strong>
+                <p>Team description lorem</p>
+            </div>
+        </div>
+        
+        <!-- Section Tâche -->
+        <div class="popuptask">
+            <div class="TaskInfo">
+                <div class="taskName"></div>
+                <div class="Task-Desc-Checklist">
+                    <div class="taskDescription">
+                        <h4>Task Description</h4>
+                        <p>Description de la tâche</p>
+                    </div>
+                    <div class="taskChecklist">
+                        <h4>Checklist</h4>
+                        <ul>
+                          <li><input type="checkbox" class="check-item" /> <span class="check-text">little task 1</span></li>
+                          <li><input type="checkbox" class="check-item" checked /> <span class="check-text"><s>little task 2</s></span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                  <div class="taskOption">
+                    <input type="date" class="date-button creation" id="creationInput" disabled>
+                    <input type="date" class="date-button deadline" id="deadlineInput" disabled>
+                </div>
+            </div>
+    
+            <!-- Section Priorité et Statut -->
+            <div class="priority-status">
+              <h4>Priority:</h4>
+              <div class="options">
+                  <label><input type="radio" name="priority" value="Low"> Low</label>
+                  <label><input type="radio" name="priority" value="Mid"> Mid</label>
+                  <label><input type="radio" name="priority" value="High" checked> High</label>
+              </div>
+    
+                <h4>Status :</h4>
+                <div class="options">
+                  <label><input type="radio" name="status" value="In Queue"> In Queue</label>
+                  <label><input type="radio" name="status" value="In Progress"> In Progress</label>
+                  <label><input type="radio" name="status" value="On Review" checked> On Review</label>
+                  <label><input type="radio" name="status" value="Done"> Done</label>
+              </div>
+    
+                <button class="edit-btn">Edit</button>
+                <button class="delete-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+
     </main>
   </body>
 </html>

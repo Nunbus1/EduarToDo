@@ -100,5 +100,16 @@ function getTeamFromURL() {
     return params.get('teamId'); // Renvoie l'ID de l'équipe
 }
 
+// Fonction pour fermer la popup
+function closePopup() {
+    if (isEditing) {
+        alert("Vous devez valider vos modifications avant de quitter la popup.");
+        return; // Empêche la fermeture
+    }
+    popup.style.display = "none";
+    overlay.style.display = "none";
+    loadTasksForTeam(); // Recharge les tâches après fermeture
+}
+
 // Charge les tâches dès que la page est prête
 document.addEventListener("DOMContentLoaded", loadTasksForTeam);
