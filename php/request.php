@@ -351,19 +351,19 @@ if ($requestRessource == "task") {
             // Lecture du corps de la requête et décodage JSON
             $rawInput = file_get_contents('php://input');
             //file_put_contents('php_debug.log', "Données brutes reçues : $rawInput\n", FILE_APPEND);
-            
+        
             $inputData = json_decode($rawInput, true);
             if (!$inputData) {
                 sendError(400, 'Données JSON invalides.');
                 break;
             }
-            
+        
             //file_put_contents('php_debug.log', "Données décodées : " . print_r($inputData, true) . "\n", FILE_APPEND);
-            
+        
             // Vérification des données reçues
             if (!isset(
-                $inputData['task_name'],
-                $inputData['task_description'],
+                $inputData['name'],
+                $inputData['description'],
                 $inputData['deadline'],
                 $inputData['start_date'],
                 $inputData['significance'],
@@ -372,12 +372,12 @@ if ($requestRessource == "task") {
                 sendError(400, 'Données incomplètes pour modifier une tâche.');
                 break;
             }
-            
+        
             // Mise à jour de la tâche dans la base de données
             $data = $db->dbUpdateTask(
                 $taskId, // ID de la tâche
-                $inputData['task_name'],
-                $inputData['task_description'],
+                $inputData['name'],
+                $inputData['description'],
                 $inputData['deadline'],
                 $inputData['start_date'],
                 $inputData['significance'],
