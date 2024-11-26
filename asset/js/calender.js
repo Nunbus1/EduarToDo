@@ -92,10 +92,7 @@ function updateTaskDates(event, revertFunc) {
             
             // Mise à jour des nouvelles dates
             task[0].start_date = event.start.format('YYYY-MM-DD');
-            
             task[0].deadline = lessOneDay(event.end.format('YYYY-MM-DD'));
-            console.log("date calender", event.end.format('YYYY-MM-DD'));
-            console.log("date bdd",task[0].deadline);
             
             // Étape 2 : Envoyer les données mises à jour via un PUT
             ajaxRequest('PUT', `../php/request.php/task/${task[0].id}`, (updateResponse) => {
