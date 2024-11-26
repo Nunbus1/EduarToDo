@@ -82,12 +82,19 @@ function updateTaskDates(event, revertFunc) {
 
     ajaxRequest('GET', `../php/request.php/task`, (response) => {
         if (response && response.success) {
-            const task = response.task; 
+            const task = response.task;
             
-            task[0].start_date = event.start.format('YYYY-MM-DD');
-            task[0].deadline = lessOneDay(event.end.format('YYYY-MM-DD'));
+            const updatedTask = {
+                id: task[0].id,
+                name: task[0].task_name,
+                description: task[0].task_description,
+                significance: task[0].significance,
+                status: task[0].status,
+                start_date: event.start.format('YYYY-MM-DD'),
+                deadline: lessOneDay(event.end.format('YYYY-MM-DD')),
+            };
             
-            ajaxRequest('PUT', `../php/request.php/task/${task[0].id}`, (updateResponse) => {
+            ajaxRequest('PUT', `../php/request.php/task/${updatedTask.id}`, (updateResponse) => {
                 if (updateResponse && updateResponse.success) {
                     loadAllTasks();
                 } else {
@@ -95,7 +102,7 @@ function updateTaskDates(event, revertFunc) {
                     alert('Erreur lors de la mise à jour des dates. Annulation...');
                     revertFunc(); 
                 }
-            }, JSON.stringify(task[0]));
+            }, JSON.stringify(updatedTask));
         } else {
             console.error('Erreur lors de la récupération des détails de la tâche : ', response?.message || 'Aucune réponse.');
             alert('Impossible de récupérer les détails de la tâche. Annulation...');
