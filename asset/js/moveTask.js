@@ -79,12 +79,13 @@ function dragDrop(event) {
             (response) => {
                 if (response && response.success) {
                     const task = response.task;
+                    const subtasks = response.subtasks;
 
                     // Mettre à jour uniquement le statut
                     const updatedTask = {
                         id: task[0].id,
-                        name: task[0].name,
-                        description: task[0].description,
+                        name: task[0].task_name,
+                        description: task[0].task_description,
                         significance: task[0].significance,
                         status: newStatus,
                         start_date: task[0].start_date,

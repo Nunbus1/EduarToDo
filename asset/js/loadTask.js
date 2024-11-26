@@ -18,6 +18,7 @@ function loadTasksForTeam() {
                 response.tasks.forEach((task) => displayTask(task)); // Affiche chaque tâche
                 initializeDragAndDrop();
                 attachTaskClickEvents();
+                displayTeamName(response.team);
             } else {
                 console.error("Erreur :", response.message);
             }
@@ -31,6 +32,11 @@ function clearTasks() {
     tasksContainers.forEach((container) => {
         container.innerHTML = "";
     });
+}
+
+function displayTeamName(team){
+    const teamName = document.querySelector(".team-name");
+    teamName.textContent = team;
 }
 
 function displayTask(task) {
@@ -55,6 +61,7 @@ function displayTask(task) {
     newTaskElement.className = "task";
     newTaskElement.setAttribute("draggable", "true");
     newTaskElement.setAttribute("data-id", task.id); // Attribue l'ID de la tâche à l'élément
+    console.log(task);
     newTaskElement.innerHTML = `
         <div class="upperInfo">
             ${task.name}
@@ -69,7 +76,7 @@ function displayTask(task) {
             <div class="deadline-display">${task.deadline}</div>
             <div class="checkList">
                 <img src="../asset/svg/Union.svg" alt="Options Icon" />
-                0/0
+                ${task.nb_subtask_finish}/${task.nb_subtask}
             </div>
         </div>
     `;
