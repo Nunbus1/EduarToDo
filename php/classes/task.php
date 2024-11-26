@@ -79,9 +79,7 @@ class Task extends Database {
      * @return Array Array contenant les informations d'une tâche
      */
     public function dbInfoTask($taskId) {
-        $query = 'SELECT task.id, task.name AS task_name, task.description AS task_description, task.deadline, task.start_date, task.significance, task.status, team.name AS team_name, team.description AS team_description FROM task 
-                    JOIN team ON team.id = task.id_team
-                    WHERE task.id = :taskId';
+        $query = 'SELECT * FROM task WHERE id = :taskId';
         $params = ['taskId' => $taskId];
         return $this->fetchRequest($query, $params);
     }
@@ -94,9 +92,8 @@ class Task extends Database {
      */
     public function dbGetTasksByTeamId($teamId){
 
-        $query = 'SELECT task.id, task.name, task.description, task.deadline, task.start_date, task.significance, task.status, team.name AS team_name 
+        $query = 'SELECT task.id, task.name, task.description, task.deadline, task.start_date, task.significance, task.status 
                   FROM task
-                  JOIN team ON team.id = task.id_team
                   WHERE task.id_team = :teamId';
 
         $params = array(
