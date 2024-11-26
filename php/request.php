@@ -235,14 +235,13 @@ if ($requestRessource == "part_of") {
 
 if ($requestRessource == "task") {
     $db = new Task(); // Création de l'objet Task qui contient les méthodes pour gérer les tâches
-
+    $sub = new Subtask();
     switch ($requestMethod) {
         case 'GET':
             if (!isset($_GET['action'])) {
                 sendError(400, 'Action non spécifiée.');
                 break;
             }
-
             switch ($_GET['action']) {
                 case 'getTasks':
                     // Récupération des tâches d'une équipe via l'ID de la team
@@ -261,21 +260,21 @@ if ($requestRessource == "task") {
                     }
                     break;
 
-                    case 'getTaskInfo':
+                    case 'getTaskInfo':   
                         if (!isset($_GET['id'])) {
                             sendError(400, 'Aucun ID de tâche fourni.');
                             break;
                         }
-                    
                         $taskId = intval($_GET['id']);
                         $taskInfo = $db->dbInfoTask($taskId);
-                    
+                        $subtaskInfo = $sub->dbInfoSubtaskFromTask($taskId);
+                        
                         if ($taskInfo) {
                             // Ajoute les sous-tâches associées à la tâche
                             //$subtasks = $db->dbGetSubtasksByTaskId($taskId); // Assurez-vous que cette méthode existe
                             //$taskInfo['subtasks'] = $subtasks;
                     
-                            sendJsonData(['success' => true, 'task' => $taskInfo], 200);
+                            sendJsonData(['success' => true, 'task' => $taskInfo, 'subtasks' => $subtaskInfo], 200);
                         } else {
                             sendJsonData(['success' => false, 'message' => 'Tâche non trouvée.'], 404);
                         }
