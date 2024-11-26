@@ -4,7 +4,7 @@ function loadAllTasks() {
         if (response && response.success) {
             const tasks = response.tasks.map(task => ({
                 id: task.id,
-                title: task.name,
+                title: task.task_name,
                 start: task.start_date,
                 end: addOneDay(task.deadline),
                 color: getTaskColor(task.significance),
