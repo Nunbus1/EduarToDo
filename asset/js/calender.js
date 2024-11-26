@@ -52,7 +52,7 @@ function initializeCalendar(tasks) {
         eventLimit: true,
         events: tasks,
         eventClick: function (event) {
-            alert(`Tâche : ${event.title}\nDébut : ${event.start.format('YYYY-MM-DD')}\nFin : ${event.end ? event.end.format('YYYY-MM-DD') : 'Non définie'}`);
+            alert(`Tâche : ${event.title}\nDébut : ${event.start.format('YYYY-MM-DD')}\nFin : ${lessOneDay(event.end.format('YYYY-MM-DD'))}`);
         },
         eventDrop: function (event, delta, revertFunc) {
             updateTaskDates(event, revertFunc);
