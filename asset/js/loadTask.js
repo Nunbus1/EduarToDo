@@ -6,14 +6,16 @@ function loadTasksForTeam() {
         return;
     }
     clearTasks();
-
-
+    //console.log(teamId);
+    
     // Utilisation de ajaxRequest
     ajaxRequest(
         'GET', // Type de requête
         "../php/request.php/task", // URL de l'API
         (response) => { // Callback pour traiter la réponse
             if (response.success) {
+                //console.log(response.tasks);
+                
                 //console.log("Tâches chargées pour l'équipe :", response.tasks);
                 response.tasks.forEach((task) => displayTask(task)); // Affiche chaque tâche
                 initializeDragAndDrop();
@@ -61,7 +63,7 @@ function displayTask(task) {
     newTaskElement.className = "task";
     newTaskElement.setAttribute("draggable", "true");
     newTaskElement.setAttribute("data-id", task.id); // Attribue l'ID de la tâche à l'élément
-    console.log(task);
+    //console.log(task);
     newTaskElement.innerHTML = `
         <div class="upperInfo">
             ${task.name}
@@ -99,11 +101,13 @@ function updateTeamInURL(teamId) {
 // Appelle cette fonction lors du chargement de la page ou quand la team change
 document.addEventListener("DOMContentLoaded", () => {
     //const activeTeamId = 1;
-    updateTeamInURL(activeTeamId);
+    //updateTeamInURL(activeTeamId);
 });
 
 function getTeamFromURL() {
     const params = new URLSearchParams(window.location.search);
+    //console.log(params.get('teamId'));
+    
     return params.get('teamId'); // Renvoie l'ID de l'équipe
 }
 
