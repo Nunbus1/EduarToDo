@@ -98,7 +98,7 @@ function updateTeamInURL(teamId) {
 
 // Appelle cette fonction lors du chargement de la page ou quand la team change
 document.addEventListener("DOMContentLoaded", () => {
-    const activeTeamId = 1; // Remplace par une méthode pour récupérer dynamiquement l'ID de la team
+    //const activeTeamId = 1;
     updateTeamInURL(activeTeamId);
 });
 

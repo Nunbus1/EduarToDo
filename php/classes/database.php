@@ -92,13 +92,31 @@ class Database{
     }
     return $params;
   }
-  public function testConnection() {
+
+    public function testConnection() {
+      try {
+          $this->getPDO(); // Supposons que votre méthode interne retourne un objet PDO
+          echo "Connexion réussie à la base de données via database.php !";
+      } catch (PDOException $e) {
+          echo "Erreur de connexion : " . $e->getMessage();
+      }
+  }
+
+  public function lastInsertId() {
     try {
-        $this->getPDO(); // Supposons que votre méthode interne retourne un objet PDO
-        echo "Connexion réussie à la base de données via database.php !";
+        // Récupère l'ID de la dernière insertion
+        $lastId = $this->db->lastInsertId();
+        
+        // Log de l'ID récupéré
+        file_put_contents('php_debug.log', "Dernier ID inséré : $lastId\n", FILE_APPEND);
+
+        return $lastId;
     } catch (PDOException $e) {
-        echo "Erreur de connexion : " . $e->getMessage();
+        // Log de l'erreur
+        file_put_contents('php_debug.log', "Erreur lors de la récupération du dernier ID inséré : " . $e->getMessage() . "\n", FILE_APPEND);
+        return null; // Retourne null en cas d'erreur
     }
-}
+  }
 
 }
+

@@ -11,6 +11,7 @@ class Team extends Database{
      * @return String Id de la tache créée
      */
     public function dbCreateTeam($name, $description){
+        
         $query = 'INSERT INTO team (name, description) VALUES (:name, :description)';
         $params = array(
             'name' => $name,

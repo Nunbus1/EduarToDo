@@ -118,26 +118,70 @@ if ($requestRessource == "teams") {
     $team = new Team();
     switch ($requestMethod) {
         case 'GET':
+            // Debugging - Log initial de la requête
+            //file_put_contents('php_debug.log', "Requête GET reçue\n", FILE_APPEND);
+        
             // Vérification qu'on est bien connecté
-            // if (!checkVariable($_GET['mail'], 401)) 
-            //     break;
-            
+            if (!isset($_GET['mail']) || empty($_GET['mail'])) {
+                //file_put_contents('php_debug.log', "Erreur : Aucun email fourni\n", FILE_APPEND);
+                sendError(400, 'Aucun email fourni');
+                break;
+            }
+        
+            $userMail = $_GET['mail'];
+            //file_put_contents('php_debug.log', "Email reçu : $userMail\n", FILE_APPEND);
+        
             // Récupération des noms des teams dont l'utilisateur fait partie
-            $data = $db->dbInfoMemberOf($_GET['mail']);
-            // Vérification que l'utilisateur fait bien partie d'au moins une team
-            checkData($data, 200, 404);
+            try {
+                $data = $db->dbInfoMemberOf($userMail);
+                //file_put_contents('php_debug.log', "Résultat de la requête SQL : " . print_r($data, true) . "\n", FILE_APPEND);
+        
+                // Vérification que l'utilisateur fait bien partie d'au moins une team
+                if ($data) {
+                    sendJsonData(['success' => true, 'teams' => $data], 200);
+                } else {
+                    //file_put_contents('php_debug.log', "Aucune équipe trouvée pour cet utilisateur\n", FILE_APPEND);
+                    sendError(404, 'Aucune équipe trouvée');
+                }
+            } catch (Exception $e) {
+                //file_put_contents('php_debug.log', "Erreur lors de l'exécution de la requête : " . $e->getMessage() . "\n", FILE_APPEND);
+                sendError(500, 'Erreur serveur');
+            }
             break;
 
-        case 'POST':
-            // Vérification qu'on est bien connecté
-            // if (!checkVariable($login, 401)) 
-            //     break;
+            case 'POST':
+                //file_put_contents('php_debug.log', "Requête POST reçue.\n", FILE_APPEND);
+
+                // Les données encodées en URL sont disponibles dans $_POST
+                if (!isset($_POST['name'], $_POST['description'], $_POST['mail'])) {
+                    file_put_contents('php_debug.log', "Champs manquants : " . print_r($_POST, true) . "\n", FILE_APPEND);
+                    sendJsonData(['success' => false, 'message' => 'Missing fields!'], 400);
+                    break;
+                }
+
+                $name = trim($_POST['name']);
+                $description = trim($_POST['description']);
+                $mail = trim($_POST['mail']);
+
+                
+                // Création de la nouvelle équipe
+                $team_id = $team->dbCreateTeam($name, $description);
+                //file_put_contents('php_debug.log', "Données reçues : {$team_id}, {$mail}\n", FILE_APPEND);
+                $association = $db->dbCreateAssociation($team_id, $mail);
+                //file_put_contents('php_debug.log', "Données reçues : {$association}\n", FILE_APPEND);
+                if (!$team_id) {
+                    file_put_contents('php_debug.log', "Échec de la création de l'équipe.\n", FILE_APPEND);
+                    sendJsonData(['success' => false, 'message' => 'Failed to create team.'], 500);
+                    break;
+                }
+                
+                //file_put_contents('php_debug.log', "Nouvelle équipe créée avec ID : {$team_id}\n", FILE_APPEND);
             
-            // Création de la nouvelle team
-            $team_id = $team->dbCreateTeam($_POST['name'], $_POST['description']);
-            $data = $data->dbCreateAssociation($team_id, $_POST['mail']);
-            sendJsonData($data, 201);
-            break;
+                
+                sendJsonData(['success' => true, 'team_id' => $team_id], 201);
+                
+                //file_put_contents('php_debug.log', "Association utilisateur-équipe réussie. Team ID: {$team_id}, Mail: {$mail}\n", FILE_APPEND);
+                break;
 
         case 'PUT':
             // Vérification qu'on est bien connecté

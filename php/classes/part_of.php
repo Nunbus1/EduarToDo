@@ -43,7 +43,7 @@ class Part_of extends Database{
      * @return Array Array contenant les informations d'une team
      */
     public function dbInfoMemberOf($mail){
-        $query = 'SELECT team.name FROM team
+        $query = 'SELECT team.id, team.name FROM team
         JOIN part_of ON part_of.id = team.id 
         JOIN user ON part_of.mail = user.mail 
         WHERE user.mail = :mail';

@@ -1,0 +1,241 @@
+/* Conteneur principal */
+.teams-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: -3rem;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+/* Section des équipes */
+.teams-section {
+  background-color: #d9d9d9;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-height: 35vh;
+}
+
+/* Conteneur défilable pour la liste des équipes */
+.teams-list-container {
+  max-height: 22vh;
+  margin-top: 1rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Masque la barre de défilement sur Chrome, Safari, et Edge basé sur Chromium */
+.teams-list-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* En-tête */
+.teams-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    width: 20rem;
+    border-bottom: 1px solid #000000;
+}
+
+.teams-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.delete-btn {
+    background-color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+
+.delete-btn img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.delete-btn:hover {
+    background-color: #f8d7da;
+    box-shadow: 0 3px 6px rgba(255, 0, 0, 0.2);
+}
+
+.delete-btn:active {
+    transform: scale(0.95);
+}
+
+/* Liste des équipes */
+.teams-list {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Cercle pour chaque équipe */
+.t-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4.2rem;
+  height: 4.2rem;
+  background-color: #fffefe;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+.t-circle:hover {
+  background-color: #d0d0d0;
+}
+
+/* Bouton ajouter une équipe */
+.add-btn {
+  width: 4rem;
+  height: 4rem;
+  background-color: #6acaf6;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #58b0d9;
+}
+
+/* Section des équipes invitées */
+.invited-teams {
+  padding: 1.5rem;
+  border-radius: 1rem;
+}
+
+
+/*-------------- popup --------------------*/
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none; /* Cachée par défaut */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: #d6d6d6;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #333;
+}
+
+.popup-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-add-image {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    width: 7rem;
+    height: 7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.popup-add-image:hover {
+    border-color: #6acaf6;
+}
+
+.popup-add-image img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.popup-form input,
+.popup-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+}
+
+.popup-form textarea {
+    resize: none;
+    height: 4rem;
+}
+
+.popup-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.popup-button {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+.create-btn:hover {
+    background-color: #45a049;
+}
+
+.cancel-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #e53935;
+}
