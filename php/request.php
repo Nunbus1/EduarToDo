@@ -331,7 +331,7 @@ if ($requestRessource == "task") {
                             //file_put_contents('php_debug.log', "Requête reçue : getAllTasks\n", FILE_APPEND);
                         
                             // Récupérer toutes les tâches
-                            $tasks = $db->dbGetAllTasks();
+                            $tasks = $db->dbGetAllTasks('test');
                         
                             // Log les résultats ou l'absence de résultats
                             if ($tasks) {
