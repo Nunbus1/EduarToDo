@@ -13,7 +13,7 @@ function loadTeams(userMail) {
                 const teamElement = document.createElement('div');
                 teamElement.classList.add('t-circle'); // Ajoute la classe 'team-circle'
                 teamElement.classList.add(`team-${team.id}`);
-                teamElement.textContent = team.name || `Unnamed Team`;
+                teamElement.textContent = team.teamName || `Unnamed Team`;
 
                 // Ajouter l'équipe à la liste
                 teamsList.appendChild(teamElement);
@@ -27,7 +27,7 @@ function loadTeams(userMail) {
             teamsList.appendChild(addButton);
 
             // Ajouter l'événement une fois le bouton "+" créé
-            addButton.addEventListener('click', showPopup);
+            addButton.addEventListener('click', showPopupTeam);
             addClickEventToTeams();
         } else {
             console.error('Erreur lors du chargement des équipes :', response?.message || 'Aucune réponse');
@@ -40,22 +40,22 @@ const popupOverlay = document.getElementById('addTeamPopup');
 const cancelPopupBtn = document.getElementById('cancelPopupBtn');
 
 // Fonction pour afficher la popup
-function showPopup() {
+function showPopupTeam() {
     popupOverlay.style.display = 'flex';
     console.log('Popup ouverte');
 }
 
 // Fonction pour fermer la popup
-function closePopup() {
+function closePopupTeam() {
     popupOverlay.style.display = 'none';
 }
 
 // Ajouter un événement pour fermer la popup quand on clique sur "Cancel" ou à l'extérieur de la popup
-cancelPopupBtn.addEventListener('click', closePopup);
+cancelPopupBtn.addEventListener('click', closePopupTeam);
 
 popupOverlay.addEventListener('click', (event) => {
     if (event.target === popupOverlay) {
-        closePopup();
+        closePopupTeam();
     }
 });
 
@@ -88,7 +88,7 @@ function createTeam() {
 
     // Préparer les données pour le POST
     const teamData = {
-        name: teamTitleInput.value.trim(),
+        teamName: teamTitleInput.value.trim(),
         description: teamDescriptionInput.value.trim(),
         mail: userMail,
     };
@@ -128,7 +128,7 @@ function addClickEventToTeams() {
 
 function loadPage() {
     const userMail = "monmail@orange.fr"; // Adresse e-mail par défaut. Peut être remplacée dynamiquement.
-    closePopup();
+    closePopupTeam();
     loadTeams(userMail);
     
 }

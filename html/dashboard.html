@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduarToDO Dashboard</title>
+
+    <!---------------------- CSS ---------------------->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css"/>
+
+    <link rel="stylesheet" href="../asset/css/body.css" />
+    <link rel="stylesheet" href="../asset/css/header.css" />
+    <link rel="stylesheet" href="../asset/css/main.css" />
+    <link rel="stylesheet" href="../asset/css/myTeams.css" />
+    <link rel="stylesheet" href="../asset/css/dashboard.css" />
+    <link rel="stylesheet" href="../asset/css/popupTask.css" />
+
+    <!---------------------- JS ---------------------->
+     <!-- JS: jQuery -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+     <!-- JS: Moment.js (requis pour FullCalendar) -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+ 
+     <!-- JS: FullCalendar -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script> 
+
+    <script src="../asset/js/header.js" defer></script>
+    <script src="../asset/js/main.js" defer></script>
+    <script src="../asset/js/ajax.js" defer></script>
+    <script src="../asset/js/calender.js" defer></script>
+    <script src="../asset/js/dashboard.js" defer></script>
+    <script src="../asset/js/myTeams.js" defer></script>
+    <script src="../asset/js/popupTask.js" defer></script>
+    <script src="../asset/js/script.js" defer></script>
+  </head>
+  <body>
+    <header class="header">
+        <div class="hour" id="hour">20:43</div>
+        <nav class="sidebar">
+          <button class="nav-button" data-section="dashboard">Dashboard</button>
+          <button class="nav-button" data-section="team">My Team</button>
+          <button class="nav-button" data-section="calendar">Calendar</button>
+          <button class="nav-button" data-section="profile">Profile</button>
+          <button class="nav-button" data-section="support">Support</button>
+        </nav>
+      </header>
+      <main>
+        <div class="title-bar">
+          <div class="date" id="date"></div>
+          <div class="search-container">
+            <input type="text" class="search" placeholder="Search" />
+          </div>
+          <button class="profile"></button>
+        </div>
+
+      <!-- Main Content -->
+      <div class="dashboard-container">
+        <div class="tasks-container">
+            <div class="tasks-header">
+              <div class="header-item">Team</div>
+              <div class="header-item">Task</div>
+              <div class="header-item">Statut</div>
+              <div class="header-item">Priority</div>
+              <div class="header-item">Deadline</div>
+            </div>
+            <div id="tasks-list">
+              <!-- Vos tâches seront ajoutées ici dynamiquement -->
+            </div>
+          </div>
+        <div class="team-calendar">
+          <div class="teams-container">
+            <!-- <h3>My Teams</h3> -->
+            <div class="teams-list">
+                <button class="add-btn" id="openAddTeamPopup">+</button>
+            </div>
+          </div>
+          <div class="calendar-container">
+            <!-- <h3>Calendar</h3> -->
+            <div id="calendar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Popup pour ajouter une équipe -->
+      <div class="popup-overlay" id="addTeamPopup">
+        <div class="popup-content">
+            <h3>Create Team</h3>
+            <div class="popup-form">
+                <button class="popup-add-image">
+                    <img src="../asset/svg/Add.svg" alt="Add Image" />
+                </button>
+                <input type="file" id="teamImageInput" style="display: none;" />
+                <input type="text" placeholder="Team Title" id="teamTitle" />
+                <textarea placeholder="Add a description" id="teamDescription"></textarea>
+                <div class="popup-actions">
+                    <button id="createTeamBtn" class="popup-button create-btn">Create</button>
+                    <button id="cancelPopupBtn" class="popup-button cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-overlay"></div>
+
+      <div class="popup-overlay" id="openTask" onclick="closePopup()"></div>
+
+      <div class="popup">
+          <!-- Section Equipe -->
+           <!-- Bouton de fermeture -->
+          <button class="close-btn" onclick="closePopup()">X</button>
+          <div class="popupteam">
+              <div class="teamPicture"></div>
+              <div class="teamDescription">
+                  <strong>Team Name</strong>
+                  <p>Team description lorem</p>
+              </div>
+          </div>
+          
+          <!-- Section Tâche -->
+          <div class="popuptask">
+              <div class="TaskInfo">
+                  <div class="taskName"></div>
+                  <div class="Task-Desc-Checklist">
+                      <div class="taskDescription">
+                          <h4>Task Description</h4>
+                          <p>Description de la tâche</p>
+                      </div>
+                      <div class="taskChecklist">
+                          <h4>Checklist</h4>
+                          <ul>
+                            <li><input type="checkbox" class="check-item" disabled/> <span class="check-text">little task 1</span></li>
+                            <li><input type="checkbox" class="check-item" disabled /> <span class="check-text"><s>little task 2</s></span></li>
+                          </ul>
+                      </div>
+                  </div>
+                  
+                    <div class="taskOption">
+                      <input type="date" class="date-button creation" id="creationInput" disabled>
+                      <input type="date" class="date-button deadline" id="deadlineInput" disabled>
+                  </div>
+              </div>
+      
+              <!-- Section Priorité et Statut -->
+              <div class="priority-status">
+                <h4>Priority:</h4>
+                <div class="options">
+                    <label><input type="radio" name="priority" value="Low"> Low</label>
+                    <label><input type="radio" name="priority" value="Mid"> Mid</label>
+                    <label><input type="radio" name="priority" value="High" checked> High</label>
+                </div>
+      
+                  <h4>Status :</h4>
+                  <div class="options">
+                    <label><input type="radio" name="status" value="In Queue"> In Queue</label>
+                    <label><input type="radio" name="status" value="In Progress"> In Progress</label>
+                    <label><input type="radio" name="status" value="On Review" checked> On Review</label>
+                    <label><input type="radio" name="status" value="Done"> Done</label>
+                </div>
+      
+                  <button class="edit-btn">Edit</button>
+                  <button class="delete-btn">Delete</button>
+              </div>
+          </div>
+      </div>
+    </main>
+  </body>
+</html>

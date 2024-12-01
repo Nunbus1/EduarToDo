@@ -1,0 +1,164 @@
+.dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -3rem;
+    padding: 2rem;
+    gap: 1.5rem;
+    height: 85vh;
+  }
+  
+  .tasks-container {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 1rem;
+    border: 2px solid black;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tasks-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 1rem 1rem 0rem 0rem;
+    border-bottom: 2px solid black;
+    padding: 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    /* text-align: center; */
+  }
+  
+  .tasks-list {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
+    align-items: center;
+    overflow-y: auto;
+    padding: 1rem;
+    height: calc(85vh - 5rem); /* Ajuste pour inclure le header */
+  }
+  
+  .task-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #FFFCFC;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .task{
+    background-color: #d9d9d969;
+    margin-top: 0.5rem;
+   
+  }
+  
+  .task-row:last-child {
+    border-bottom: none;
+  }
+  
+  .team-circle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .task-name {
+    text-align: left;
+  }
+  
+  .status-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+  
+
+  .status-circle {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+  }
+  
+  .priority {
+    text-align: center;
+    border-radius: 1rem;
+    padding: 0.2rem 0.3rem;
+    width: 80%;
+    /* background-color: #f5f5f5; */
+    display: inline-block;
+}
+  
+  .team-calendar {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 85vh;
+  }
+  
+  .teams-container,
+  .calendar-container {
+    background-color: #d9d9d9;
+    border-radius: 1rem;
+    border: 2px solid rgb(0, 0, 0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+  }
+
+  .teams-container{
+    margin-top: 0;
+  }
+  
+  .calendar-container {
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+
+  }
+  
+  .calendar-container #calendar {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .fc-scroller {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .fc-scroller::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .fc .fc-button {
+    font-size: 0.8rem !important;
+  }
+  
+  .fc-unthemed .fc-content,
+  .fc-unthemed .fc-divider,
+  .fc-unthemed .fc-list-heading td,
+  .fc-unthemed .fc-list-view,
+  .fc-unthemed .fc-popover,
+  .fc-unthemed .fc-row,
+  .fc-unthemed tbody,
+  .fc-unthemed td,
+  .fc-unthemed th,
+  .fc-unthemed thead {
+    border-color: #333;
+  }
+  

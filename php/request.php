@@ -153,13 +153,13 @@ if ($requestRessource == "teams") {
                 //file_put_contents('php_debug.log', "Requête POST reçue.\n", FILE_APPEND);
 
                 // Les données encodées en URL sont disponibles dans $_POST
-                if (!isset($_POST['name'], $_POST['description'], $_POST['mail'])) {
+                if (!isset($_POST['teamName'], $_POST['description'], $_POST['mail'])) {
                     file_put_contents('php_debug.log', "Champs manquants : " . print_r($_POST, true) . "\n", FILE_APPEND);
                     sendJsonData(['success' => false, 'message' => 'Missing fields!'], 400);
                     break;
                 }
 
-                $name = trim($_POST['name']);
+                $name = trim($_POST['teamName']);
                 $description = trim($_POST['description']);
                 $mail = trim($_POST['mail']);
 
@@ -189,7 +189,7 @@ if ($requestRessource == "teams") {
             //     break;
 
             // Modification de la team
-            $data = $team->dbUpdateTeam($_PUT['name'], $_PUT['description'], $_PUT['id']);
+            $data = $team->dbUpdateTeam($_PUT['teamName'], $_PUT['description'], $_PUT['id']);
             sendJsonData($data, 201);
 
         default:
@@ -297,7 +297,7 @@ if ($requestRessource == "task") {
 
                     $teamId = intval($_GET['id']); // Sécurisation de l'entrée
                     $tasks = $db->dbGetTasksByTeamId($teamId);
-                    $teamName = $team->dbInfoTeam($teamId)[0]['name'];
+                    $teamName = $team->dbInfoTeam($teamId)[0]['teamName'];
 
                     if ($tasks) {
                         sendJsonData(['success' => true, 'tasks' => $tasks, 'team' => $teamName], 200);

@@ -14,16 +14,39 @@ updateDate();
 
 setInterval(updateDate, 86400000);
 
-// document.querySelectorAll('.nav-button').forEach(button => {
-//     button.addEventListener('click', () => {
-//         // Cacher toutes les sections
-//         document.querySelectorAll('.section').forEach(section => {
-//             section.style.display = 'none';
-//         });
+// Sélectionner tous les boutons de navigation
+const navButtons = document.querySelectorAll(".nav-button");
 
-//         // Afficher la section correspondant au bouton cliqué
-//         const sectionId = button.getAttribute('data-section');
-//         document.getElementById(sectionId).style.display = 'block';
-//     });
-// });
+// Ajouter un événement "click" à chaque bouton
+navButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        // Obtenir la valeur de l'attribut data-section
+        const section = button.getAttribute("data-section");
 
+        // Définir l'URL cible en fonction de la section
+        let url = "";
+        switch (section) {
+            case "dashboard":
+                url = "dashboard.html";
+                break;
+            case "team":
+                url = "myTeams.html";
+                break;
+            case "calendar":
+                url = "calendar.html";
+                break;
+            case "profile":
+                url = "profile.html";
+                break;
+            case "support":
+                url = "support.html";
+                break;
+            default:
+                console.error("Section inconnue : ", section);
+                return;
+        }
+
+        // Rediriger vers l'URL cible
+        window.location.href = url;
+    });
+});

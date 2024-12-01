@@ -79,7 +79,7 @@ class Task extends Database {
      * @return Array Array contenant les informations d'une tâche
      */
     public function dbInfoTask($taskId) {
-        $query = 'SELECT task.id, task.name AS task_name, task.description AS task_description, task.deadline, task.start_date, task.significance, task.status, team.name AS team_name, team.description AS team_description FROM task 
+        $query = 'SELECT task.id, task.name AS task_name, task.description AS task_description, task.deadline, task.start_date, task.significance, task.status, team.teamName AS team_name, team.description AS team_description FROM task 
                     JOIN team ON team.id = task.id_team
                     WHERE task.id = :taskId';
         $params = ['taskId' => $taskId];
@@ -127,7 +127,7 @@ class Task extends Database {
     }
 
     public function dbGetAllTasks($mail) {
-        $query = "SELECT task.id, task.name, task.description, task.start_date, task.deadline, task.status, task.significance, task.id_team FROM task
+        $query = "SELECT task.id, task.name, task.description, task.start_date, task.deadline, task.status, task.significance, task.id_team, team.teamName FROM task
                     JOIN team ON team.id = task.id_team
                     JOIN part_of ON part_of.mail = 'monmail@orange.fr'
                     WHERE part_of.id = team.id"; // remplacer l'adresse pas :mail

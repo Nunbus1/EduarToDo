@@ -1,6 +1,6 @@
 // Récupère les éléments nécessaires
 const popup = document.querySelector(".popup");
-const overlay = document.querySelector(".popup-overlay");
+const overlay = document.getElementById("openTask");
 
 // Fonction principale pour ouvrir la popup
 function openPopup(taskId) {

@@ -2,16 +2,22 @@
 function loadAllTasks() {
     ajaxRequest('GET', '../php/request.php/task', (response) => {
         if (response && response.success) {
+            console.log(response);
+            
             const tasks = response.tasks.map(task => ({
                 id: task.id,
                 title: task.name,
                 start: task.start_date,
                 end: addOneDay(task.deadline),
                 color: getTaskColor(task.significance),
+                significance: task.significance,
+                deadline: task.deadline,
+                teamName: task.teamName,
+                status: task.status,
             }));
 
             initializeCalendar(tasks);
-            displayUpcomingTasks(tasks);
+            displayTasks(tasks);
             attachTaskClickEvents();
         } else {
             console.error('Erreur lors du chargement des tâches : ', response.message);
@@ -109,59 +115,6 @@ function updateTaskDates(event, revertFunc) {
             revertFunc(); 
         }
     }, `resource=task&action=getTaskInfo&id=${event.id}`);
-}
-
-function displayUpcomingTasks(tasks) {
-    // Trier les tâches par date de deadline
-    const sortedTasks = tasks.sort((a, b) => new Date(a.end) - new Date(b.end));
-
-    // Sélectionner l'élément contenant les tâches
-    const upcomingTasksContainer = document.getElementById("upcoming-task-container");
-    upcomingTasksContainer.innerHTML = ''; // Réinitialiser le contenu
-
-    // Générer le HTML pour chaque tâche triée
-    sortedTasks.forEach((task) => {
-        
-        const taskElement = document.createElement("div");
-        taskElement.setAttribute("data-id", task.id);
-        taskElement.className = "task";
-        taskElement.classList.add("upcoming-task");
-        taskElement.style.borderLeft = `1vw solid ${task.color}`; // Couleur selon la priorité
-        taskElement.style.backgroundColor =hexToRGBA(task.color, 0.6);
-        taskElement.innerHTML = `
-            <div class="task-header">
-                <div class="task-circle"></div>
-                <span>${task.end}</span>
-            </div>
-            <div class="task-body">
-                <p class="task-name">${task.title}</p>
-            </div>
-        `;
-        upcomingTasksContainer.appendChild(taskElement);
-    });
-}
-
-function hexToRGBA(hex, opacity = 0.2) {
-    // Supprime le `#` s'il est présent
-    hex = hex.replace('#', '');
-    
-    // Convertit le hex en RGB
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-    
-    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-}
-
-// Fonction pour fermer la popup
-function closePopup() {
-    if (isEditing) {
-        alert("Vous devez valider vos modifications avant de quitter la popup.");
-        return; // Empêche la fermeture
-    }
-    popup.style.display = "none";
-    overlay.style.display = "none";
-    loadAllTasks(); // Recharge les tâches après fermeture
 }
 
 // Charger toutes les tâches une fois le DOM prêt
