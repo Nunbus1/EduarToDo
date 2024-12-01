@@ -1,0 +1,103 @@
+.support-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-image {
+    margin-bottom: 20px;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .card input {
+    width: calc(100% - 10px);
+    margin: 5px auto;
+    padding: 0.5rem;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: block;
+  }
+
+  .card textarea {
+    width: calc(100% - 10px);
+    margin: 5px auto;
+    padding: 0.5rem;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    height: 50px;
+  }
+
+  .triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    z-index: 0;
+  }
+
+  .triangle.left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 200px 0 0 40vw; /* Triangle couvrant la largeur gauche */
+    border-color: transparent transparent #ccc transparent;
+  }
+  
+  .triangle.right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 200px 40vw 0 0; /* Triangle couvrant la largeur droite */
+    border-color: transparent #ccc transparent transparent;
+  }
+
+  .triangle-container {
+    position: absolute;
+    bottom: 0;
+    left: 12%;
+    width: 88%; /* Couvre toute la largeur de l'écran */
+    height: 200px; /* Hauteur totale de la forme */
+    background: linear-gradient(
+      to right,
+      #ccc 100%, /* Triangle gris à gauche */
+      transparent 50% /* Triangle transparent à droite */
+    );
+    clip-path: polygon(50% 100%, 0% 100%, 0% 0%, 50% 100%, 100% 100%, 100% 10%); /* Forme combinée de deux triangles */
+    z-index: 0; /* En arrière-plan */
+  }
+  
+  

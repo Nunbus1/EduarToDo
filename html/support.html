@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EduarToDO</title>
+
+    <!---------------------- CSS ---------------------->
+    <link rel="stylesheet" href="../asset/css/body.css" />
+    <link rel="stylesheet" href="../asset/css/header.css" />
+    <link rel="stylesheet" href="../asset/css/main.css" />
+    <link rel="stylesheet" href="../asset/css/support.css" />
+
+    <!---------------------- JS ---------------------->
+    <script src="../asset/js/header.js" defer></script>
+    <script src="../asset/js/main.js" defer></script>
+  
+</head>
+  <body>
+    <header class="header">
+      <div class="hour" id="hour">20:43</div>
+      <nav class="sidebar">
+        <button class="nav-button" data-section="dashboard">Dashboard</button>
+        <button class="nav-button" data-section="team">My Team</button>
+        <button class="nav-button" data-section="calendar">Calendar</button>
+        <button class="nav-button" data-section="profile">Profile</button>
+        <button class="nav-button" data-section="support">Support</button>
+      </nav>
+    </header>
+    <main>
+      <div class="title-bar">
+        <div class="date" id="date"></div>
+        <div class="search-container">
+          <input type="text" class="search" placeholder="Search" />
+        </div>
+        <button class="profile"></button>
+      </div>
+
+
+      <!-- Support Section -->
+      <div id="profile" class="support-container">
+        <h1 class="main-title">Support</h1>
+        <div class="cards-container">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="support-image">
+                    <img src="../asset/img/cat.jpg" />
+                </div>
+                <p>Romain D'Hem</p>
+                <p>Back End Developper</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="support-image">
+                    <img src="../asset/img/cat.jpg" />
+                </div>
+                <p>Pier Chapon</p>
+                <p>Front End Developper</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="support-image">
+                    <img src="../asset/img/cat.jpg" />
+                </div>
+                <p>Aubin Rochefort</p>
+                <p>DataBase Creator</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="card">
+                <div class="support-image">
+                    <img src="../asset/img/cat.jpg" />
+                </div>
+                <p>Maëlle Juilliot</p>
+                <p>Back End Developper</p>
+            </div>
+        </div>  
+
+        <div class="triangle-container"></div>
+
+        
+
+      
+    </main>
+    
+  </body>
+</html>
