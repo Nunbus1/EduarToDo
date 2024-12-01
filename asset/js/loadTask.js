@@ -1,8 +1,12 @@
+let isLoadingTasks = false;
 const tasksContainers = document.querySelectorAll(".Tasks");
 function loadTasksForTeam() {
+    if (isLoadingTasks) return; // Si déjà en cours, n'exécute pas
+    isLoadingTasks = true;
     const teamId = getTeamFromURL();
     if (!teamId) {
         console.error("Aucune équipe trouvée dans l'URL.");
+        isLoadingTasks = false;
         return;
     }
     clearTasks();
@@ -24,6 +28,7 @@ function loadTasksForTeam() {
             } else {
                 console.error("Erreur :", response.message);
             }
+            isLoadingTasks = false;
         },
         `resource=task&action=getTasks&id=${teamId}` // Paramètres à envoyer dans l'URL
     );
@@ -31,6 +36,7 @@ function loadTasksForTeam() {
 
 // Supprime toutes les tâches existantes dans l'interface
 function clearTasks() {
+    console.log("clear");
     tasksContainers.forEach((container) => {
         container.innerHTML = "";
     });
@@ -45,7 +51,6 @@ function displayTask(task) {
     // Trouver le bon conteneur `Tasks` basé sur le status de la tâche
     const statusContainers = document.querySelectorAll(".status");
     let taskContainer = null;
-
     statusContainers.forEach((statusContainer) => {
         const titleStatus = statusContainer.querySelector(".title-status").textContent.trim();
         if (titleStatus === task.status) {
@@ -123,4 +128,5 @@ function closePopup() {
 }
 
 // Charge les tâches dès que la page est prête
+document.removeEventListener("DOMContentLoaded", loadTasksForTeam);
 document.addEventListener("DOMContentLoaded", loadTasksForTeam);

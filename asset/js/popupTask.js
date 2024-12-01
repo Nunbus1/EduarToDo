@@ -173,6 +173,7 @@ function enableDateInputs() {
   document.getElementById("deadlineInput").disabled = false;
 }
 
+
 // Ajouter un événement pour fermer la popup en cliquant sur l'overlay
 overlay.addEventListener("click", closePopup);
 
