@@ -64,7 +64,14 @@ popupOverlay.addEventListener('click', (event) => {
 const createTeamBtn = document.getElementById('createTeamBtn');
 const teamTitleInput = document.getElementById('teamTitle');
 const teamDescriptionInput = document.getElementById('teamDescription');
-const userMail = "monmail@orange.fr"; // Email par défaut pour les tests
+// Récupérer la chaîne de requête depuis l'URL
+const queryString = window.location.search;
+
+// Utiliser l'API URLSearchParams pour analyser la chaîne de requête
+const urlParams = new URLSearchParams(queryString);
+
+// Extraire le paramètre 'mail'
+const userMail = urlParams.get('mail'); // Valeur par défaut si 'mail' n'est pas défini
 
 // Fonction pour vérifier les champs obligatoires
 function validateFields() {
@@ -127,10 +134,8 @@ function addClickEventToTeams() {
 }
 
 function loadPage() {
-    const userMail = "monmail@orange.fr"; // Adresse e-mail par défaut. Peut être remplacée dynamiquement.
     closePopupTeam();
     loadTeams(userMail);
-    
 }
 
 
