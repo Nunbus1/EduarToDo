@@ -19,7 +19,7 @@ $request = substr($_SERVER['PATH_INFO'], 1);
 $request = explode('/', $request);
 $requestRessource = array_shift($request);
 // $login = null;
-//file_put_contents('C:/wamp64/www/EduarToDo/php/php_debug.log', "Méthode reçue : " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
+// file_put_contents('C:/wamp64/www/EduarToDo/php/php_debug.log', "Méthode reçue : " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
 
 // Vérification de l'utilisateur
 // if ($requestRessource == 'connexion') {
@@ -70,24 +70,49 @@ if ($requestRessource == 'user') {
     $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
     switch ($requestMethod) {
     case 'GET':
-        // Vérification qu'on est bien connecté
-        // if (!checkVariable($_GET['mail'], 401)) 
-        //     break;
+        if (!isset($_GET['action'])) {
+            sendError(400, 'Action non spécifiée.');
+            break;
+        }
+        switch ($_GET['action']) {
+            
+        case 'getUserByMail' :
+            // Vérification qu'on est bien connecté
+            // if (!checkVariable($_GET['mail'], 401)) 
+            //     break;
         
-        // Récupération des données de l'utilisateur
-        $data = $db->dbInfoUser($_GET['mail']);
-        // Vérification que l'utilisateur existe
-        checkData($data, 200, 404);
-        break;
+            // Récupération des données de l'utilisateur
+            $data = $db->dbInfoUser($_GET['mail']);
+
+            // Vérification que l'utilisateur existe
+            checkData($data, 200, 404);
+            break;
+
+        case 'getUserInfo' :
+            // Vérification qu'on est bien connecté
+            // if (!checkVariable($_GET['mail'], 401)) 
+            //     break;
+            // Récupération des données de l'utilisateur
+            $data = $db->dbCheckUser($_GET['mail'],$_GET['password']);
+           
+            // Vérification que l'utilisateur existe
+            checkData($data, 200, 404);
+            break;
+
+        default :
+            break;
+        }
+    
 
     case 'POST':
         // Vérification des données envoyées
-        if (!checkInput(isset($_POST['mail']) && isset($_POST['first']) && isset($_POST['last']) && isset($_POST['password']), 400)) 
+        if (!checkInput(isset($_POST['mail']) && isset($_POST['first']) && isset($_POST['last']) && isset($_POST['password']), 400)) {
             break;
-
+        }
         // Si l'utlisateur n'existe pas déjà
         if ($db->dbInfoUser($_POST['mail']) == false) {
             $data = $db->dbCreateUser($_POST['mail'], $_POST['first'], $_POST['last'], $_POST['password']);
+            file_put_contents('php_debug.log',  print_r($data, true), FILE_APPEND);
             sendJsonData($data, 201);
         } 
 
@@ -332,13 +357,13 @@ if ($requestRessource == "task") {
                         
                             // Récupérer toutes les tâches
                             $tasks = $db->dbGetAllTasks('test');
-                        
+                            //file_put_contents('php_debug.log', "$tasks\n", FILE_APPEND);
                             // Log les résultats ou l'absence de résultats
                             if ($tasks) {
-                                //file_put_contents('php_debug.log', "Tâches récupérées : " . print_r($tasks, true) . "\n", FILE_APPEND);
+                                file_put_contents('php_debug.log', "Tâches récupérées : " . print_r($tasks, true) . "\n", FILE_APPEND);
                                 sendJsonData(['success' => true, 'tasks' => $tasks], 200);
                             } else {
-                                //file_put_contents('php_debug.log', "Aucune tâche trouvée.\n", FILE_APPEND);
+                                file_put_contents('php_debug.log', "Aucune tâche trouvée.\n", FILE_APPEND);
                                 sendJsonData(['success' => false, 'message' => 'Aucune tâche trouvée.'], 404);
                             }
                             break;

@@ -12,12 +12,12 @@ class User extends Database{
      */
     public function dbCheckUser($mail, $password){
         $password = hash('sha256', $password);
-        $query = 'SELECT * FROM user WHERE email = :email AND password = :password';
+        $query = 'SELECT * FROM user WHERE mail = :mail AND password = :password';
         $params = array(
-            'email' => $mail,
+            'mail' => $mail,
             'password' => $password
         );
-        return $this->fetchRequest($query, $params)['mail'];
+        return $this->fetchRequest($query, $params);
     }
 
     /**
@@ -31,7 +31,7 @@ class User extends Database{
      */
     public function dbCreateUser($mail, $first, $last, $password){
         $password = hash('sha256', $password);
-        $query = 'INSERT INTO user (mail, first, last, password) VALUES (:mail, :first, :last, :password)';
+        $query = "INSERT INTO user (mail, first, last, password) VALUES (:mail, :first, :last, :password)";
         $params = array(
             'mail' => $mail,
             'first' => $first,

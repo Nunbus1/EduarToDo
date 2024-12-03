@@ -127,6 +127,7 @@ class Task extends Database {
     }
 
     public function dbGetAllTasks($mail) {
+        
         $query = "SELECT task.id, task.name, task.description, task.start_date, task.deadline, task.status, task.significance, task.id_team, team.teamName FROM task
                     JOIN team ON team.id = task.id_team
                     JOIN part_of ON part_of.mail = 'monmail@orange.fr'
@@ -134,6 +135,7 @@ class Task extends Database {
         // $params = array(
         //     'mail' => $mail
         // );
+        //file_put_contents('php_debug.log', "$query\n", FILE_APPEND);
         return $this->fetchAllRequest($query); // fetchAllRequest exécute et retourne les résultats.
     }
 }

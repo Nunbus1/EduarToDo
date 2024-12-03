@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="../asset/css/login.css" />
 
     <!---------------------- JS ---------------------->
+    <script src="../asset/js/ajax.js" defer></script>
     <script src="../asset/js/login.js" defer></script>
+    
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 
 </head>
@@ -21,19 +23,19 @@
             <h2 class="animation" style="--D:0; --S:21">Login</h2>
             <form action="#">
                 <div class="input-box animation" style="--D:1; --S:22">
-                    <input type="text" required>
+                    <input type="text" id="LoginUser"s required>
                     <label for="">Email</label>
                     <box-icon type="solid" name="user"></box-icon>
                 </div>
 
                 <div class="input-box animation" style="--D:2; --S:23">
-                    <input type="password" required>
+                    <input type="password" id="LoginPassword" required>
                     <label for="">Password</label>
                     <box-icon name="lock-alt" type="solid" ></box-icon>
                 </div>
 
                 <div class="input-box animation" style="--D:3; --S:24">
-                    <button class="btn" type="submit">Login</button>
+                    <button class="btn btn-login" type="submit">Login</button>
                 </div>
 
                 <div class="regi-link animation" style="--D:4; --S:25">
@@ -52,32 +54,32 @@
             <form action="#">
                 <div class="row">
                     <div class="input-box animation" style="--li:17; --S:1">
-                        <input type="text" required>
+                        <input type="text" id="RegisterFirst" required>
                         <label for="">First Name</label>
                         <box-icon type="solid" name="user"></box-icon>
                     </div>
         
                     <div class="input-box animation" style="--li:18; --S:2">
-                        <input type="text" required>
+                        <input type="text" id="RegisterLast" required>
                         <label for="">Last Name</label>
                         <box-icon type="solid" name="user"></box-icon>
                     </div>
                 </div>
 
                 <div class="input-box animation" style="--li:19; --S:2">
-                    <input type="email" required>
+                    <input type="email" id="RegisterMail" required>
                     <label for="">Email</label>
                     <box-icon name="envelope" type="solid" ></box-icon>
                 </div>
 
                 <div class="input-box animation" style="--li:19; --S:3">
-                    <input type="password" required>
+                    <input type="password" id="RegisterPassword" required>
                     <label for="">Password</label>
                     <box-icon name="lock-alt" type="solid"></box-icon>
                 </div>
 
                 <div class="input-box animation" style="--li:20; --S:4">
-                    <button class="btn" type="submit">Register</button>
+                    <button class="btn btn-register" type="submit">Register</button>
                 </div>
 
                 <div class="regi-link animation" style="--li:21; --S:5">
