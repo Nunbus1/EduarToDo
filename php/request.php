@@ -255,8 +255,9 @@ if ($requestRessource == "subtask") {
                 break;
         
             // Création d'une sous-tache
-            $data = $db->dbCreateSubtask($_POST['name'], $_POST['description'], $_POST['id_task']);
+            $data = $db->dbCreateSubtask($_POST['name'], $_POST['status'], $_POST['id_task']);
             sendJsonData($data, 200);  
+            file_put_contents('php_debug.log', "Création subatask réussie.", FILE_APPEND);
             break;
         
         case 'PUT':

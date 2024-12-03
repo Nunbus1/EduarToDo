@@ -17,7 +17,9 @@ function loadTasksForTeam() {
         'GET', // Type de requête
         "../php/request.php/task", // URL de l'API
         (response) => { // Callback pour traiter la réponse
-            if (response.success) {
+            if (response === undefined)
+                console.log("Aucune tache");
+            else {
                 //console.log(response.tasks);
                 
                 //console.log("Tâches chargées pour l'équipe :", response.tasks);
@@ -25,9 +27,7 @@ function loadTasksForTeam() {
                 initializeDragAndDrop();
                 attachTaskClickEvents();
                 displayTeamName(response.team);
-            } else {
-                console.error("Erreur :", response.message);
-            }
+            } 
             isLoadingTasks = false;
         },
         `resource=task&action=getTasks&id=${teamId}` // Paramètres à envoyer dans l'URL

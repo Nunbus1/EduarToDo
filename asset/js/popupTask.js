@@ -77,7 +77,20 @@ function updatePopupContent(task, subtasks) {
           radio.checked = (radio.value === task[0].status);
       });
   }
+  updateSubtasks(subtasks);
 
+   // Activer le bouton "Add subtask"
+   const addSubtaskButton = document.getElementById('add-subtask');
+   addSubtaskButton.onclick = () => addSubtask(task[0].id);
+
+   // Activer le bouton "Delete"
+   const deleteButton = popup.querySelector(".delete-btn");
+   if (deleteButton) {
+       deleteButton.onclick = () => deleteTask(task[0].id);
+   }
+}
+
+function updateSubtasks(subtasks){
   // Mettre à jour la checklist
   const checklistContainer = popup.querySelector(".taskChecklist ul");
   checklistContainer.innerHTML = ""; // Réinitialise la checklist
@@ -87,8 +100,8 @@ function updatePopupContent(task, subtasks) {
       subtasks.forEach((subtask) => {
           const listItem = document.createElement("li");
           listItem.innerHTML = `
-              <input type="checkbox" class="check-item" ${subtask.status === 0 ? "checked" : ""} disabled/>
-              <span class="check-text">${subtask.status === 0 ? `<s>${subtask.name}</s>` : subtask.name}</span>
+              <input type="checkbox" class="check-item" ${subtask.status === 1 ? "checked" : ""} disabled/>
+              <span class="check-text">${subtask.status === 1 ? `<s>${subtask.name}</s>` : subtask.name}</span>
           `;
           checklistContainer.appendChild(listItem);
       });
@@ -97,15 +110,27 @@ function updatePopupContent(task, subtasks) {
       emptyMessage.textContent = "Aucune sous-tâche disponible.";
       checklistContainer.appendChild(emptyMessage);
   }
-
-   // Activer le bouton "Delete"
-   const deleteButton = popup.querySelector(".delete-btn");
-   if (deleteButton) {
-       deleteButton.onclick = () => deleteTask(task[0].id);
-   }
 }
 
+function addSubtask(idTask){
+    const inputField = document.getElementById('user-input');
+    inputField.style.display = 'inline'; // Afficher le champ de saisie
 
+    inputField.focus(); // Placer le focus sur le champ de saisie
+    inputField.addEventListener('blur', function() {
+        const userInput = inputField.value;
+        if (userInput) {
+            const data = `name=${encodeURIComponent(userInput)}&status=${encodeURIComponent(0)}&id_task=${encodeURIComponent(idTask)}`;
+            ajaxRequest(
+                "POST",
+                `../php/request.php/subtask`,
+                () => console.log("insertion réussie"), 
+                data
+            )
+        }
+        inputField.style.display = 'none'; // Cacher le champ après la saisie
+    });
+}
 
 function attachTaskClickEvents() {
   document.querySelectorAll(".task").forEach((task) => {
@@ -187,6 +212,8 @@ const priorityInputs = document.querySelectorAll('input[name="priority"]');
 const statusRadios = document.querySelectorAll('.options input[name="status"]');
 const creationInput = document.querySelector("#creationInput");
 const deadlineInput = document.querySelector("#deadlineInput");
+const addSubtaskButton = document.getElementById('add-subtask');
+var subtaskStatus = document.querySelectorAll(".check-item");
 let isEditing = false;
 /**
  * Active ou désactive les champs d'édition.
@@ -231,6 +258,15 @@ function toggleEditing(enable) {
             editableDescription.replaceWith(currentDescription);
         }
     }
+
+    // Activer ou désactiver l'ajout de sous tâches
+    addSubtaskButton.disabled = !addSubtaskButton.disabled;
+
+    subtaskStatus.forEach((checkbox) => {
+        if (checkbox.hasAttribute("disabled"))
+            checkbox.removeAttribute("disabled");
+        else checkbox.setAttribute("disabled", "");
+    })
 
     // Activer ou désactiver les priorités
     priorityInputs.forEach((input) => {
@@ -300,3 +336,10 @@ editButton.addEventListener("click", () => {
         );
     }
 });
+
+function updateSubtaskStatus(){
+
+}
+subtaskStatus.forEach((checkbox) => {
+    checkbox.addEventListener('click', updateSubtaskStatus);
+})

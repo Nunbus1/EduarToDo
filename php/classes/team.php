@@ -12,7 +12,7 @@ class Team extends Database{
      */
     public function dbCreateTeam($name, $description){
         
-        $query = 'INSERT INTO team (name, description) VALUES (:name, :description)';
+        $query = 'INSERT INTO team (teamName, description) VALUES (:name, :description)';
         $params = array(
             'name' => $name,
             'description' => $description
@@ -30,7 +30,7 @@ class Team extends Database{
      * @return void Résultat de la requête
      */
     public function dbUpdateTeam($name, $description, $id){
-        $query = 'UPDATE team SET name = :name, description = :description WHERE id = :id';
+        $query = 'UPDATE team SET teamName = :name, description = :description WHERE id = :id';
         $params = array(
             'name' => $name,
             'description' => $description,
