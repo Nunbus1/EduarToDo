@@ -30,13 +30,13 @@ class User extends Database{
      * @return void Résultat de la requête
      */
     public function dbCreateUser($mail, $first, $last, $password){
-        $password = hash('sha256', $password);
+        $encrypted = hash('sha256', $password);
         $query = "INSERT INTO user (mail, first, last, password) VALUES (:mail, :first, :last, :password)";
         $params = array(
             'mail' => $mail,
             'first' => $first,
             'last' => $last,
-            'password' => $password,
+            'password' => $encrypted,
         );
         return $this->fetchRequest($query, $params);
     }

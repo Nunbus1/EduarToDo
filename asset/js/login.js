@@ -51,12 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ajaxRequest(
                     "POST",
                     `../php/request.php/user`,
-                    (response) => {
-                        if (response && response.success) {
-                            console.log("Envoi User :", response.message);
-                        } else {
-                            console.error("Erreur lors de l'envoi de register :", response?.message || "Aucune réponse.");
-                        }
+                    () => {
+                        window.location.href = `myTeams.html?mail=${RegisterMail}`; // Redirige vers l'URL
                     },
                     `resource=user&mail=${RegisterMail}&first=${RegisterFirstName}&last=${RegisterLastname}&password=${RegisterPassword}`
                 );
