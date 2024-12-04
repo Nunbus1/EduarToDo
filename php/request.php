@@ -83,6 +83,7 @@ if ($requestRessource == 'user') {
         
             // Récupération des données de l'utilisateur
             $data = $db->dbInfoUser($_GET['mail']);
+            // file_put_contents('php_debug.log',  print_r($data, true), FILE_APPEND);
 
             // Vérification que l'utilisateur existe
             checkData($data, 200, 404);

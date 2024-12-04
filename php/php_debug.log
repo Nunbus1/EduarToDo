@@ -1,101 +1,63 @@
-Tâches récupérées : Array
+Array
 (
     [0] => Array
         (
-            [id] => 15
-            [name] => patate
-            [description] => Description par défaut de la tâche
-            [start_date] => 2024-12-02
-            [deadline] => 2024-12-13
-            [status] => In Queue
-            [significance] => High
-            [id_team] => 2
-            [teamName] => nouvelle team
-        )
-
-    [1] => Array
-        (
-            [id] => 16
-            [name] => tache
-            [description] => Description par défaut de la tâche
-            [start_date] => 2024-11-01
-            [deadline] => 2024-12-06
-            [status] => In Queue
-            [significance] => Low
-            [id_team] => 3
-            [teamName] => test
-        )
-
-    [2] => Array
-        (
-            [id] => 24
-            [name] => tache
-            [description] => Description par défaut de la tâche
-            [start_date] => 2024-11-01
-            [deadline] => 2024-12-31
-            [status] => Done
-            [significance] => Low
-            [id_team] => 5
-            [teamName] => nouvelle team geniale
+            [mail] => monmail@orange.fr
+            [first] => Exmple
+            [last] => EXEMPLE
+            [password] => 1234
+            [picture] => 
         )
 
 )
-
-Tâches récupérées : Array
+Array
 (
     [0] => Array
         (
-            [id] => 15
-            [name] => patate
-            [description] => Description par défaut de la tâche
-            [start_date] => 2024-12-02
-            [deadline] => 2024-12-13
-            [status] => In Queue
-            [significance] => High
-            [id_team] => 2
-            [teamName] => nouvelle team
+            [mail] => monmail@orange.fr
+            [first] => Exmple
+            [last] => EXEMPLE
+            [password] => 1234
+            [picture] => 
         )
 
-    [1] => Array
+)
+Array
+(
+    [0] => Array
         (
-            [id] => 16
-            [name] => tache
-            [description] => Description par défaut de la tâche
-            [start_date] => 2024-11-01
-            [deadline] => 2024-12-06
-            [status] => In Queue
-            [significance] => Low
-            [id_team] => 3
-            [teamName] => test
+            [mail] => monmail@orange.fr
+            [first] => Exmple
+            [last] => EXEMPLE
+            [password] => 1234
+            [picture] => 
         )
 
-    [2] => Array
+)
+Array
+(
+)
+Array
+(
+    [0] => Array
         (
-            [id] => 24
-            [name] => tache
-            [description] => Description par défaut de la tâche
-            [start_date] => 2024-11-01
-            [deadline] => 2024-12-31
-            [status] => Done
-            [significance] => Low
-            [id_team] => 5
-            [teamName] => nouvelle team geniale
+            [mail] => monmail@orange.fr
+            [first] => Exmple
+            [last] => EXEMPLE
+            [password] => 1234
+            [picture] => 
         )
 
 )
+Array
+(
+    [0] => Array
+        (
+            [mail] => monmail@orange.fr
+            [first] => Exmple
+            [last] => EXEMPLE
+            [password] => 1234
+            [picture] => 
+        )
 
-Array
-(
-)
-Array
-(
-)
-Array
-(
-)
-Array
-(
-)
-Array
-(
 )
