@@ -192,7 +192,7 @@ if ($requestRessource == "teams") {
                 // Création de la nouvelle équipe
                 $team_id = $team->dbCreateTeam($name, $description);
                 //file_put_contents('php_debug.log', "Données reçues : {$team_id}, {$mail}\n", FILE_APPEND);
-                $association = $db->dbCreateAssociation($team_id, $mail);
+                $association = $db->dbCreateAssociation($team_id, $login);
                 //file_put_contents('php_debug.log', "Données reçues : {$association}\n", FILE_APPEND);
                 if (!$team_id) {
                     file_put_contents('php_debug.log', "Échec de la création de l'équipe.\n", FILE_APPEND);

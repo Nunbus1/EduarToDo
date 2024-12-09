@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "POST",
                     `../php/request.php/user`,
                     () => {
-                        window.location.href = `myTeams.html?mail=${RegisterMail}`; // Redirige vers l'URL
+                        window.location.href = `login.html`; // Redirige vers l'URL
                     },
                     `resource=user&mail=${RegisterMail}&first=${RegisterFirstName}&last=${RegisterLastname}&password=${RegisterPassword}`
                 );

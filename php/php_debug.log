@@ -221,3 +221,239 @@ Résultat de la requête SQL : Array
 
 Résultat de login : Test@gmail.com
 Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : dqs@gmail.com
+Résultat de login : dqs@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+)
+
+Résultat de login : dqs@gmail.com
+Résultat de login : dqs@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [teamName] => Les Bests
+        )
+
+)
+
+Résultat de login : dqs@gmail.com
+Résultat de login : dqs@gmail.com
+Dernier ID inséré : 5
+Résultat de login : dqs@gmail.com
+Résultat de login : dqs@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [teamName] => Les Bests
+        )
+
+)
+
+Résultat de login : dqs@gmail.com
+Résultat de login : dqs@gmail.com
+Dernier ID inséré : 6
+Résultat de login : dqs@gmail.com
+Résultat de login : dqs@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [teamName] => Les Bests
+        )
+
+)
+
+Résultat de login : dqs@gmail.com
+Résultat de login : dqs@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [teamName] => Les Bests
+        )
+
+)
+
+Résultat de login : dqs@gmail.com
+Résultat de login : dqs@gmail.com
+Dernier ID inséré : 7
+Résultat de login : dqs@gmail.com
+Résultat de login : dqs@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [teamName] => Les Bests
+        )
+
+    [1] => Array
+        (
+            [id] => 7
+            [teamName] => vqqdvq
+        )
+
+)
+
