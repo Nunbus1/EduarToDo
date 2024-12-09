@@ -1,63 +1,223 @@
-Array
+Résultat de login : 
+Résultat de login : 
+Requête GET reçue
+Résultat de login : Array
 (
     [0] => Array
         (
-            [mail] => monmail@orange.fr
-            [first] => Exmple
-            [last] => EXEMPLE
-            [password] => 1234
+            [mail] => Test@gmail.com
+            [first] => Tes
+            [last] => Teu
+            [password] => 532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25
             [picture] => 
+            [token] => xT4erZO6WvyJ7Wpgtuam0fvWvMJz37u2aUQT7zE3LcY=
         )
 
 )
-Array
+
+Résultat de login : 
+Requête GET reçue
+Résultat de login : 
+Résultat de login : 
+Requête GET reçue
+Résultat de login : 
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [id] => 3
+    [teamName] => sqccsc
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [id] => 3
+    [teamName] => sqccsc
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [id] => 3
+    [teamName] => sqccsc
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
 (
     [0] => Array
         (
-            [mail] => monmail@orange.fr
-            [first] => Exmple
-            [last] => EXEMPLE
-            [password] => 1234
-            [picture] => 
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
         )
 
 )
-Array
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
 (
     [0] => Array
         (
-            [mail] => monmail@orange.fr
-            [first] => Exmple
-            [last] => EXEMPLE
-            [password] => 1234
-            [picture] => 
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
         )
 
 )
-Array
-(
-)
-Array
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
 (
     [0] => Array
         (
-            [mail] => monmail@orange.fr
-            [first] => Exmple
-            [last] => EXEMPLE
-            [password] => 1234
-            [picture] => 
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
         )
 
 )
-Array
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
 (
     [0] => Array
         (
-            [mail] => monmail@orange.fr
-            [first] => Exmple
-            [last] => EXEMPLE
-            [password] => 1234
-            [picture] => 
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
         )
 
 )
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com
+Requête GET reçue
+Résultat de la requête SQL : Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [teamName] => sqccsc
+        )
+
+    [1] => Array
+        (
+            [id] => 4
+            [teamName] => test
+        )
+
+)
+
+Résultat de login : Test@gmail.com
+Résultat de login : Test@gmail.com

@@ -10,6 +10,7 @@ require_once('classes/user.php');
 // require_once('inc/constants.php');
 require_once('inc/utilities.php');
 require_once('inc/data_encode.php');
+require_once('inc/debug.php');
 
 // $requestRessource = $_GET['resource'] ?? null; // Utilise ?resource=task
 // $action = $_GET['action'] ?? null; 
@@ -18,52 +19,53 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 $request = substr($_SERVER['PATH_INFO'], 1);
 $request = explode('/', $request);
 $requestRessource = array_shift($request);
-// $login = null;
-// file_put_contents('C:/wamp64/www/EduarToDo/php/php_debug.log', "Méthode reçue : " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
+$login = null;
+//file_put_contents('C:/wamp64/www/EduarToDo/php/php_debug.log', "Méthode reçue : " . $_SERVER['REQUEST_METHOD'] . "\n", FILE_APPEND);
 
-// Vérification de l'utilisateur
-// if ($requestRessource == 'connexion') {
-//     $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
-//     $mail = $_SERVER['PHP_AUTH_USER'];
-//     $password = $_SERVER['PHP_AUTH_PW'];
+//Vérification de l'utilisateur
+if ($requestRessource == 'connexion') {
+    $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
+    $mail = $_SERVER['PHP_AUTH_USER'];
+    $password = $_SERVER['PHP_AUTH_PW'];
 
-//     // Vérification des données envoyées
-//     if (!checkInput(isset($mail) && isset($password), 400)) 
-//         return;
+    // Vérification des données envoyées
+    if (!checkInput(isset($mail) && isset($password), 400)) 
+        return;
     
-//     // Vérification que l'utilisateur existe
-//     if ($db->dbCheckUser($mail, $password)) {
-//         // Création du token
-//         $token = base64_encode(openssl_random_pseudo_bytes(32));
-//         // Envoi du token
-//         header('Content-Type: application/json; charset=utf-8');
-//         header('Cache-control: no-store, no-cache, must-revalidate');
-//         header('Pragma: no-cache');
-//         echo ($token);
-//     } 
+    // Vérification que l'utilisateur existe
+    if ($db->dbCheckUser($mail, $password)) {
+        // Création du token
+        $token = base64_encode(openssl_random_pseudo_bytes(32));
+        // Envoi du token
+        header('Content-Type: application/json; charset=utf-8');
+        header('Cache-control: no-store, no-cache, must-revalidate');
+        header('Pragma: no-cache');
+        $db->dbAddToken($mail,$token);
+        echo ($token);
+    } 
     
-//     else 
-//         sendError(401);
+    else 
+        sendError(401);
   
-// } 
+} 
 
-// else {
-//     $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
-//     $headers = getallheaders();
-//     $token = $headers['Authorization'];
+else {
+    $db = new User(); // Création de l'objet User qui contient les fonctions pour gérer les utilisateurs
+    $headers = getallheaders();
+    $token = $headers['Authorization'];
 
-//     if (preg_match('/Bearer (.*)/', $token, $tab)) 
-//         $token = $tab[1];
+    if (preg_match('/Bearer (.*)/', $token, $tab)) 
+        $token = $tab[1];
     
-//     if ($token != null) {
-//         $login = $db->dbVerifyToken($token);
-
-//         // Vérification que l'utilisateur existe
-//         if (!$login) 
-//             $login = null;
+    if ($token != null) {
+        $login = $db->dbVerifyToken($token);
+        file_put_contents('php_debug.log', "Résultat de login : " . print_r($login, true) . "\n", FILE_APPEND);
+        // Vérification que l'utilisateur existe
+        if (!$login) 
+            $login = null;
         
-//     }
-// }
+    }
+}
 
 // Gestion des requêtes utilisateur
 if ($requestRessource == 'user') {  
@@ -145,22 +147,19 @@ if ($requestRessource == "teams") {
     switch ($requestMethod) {
         case 'GET':
             // Debugging - Log initial de la requête
-            //file_put_contents('php_debug.log', "Requête GET reçue\n", FILE_APPEND);
+            file_put_contents('php_debug.log', "Requête GET reçue\n", FILE_APPEND);
         
             // Vérification qu'on est bien connecté
-            if (!isset($_GET['mail']) || empty($_GET['mail'])) {
-                //file_put_contents('php_debug.log', "Erreur : Aucun email fourni\n", FILE_APPEND);
-                sendError(400, 'Aucun email fourni');
-                break;
-            }
+            if ($login===null) 
+                sendError(404, 'User pas connecté');
         
-            $userMail = $_GET['mail'];
+            
             //file_put_contents('php_debug.log', "Email reçu : $userMail\n", FILE_APPEND);
         
             // Récupération des noms des teams dont l'utilisateur fait partie
             try {
-                $data = $db->dbInfoMemberOf($userMail);
-                //file_put_contents('php_debug.log', "Résultat de la requête SQL : " . print_r($data, true) . "\n", FILE_APPEND);
+                $data = $db->dbInfoMemberOf($login);
+                file_put_contents('php_debug.log', "Résultat de la requête SQL : " . print_r($data, true) . "\n", FILE_APPEND);
         
                 // Vérification que l'utilisateur fait bien partie d'au moins une team
                 if ($data) {

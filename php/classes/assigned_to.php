@@ -33,7 +33,7 @@ class Assigned_to extends Database{
         $params = array(
             'id' => $id
         );
-        return $this->fetchRequest($query, $params);
+        return $this->fetchAllRequest($query, $params);
     }
 
     /**
@@ -51,6 +51,6 @@ class Assigned_to extends Database{
         $params = array(
             'mail' => $mail
         );
-        return $this->fetchRequest($query, $params);
+        return $this->fetchAllRequest($query, $params);
     }
 }

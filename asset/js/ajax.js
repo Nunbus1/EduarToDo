@@ -16,7 +16,7 @@ function ajaxRequest(type, _url, callback, data = null) {
     }
     xhr.open(type, url);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
+    xhr.setRequestHeader('Authorization', 'Bearer ' + Cookies.get('token'));
     xhr.onload = () => {
         //console.log("Statut de la réponse :", xhr.status);
         //console.log("Texte de la réponse :", xhr.responseText);

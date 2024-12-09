@@ -48,7 +48,7 @@ class Subtask extends Database{
         $params = array(
             'id' => $id
         );
-        return $this->fetchRequest($query, $params);
+        return $this->fetchAllRequest($query, $params);
     }        
 
     /**
@@ -62,6 +62,6 @@ class Subtask extends Database{
         $params = array(
             'idTask' => $idTask
         );
-        return $this->fetchRequest($query, $params);
+        return $this->fetchAllRequest($query, $params);
     } 
 }

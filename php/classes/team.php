@@ -50,7 +50,7 @@ class Team extends Database{
         $params = array(
             'id' => $id
         );
-        return $this->fetchRequest($query, $params);
+        return $this->fetchAllRequest($query, $params);
     }        
 }
 

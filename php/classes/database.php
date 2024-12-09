@@ -73,7 +73,7 @@ class Database{
   public function fetchRequest($query, $params = null)
   {
     $stmt = $this->request($query, $params);
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result;
   }
 

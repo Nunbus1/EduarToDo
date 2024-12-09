@@ -83,7 +83,7 @@ class Task extends Database {
                     JOIN team ON team.id = task.id_team
                     WHERE task.id = :taskId';
         $params = ['taskId' => $taskId];
-        return $this->fetchRequest($query, $params);
+        return $this->fetchAllRequest($query, $params);
     }
 
     /**
@@ -105,7 +105,7 @@ class Task extends Database {
             'teamId' => $teamId
         );
     
-        return $this->fetchRequest($query, $params);
+        return $this->fetchAllRequest($query, $params);
     }
 
 

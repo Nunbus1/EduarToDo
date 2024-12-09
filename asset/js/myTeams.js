@@ -1,13 +1,13 @@
 // Fonction pour charger les équipes
 function loadTeams(userMail) {
-    ajaxRequest('GET', `../php/request.php/teams?mail=${encodeURIComponent(userMail)}`, (response) => {
+    ajaxRequest('GET', `../php/request.php/teams`, (response) => {
         if (response && response.success) {
             const teams = response.teams; // Les équipes sont retournées ici.
             const teamsList = document.querySelector('.teams-list');
 
             // Vider la liste avant d'ajouter de nouvelles équipes
             teamsList.innerHTML = '';
-
+            console.log(response.teams);
             // Ajouter chaque équipe
             teams.forEach((team) => {
                 const teamElement = document.createElement('div');

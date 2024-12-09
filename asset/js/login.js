@@ -21,19 +21,30 @@ document.addEventListener("DOMContentLoaded", () => {
         const LoginPassword = document.getElementById("LoginPassword").value;
         console.log(LoginUser);
         console.log(LoginPassword);
-        ajaxRequest(
-                    "GET",
-                    `../php/request.php/user`,
-                    (response) => {
-                        if (response) {
-                            console.log("Recup User :", response[0]['mail']);
-                            window.location.href = `myTeams.html?mail=${response[0]['mail']}`; // Redirige vers l'URL
-                        } else {
-                            console.error("Erreur lors de l'envoi de login :", response?.message || "Aucune réponse.");
-                        }
-                    },
-                    `resource=user&action=getUserInfo&mail=${encodeURIComponent(LoginUser)}&password=${encodeURIComponent(LoginPassword)}`
-                );
+       // Requête AJAX pour récupérer le cookie de session
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', '../php/request.php/connexion');
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.setRequestHeader('Authorization', 'Basic ' + btoa(`${LoginUser}:${LoginPassword}`));
+
+		xhr.onload = () => {
+			switch (xhr.status) {
+				case 200:
+                    console.log(xhr.responseText);
+                    console.log(xhr.responseText.length);
+                    var db = JSON.stringify(xhr.responseText);
+					Cookies.set('token', JSON.parse(db));
+					console.log('Authentification réussite !');
+					document.location.href = 'myTeams.html';
+					break;
+
+				default:
+					console.log('Email ou mot de passe incorrect');
+					break;
+			}
+		};
+
+		xhr.send();
     });
 });
 
