@@ -52,5 +52,25 @@ class Team extends Database{
         );
         return $this->fetchAllRequest($query, $params);
     }        
+
+    public function dbDeleteTeam($id){
+        $params = array(
+            'id' => $id
+        ); 
+
+        $query = 'DELETE FROM subtask WHERE id_task IN (
+            SELECT id FROM task WHERE id_team = :id
+        )';
+        $this->fetchRequest($query, $params);
+
+        $query = 'DELETE FROM part_of WHERE id = :id';
+        $this->fetchRequest($query, $params);
+
+        $query = 'DELETE FROM task WHERE id_team = :id';
+        $this->fetchRequest($query, $params);
+
+        $query = 'DELETE FROM team WHERE id = :id';
+        $this->fetchRequest($query, $params);
+    }
 }
 

@@ -59,7 +59,7 @@ else {
     
     if ($token != null) {
         $login = $db->dbVerifyToken($token);
-        file_put_contents('php_debug.log', "Résultat de login : " . print_r($login, true) . "\n", FILE_APPEND);
+        //file_put_contents('php_debug.log', "Résultat de login : " . print_r($login, true) . "\n", FILE_APPEND);
         // Vérification que l'utilisateur existe
         if (!$login) 
             $login = null;
@@ -115,7 +115,7 @@ if ($requestRessource == 'user') {
         // Si l'utlisateur n'existe pas déjà
         if ($db->dbInfoUser($_POST['mail']) == false) {
             $data = $db->dbCreateUser($_POST['mail'], $_POST['first'], $_POST['last'], $_POST['password']);
-            file_put_contents('php_debug.log',  print_r($data, true), FILE_APPEND);
+            //file_put_contents('php_debug.log',  print_r($data, true), FILE_APPEND);
             sendJsonData($data, 201);
         } 
 
@@ -147,7 +147,7 @@ if ($requestRessource == "teams") {
     switch ($requestMethod) {
         case 'GET':
             // Debugging - Log initial de la requête
-            file_put_contents('php_debug.log', "Requête GET reçue\n", FILE_APPEND);
+            //file_put_contents('php_debug.log', "Requête GET reçue\n", FILE_APPEND);
         
             // Vérification qu'on est bien connecté
             if ($login===null) 
@@ -159,7 +159,7 @@ if ($requestRessource == "teams") {
             // Récupération des noms des teams dont l'utilisateur fait partie
             try {
                 $data = $db->dbInfoMemberOf($login);
-                file_put_contents('php_debug.log', "Résultat de la requête SQL : " . print_r($data, true) . "\n", FILE_APPEND);
+                //file_put_contents('php_debug.log', "Résultat de la requête SQL : " . print_r($data, true) . "\n", FILE_APPEND);
         
                 // Vérification que l'utilisateur fait bien partie d'au moins une team
                 if ($data) {
@@ -179,7 +179,7 @@ if ($requestRessource == "teams") {
 
                 // Les données encodées en URL sont disponibles dans $_POST
                 if (!isset($_POST['teamName'], $_POST['description'], $_POST['mail'])) {
-                    file_put_contents('php_debug.log', "Champs manquants : " . print_r($_POST, true) . "\n", FILE_APPEND);
+                    //file_put_contents('php_debug.log', "Champs manquants : " . print_r($_POST, true) . "\n", FILE_APPEND);
                     sendJsonData(['success' => false, 'message' => 'Missing fields!'], 400);
                     break;
                 }
@@ -195,7 +195,7 @@ if ($requestRessource == "teams") {
                 $association = $db->dbCreateAssociation($team_id, $login);
                 //file_put_contents('php_debug.log', "Données reçues : {$association}\n", FILE_APPEND);
                 if (!$team_id) {
-                    file_put_contents('php_debug.log', "Échec de la création de l'équipe.\n", FILE_APPEND);
+                    // file_put_contents('php_debug.log', "Échec de la création de l'équipe.\n", FILE_APPEND);
                     sendJsonData(['success' => false, 'message' => 'Failed to create team.'], 500);
                     break;
                 }
@@ -215,6 +215,19 @@ if ($requestRessource == "teams") {
 
             // Modification de la team
             $data = $team->dbUpdateTeam($_PUT['teamName'], $_PUT['description'], $_PUT['id']);
+            sendJsonData($data, 201);
+
+
+        case 'DELETE':
+            $path = $_SERVER['PATH_INFO'] ?? null;
+                if ($path) {
+                    $parts = explode('/', trim($path, '/'));
+                    $taskId = intval(end($parts)); // Récupère la dernière partie de l'URL comme ID de tâche
+                } else {
+                    $taskId = null;
+                }
+
+            $data = $team->dbDeleteTeam($taskId);
             sendJsonData($data, 201);
 
         default:
@@ -257,19 +270,41 @@ if ($requestRessource == "subtask") {
             // Création d'une sous-tache
             $data = $db->dbCreateSubtask($_POST['name'], $_POST['status'], $_POST['id_task']);
             sendJsonData($data, 200);  
-            file_put_contents('php_debug.log', "Création subatask réussie.", FILE_APPEND);
+            //file_put_contents('php_debug.log', "Création subatask réussie.", FILE_APPEND);
             break;
         
         case 'PUT':
             // Vérification qu'on est bien connecté
             // if (!checkVariable($login, 401)) 
             //     break;
+            $path = $_SERVER['PATH_INFO'] ?? null;
+            preg_match_all('/-(\d+)/', $path, $matches);
+            // Vérifier les résultats
+            if (!empty($matches[1])) {
+                // Les nombres extraits
+                $subtaskId = $matches[1][0];
+            } else 
+                echo "Aucun nombre trouvé après un tiret.\n";
+            
+            file_put_contents('php_debug.log', "Id : $subtaskId\n", FILE_APPEND);
+
+            $rawInput = file_get_contents('php://input');
+        
+            $inputData = json_decode($rawInput, true);
+            if (!$inputData) {
+                sendError(400, 'Données JSON invalides.');
+                break;
+            }
+            if ($inputData['status'] == true)
+                $status = 1;
+            else
+                $status = 0;
 
             // Vérification que les éléments nécessaire sont définis
-            if (!isset($_PUT['status']) || !isset($_PUT['id']))
-                break;
-
-            $data = $db->dbUpdateSubtask($_PUT['status'], $_PUT['id']);
+            // if (!isset($_PUT['status']) || !isset($_PUT['id']))
+            //    break;
+            file_put_contents('php_debug.log', "Données envoyee : $status, $rawInput\n", FILE_APPEND);
+            $data = $db->dbUpdateSubtask($status, $subtaskId);
             sendJsonData($data, 200);
             break;
 
@@ -332,42 +367,36 @@ if ($requestRessource == "task") {
                     }
                     break;
 
-                    case 'getTaskInfo':   
-                        if (!isset($_GET['id'])) {
-                            sendError(400, 'Aucun ID de tâche fourni.');
-                            break;
-                        }
-                        $taskId = intval($_GET['id']);
-                        $taskInfo = $db->dbInfoTask($taskId);
-                        $subtaskInfo = $sub->dbInfoSubtaskFromTask($taskId);
-                        
-                        if ($taskInfo) {
-                            // Ajoute les sous-tâches associées à la tâche
-                            //$subtasks = $db->dbGetSubtasksByTaskId($taskId); // Assurez-vous que cette méthode existe
-                            //$taskInfo['subtasks'] = $subtasks;
-                    
-                            sendJsonData(['success' => true, 'task' => $taskInfo, 'subtasks' => $subtaskInfo], 200);
-                        } else {
-                            sendJsonData(['success' => false, 'message' => 'Tâche non trouvée.'], 404);
-                        }
+                case 'getTaskInfo':   
+                    if (!isset($_GET['id'])) {
+                        sendError(400, 'Aucun ID de tâche fourni.');
                         break;
-
-                        case 'getAllTasks':
-                            // Log la requête pour debug
-                            //file_put_contents('php_debug.log', "Requête reçue : getAllTasks\n", FILE_APPEND);
+                    }
+                    $taskId = intval($_GET['id']);
+                    $taskInfo = $db->dbInfoTask($taskId);
+                    $subtaskInfo = $sub->dbInfoSubtaskFromTask($taskId);
                         
-                            // Récupérer toutes les tâches
-                            $tasks = $db->dbGetAllTasks('test');
-                            //file_put_contents('php_debug.log', "$tasks\n", FILE_APPEND);
-                            // Log les résultats ou l'absence de résultats
-                            if ($tasks) {
-                                file_put_contents('php_debug.log', "Tâches récupérées : " . print_r($tasks, true) . "\n", FILE_APPEND);
-                                sendJsonData(['success' => true, 'tasks' => $tasks], 200);
-                            } else {
-                                file_put_contents('php_debug.log', "Aucune tâche trouvée.\n", FILE_APPEND);
-                                sendJsonData(['success' => false, 'message' => 'Aucune tâche trouvée.'], 404);
-                            }
-                            break;
+                    if ($taskInfo) {
+                        // Ajoute les sous-tâches associées à la tâche
+                        //$subtasks = $db->dbGetSubtasksByTaskId($taskId); // Assurez-vous que cette méthode existe
+                        //$taskInfo['subtasks'] = $subtasks;
+                    
+                        sendJsonData(['success' => true, 'task' => $taskInfo, 'subtasks' => $subtaskInfo], 200);
+                    } else {
+                        sendJsonData(['success' => false, 'message' => 'Tâche non trouvée.'], 404);
+                    }
+                    break;
+
+                case 'getAllTasks':    
+                    // Récupérer toutes les tâches
+                    $tasks = $db->dbGetAllTasks($login);
+                    // Log les résultats ou l'absence de résultats
+                    if ($tasks) 
+                        sendJsonData(['success' => true, 'tasks' => $tasks], 200);
+                    else 
+                        sendJsonData(['success' => false, 'message' => 'Aucune tâche trouvée.'], 404);
+                    
+                    break;
 
                 default:
                     sendError(400, 'Action non reconnue.');
@@ -486,15 +515,15 @@ if ($requestRessource == "task") {
                 //file_put_contents('php_debug.log', "ID de tâche à supprimer : $taskId\n", FILE_APPEND);
             
                 // Appeler la méthode pour supprimer la tâche dans la base de données
-                $isDeleted = $db->dbDeleteTask($taskId);
+                $db->dbDeleteTask($taskId);
             
-                if ($isDeleted) {
-                    //file_put_contents('php_debug.log', "Tâche supprimée avec succès : $taskId\n", FILE_APPEND);
-                    sendJsonData(['success' => true, 'message' => "Tâche supprimée avec succès."], 200);
-                } else {
-                    //file_put_contents('php_debug.log', "Erreur : Échec de la suppression de la tâche : $taskId\n", FILE_APPEND);
-                    sendError(500, 'Erreur lors de la suppression de la tâche.');
-                }
+                // if ($isDeleted) {
+                //     file_put_contents('php_debug.log', "Tâche supprimée avec succès : $taskId\n", FILE_APPEND);
+                //     sendJsonData(['success' => true, 'message' => "Tâche supprimée avec succès."], 200);
+                // } else {
+                //     file_put_contents('php_debug.log', "Erreur : Échec de la suppression de la tâche : $taskId\n", FILE_APPEND);
+                //     sendError(500, 'Erreur lors de la suppression de la tâche.');
+                // }
                 break;
             
 

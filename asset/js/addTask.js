@@ -19,14 +19,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// Fonction pour formater une date en YYYY-MM-DD
+function formatDate(date) {
+    return date.getFullYear() + '-' +
+        String(date.getMonth() + 1).padStart(2, '0') + '-' +
+        String(date.getDate()).padStart(2, '0');
+}
+
 /**
  * Fonction pour créer une tâche
  */
 function createTask(tasksContainer) {
+    // Récupérer la date d'aujourd'hui
+    const today = new Date();
+
+    // Ajouter 7 jours pour obtenir la date dans une semaine
+    const nextWeek = new Date();
+    nextWeek.setDate(today.getDate() + 7);
+
     const name = prompt("Nom de la tâche :");
     const description = "Description par défaut de la tâche"; // Vous pouvez demander une saisie utilisateur ici
-    const deadline = "2024-12-31"; // Exemple, vous pouvez demander une date utilisateur
-    const start_date = "2024-11-01"; // Exemple, à adapter
+    const deadline = formatDate(nextWeek); // Exemple, vous pouvez demander une date utilisateur
+    const start_date = formatDate(today); // Exemple, à adapter
     const significance = "Low"; // Exemple, vous pouvez demander une saisie utilisateur
     const status = tasksContainer.closest(".status").querySelector(".title-status").textContent.trim(); // Récupère le statut
     const id_team = getTeamFromURL();

@@ -138,12 +138,8 @@ class Task extends Database {
         
         $query = "SELECT task.id, task.name, task.description, task.start_date, task.deadline, task.status, task.significance, task.id_team, team.teamName FROM task
                     JOIN team ON team.id = task.id_team
-                    JOIN part_of ON part_of.mail = :mail
+                    JOIN part_of ON part_of.mail = "."'".$mail."'"."
                     WHERE part_of.id = team.id"; // remplacer l'adresse pas :mail
-        // $params = array(
-        //     'mail' => $mail
-        // );
-        //file_put_contents('php_debug.log', "$query\n", FILE_APPEND);
         return $this->fetchAllRequest($query); // fetchAllRequest exécute et retourne les résultats.
     }
 }

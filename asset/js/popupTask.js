@@ -24,7 +24,6 @@ function openPopup(taskId) {
 }
 
 function updatePopupContent(task, subtasks) {
-  
   // Mettre à jour le nom de la tâche
   const taskNameElement = popup.querySelector(".taskName");
   if (taskNameElement) {
@@ -58,6 +57,10 @@ function updatePopupContent(task, subtasks) {
   const creationInput = popup.querySelector("#creationInput");
   const deadlineInput = popup.querySelector("#deadlineInput");
 
+  // empeche la date de debut de la tache d'etre passee
+  const today = new Date();
+  creationInput.min = formatDate(today);
+
   if (creationInput) creationInput.value = task[0].start_date || ""; // Format attendu : YYYY-MM-DD
   if (deadlineInput) deadlineInput.value = task[0].deadline || ""; // Format attendu : YYYY-MM-DD
 
@@ -81,7 +84,8 @@ function updatePopupContent(task, subtasks) {
 
    // Activer le bouton "Add subtask"
    const addSubtaskButton = document.getElementById('add-subtask');
-   addSubtaskButton.onclick = () => addSubtask(task[0].id);
+   if (addSubtaskButton)
+       addSubtaskButton.onclick = () => addSubtask(task[0].id);
 
    // Activer le bouton "Delete"
    const deleteButton = popup.querySelector(".delete-btn");
@@ -100,10 +104,26 @@ function updateSubtasks(subtasks){
       subtasks.forEach((subtask) => {
           const listItem = document.createElement("li");
           listItem.innerHTML = `
-              <input type="checkbox" class="check-item" ${subtask.status === 1 ? "checked" : ""} disabled/>
+              <input type="checkbox" class="check-item" id="subtask-${subtask.id}" ${subtask.status === 1 ? "checked" : ""}/>
               <span class="check-text">${subtask.status === 1 ? `<s>${subtask.name}</s>` : subtask.name}</span>
           `;
           checklistContainer.appendChild(listItem);
+          const checkbox = listItem.querySelector(".check-item");
+          checkbox.addEventListener("click", event => {
+            const params = {
+                id: event.target.id,
+                status: event.target.checked
+            }
+            ajaxRequest("PUT",
+            `../php/request.php/subtask/${event.target.id}`,(response) => {
+                if (response && response.success) {
+                    console.log("Tâche mise à jour :", response.message);
+                    openPopup(taskId);
+                } else {
+                    console.error("Erreur lors de la mise à jour :", response?.message || "Aucune réponse.");
+                }
+            }, JSON.stringify(params));
+          });
       });
   } else {
       const emptyMessage = document.createElement("p");
@@ -150,7 +170,6 @@ function deleteTask(taskId) {
   // Requête DELETE pour supprimer la tâche
   
   ajaxRequest("DELETE", `../php/request.php/task/${taskId}`, (response) => {
-    if (response && response.success) {
       //console.log(`Tâche ${taskId} supprimée avec succès.`);
       
       // Supprimer la tâche de l'interface
@@ -161,10 +180,7 @@ function deleteTask(taskId) {
       
       // Fermer la popup
       closePopup();
-    } else {
-      console.error("Erreur lors de la suppression :", response?.message || "Aucune réponse.");
-      alert("Impossible de supprimer la tâche.");
-    }
+    
   });
 }
 
@@ -262,12 +278,6 @@ function toggleEditing(enable) {
     // Activer ou désactiver l'ajout de sous tâches
     addSubtaskButton.disabled = !addSubtaskButton.disabled;
 
-    subtaskStatus.forEach((checkbox) => {
-        if (checkbox.hasAttribute("disabled"))
-            checkbox.removeAttribute("disabled");
-        else checkbox.setAttribute("disabled", "");
-    })
-
     // Activer ou désactiver les priorités
     priorityInputs.forEach((input) => {
         input.disabled = !enable;
@@ -336,10 +346,3 @@ editButton.addEventListener("click", () => {
         );
     }
 });
-
-function updateSubtaskStatus(){
-
-}
-subtaskStatus.forEach((checkbox) => {
-    checkbox.addEventListener('click', updateSubtaskStatus);
-})
