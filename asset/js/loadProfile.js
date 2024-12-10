@@ -1,7 +1,23 @@
+// Ajoute un écouteur d'événement pour le bouton de déconnexion
+document.addEventListener("DOMContentLoaded", () => {
+    const logoutButton = document.getElementById("logout-button");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", () => {
+            
+            // Redirige l'utilisateur vers login.html
+            window.location.href = "login.html";
+        });
+    }
+
+    // Charge le profil utilisateur au démarrage
+    loadProfilefromMail();
+});
+
 /**
  * Gère le statut de chargement du profil
  */
 let isLoadingProfile = false;
+
 
 /**
  * Charge le profil d'un utilisateur à partir de son email.
