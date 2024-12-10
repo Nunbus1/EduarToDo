@@ -106,14 +106,9 @@ class Database{
     try {
         // Récupère l'ID de la dernière insertion
         $lastId = $this->db->lastInsertId();
-        
-        // Log de l'ID récupéré
-        file_put_contents('php_debug.log', "Dernier ID inséré : $lastId\n", FILE_APPEND);
 
         return $lastId;
     } catch (PDOException $e) {
-        // Log de l'erreur
-        file_put_contents('php_debug.log', "Erreur lors de la récupération du dernier ID inséré : " . $e->getMessage() . "\n", FILE_APPEND);
         return null; // Retourne null en cas d'erreur
     }
   }

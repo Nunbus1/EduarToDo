@@ -35,7 +35,6 @@ class Subtask extends Database{
             'id' => $id
         );
         $result = $this->fetchRequest($query, $params);
-        file_put_contents('php_debug.log', "Résultat de la requête : " . print_r($result, true), FILE_APPEND);
         return $result;
     }
 
