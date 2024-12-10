@@ -51,4 +51,9 @@
     border: 0;
     margin: auto;
     margin-top: 2%;
+    cursor: pointer;
+}
+
+.logout-button:hover{
+    background-color: rgb(194, 31, 31);
 }
