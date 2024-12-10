@@ -1,3 +1,7 @@
+/**
+ * Met à jour la date affichée dans l'élément avec l'ID "date".
+ * Affiche le jour de la semaine, le jour du mois, le mois abrégé et l'année.
+ */
 function updateDate() {
     const now = new Date();
 
@@ -10,43 +14,49 @@ function updateDate() {
     document.getElementById('date').innerHTML = `${dayName}<br>${day} ${month} ${year}`;
 }
 
+// Initialisation de la date au chargement
 updateDate();
 
+// Met à jour la date tous les 24 heures
 setInterval(updateDate, 86400000);
 
-// Sélectionner tous les boutons de navigation
-const navButtons = document.querySelectorAll(".nav-button");
+/**
+ * Ajoute des événements "click" aux boutons de navigation
+ * pour rediriger vers les pages correspondantes.
+ */
+function initializeNavigation() {
+    const navButtons = document.querySelectorAll(".nav-button");
 
-// Ajouter un événement "click" à chaque bouton
-navButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        // Obtenir la valeur de l'attribut data-section
-        const section = button.getAttribute("data-section");
+    navButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const section = button.getAttribute("data-section");
 
-        // Définir l'URL cible en fonction de la section
-        let url = "";
-        switch (section) {
-            case "dashboard":
-                url = "dashboard.html";
-                break;
-            case "team":
-                url = "myTeams.html";
-                break;
-            case "calendar":
-                url = "calendar.html";
-                break;
-            case "profile":
-                url = "profile.html";
-                break;
-            case "support":
-                url = "support.html";
-                break;
-            default:
-                console.error("Section inconnue : ", section);
-                return;
-        }
+            let url = "";
+            switch (section) {
+                case "dashboard":
+                    url = "dashboard.html";
+                    break;
+                case "team":
+                    url = "myTeams.html";
+                    break;
+                case "calendar":
+                    url = "calendar.html";
+                    break;
+                case "profile":
+                    url = "profile.html";
+                    break;
+                case "support":
+                    url = "support.html";
+                    break;
+                default:
+                    console.error("Section inconnue : ", section);
+                    return;
+            }
 
-        // Rediriger vers l'URL cible
-        window.location.href = url;
+            window.location.href = url;
+        });
     });
-});
+}
+
+// Initialisation de la navigation au chargement
+initializeNavigation();

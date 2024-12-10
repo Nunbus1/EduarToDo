@@ -6,8 +6,6 @@
  * @param {*} data Data à envoyer avec la requête
  */
 function ajaxRequest(type, _url, callback, data = null) {
-    //console.log("Requête AJAX : ", type, _url, data);
-
     let url = _url;
     const xhr = new XMLHttpRequest();
 
@@ -18,12 +16,10 @@ function ajaxRequest(type, _url, callback, data = null) {
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.setRequestHeader('Authorization', 'Bearer ' + Cookies.get('token'));
     xhr.onload = () => {
-        //console.log("Statut de la réponse :", xhr.status);
-        //console.log("Texte de la réponse :", xhr.responseText);
         switch (xhr.status) {
             case 200:
                 case 201:
-                    if (xhr.responseText) { // Si la réponse n'est pas vide ou fausse
+                    if (xhr.responseText) {
                       callback(JSON.parse(xhr.responseText));
                     } else {
                       callback();

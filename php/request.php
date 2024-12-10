@@ -286,7 +286,7 @@ if ($requestRessource == "subtask") {
             } else 
                 echo "Aucun nombre trouvé après un tiret.\n";
             
-            file_put_contents('php_debug.log', "Id : $subtaskId\n", FILE_APPEND);
+            //file_put_contents('php_debug.log', "Id : $subtaskId\n", FILE_APPEND);
 
             $rawInput = file_get_contents('php://input');
         
@@ -303,7 +303,7 @@ if ($requestRessource == "subtask") {
             // Vérification que les éléments nécessaire sont définis
             // if (!isset($_PUT['status']) || !isset($_PUT['id']))
             //    break;
-            file_put_contents('php_debug.log', "Données envoyee : $status, $rawInput\n", FILE_APPEND);
+            //file_put_contents('php_debug.log', "Données envoyee : $status, $rawInput\n", FILE_APPEND);
             $data = $db->dbUpdateSubtask($status, $subtaskId);
             sendJsonData($data, 200);
             break;
