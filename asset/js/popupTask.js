@@ -2,6 +2,13 @@
 const popup = document.querySelector(".popup");
 const overlay = document.getElementById("openTask");
 
+// Fonction pour formater une date en YYYY-MM-DD
+function formatDate(date) {
+    return date.getFullYear() + '-' +
+        String(date.getMonth() + 1).padStart(2, '0') + '-' +
+        String(date.getDate()).padStart(2, '0');
+}
+
 // Fonction principale pour ouvrir la popup
 function openPopup(taskId) {
     // Requête GET pour récupérer les détails de la tâche
