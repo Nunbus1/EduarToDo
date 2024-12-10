@@ -39,7 +39,7 @@ function initLogin() {
                     case 200:
                         const db = JSON.stringify(xhr.responseText);
                         Cookies.set('token', JSON.parse(db));
-                        document.location.href = 'myTeams.html';
+                        document.location.href = 'dashboard.html';
                         break;
                     default:
                         console.error('Email ou mot de passe incorrect');
