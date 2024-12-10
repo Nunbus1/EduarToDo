@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
         logoutButton.addEventListener("click", () => {
             
             // Redirige l'utilisateur vers login.html
+            document.cookie = null;
             window.location.href = "login.html";
         });
     }

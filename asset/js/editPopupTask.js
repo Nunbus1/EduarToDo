@@ -1,5 +1,5 @@
 // Sélection des éléments nécessaires pour l'édition
-const editButton = document.querySelector(".edit-btn");
+const editBtn = document.querySelector(".edit-btn");
 const taskNameElement = document.querySelector(".taskName");
 const taskDescriptionElement = document.querySelector(".taskDescription p");
 const priorityInputs = document.querySelectorAll('input[name="priority"]');
@@ -68,7 +68,7 @@ function toggleEditing(enable) {
  * Gestionnaire d'événement pour le bouton "Edit".
  * Active le mode édition ou valide les modifications.
  */
-editButton.addEventListener("click", () => {
+editBtn.addEventListener("click", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const taskId = urlParams.get("id");
 
@@ -77,9 +77,9 @@ editButton.addEventListener("click", () => {
         return;
     }
 
-    if (editButton.textContent === "Edit") {
+    if (editBtn.textContent === "Edit") {
         toggleEditing(true);
-        editButton.textContent = "Validate";
+        editBtn.textContent = "Validate";
     } else {
         const updatedTask = {
             id: taskId,
@@ -103,7 +103,7 @@ editButton.addEventListener("click", () => {
                 if (response && response.success) {
 
                     toggleEditing(false);
-                    editButton.textContent = "Edit";
+                    editBtn.textContent = "Edit";
                     openPopup(taskId);
                 } else {
                     console.error("Erreur lors de la mise à jour :", response?.message || "Aucune réponse.");
