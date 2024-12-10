@@ -5,13 +5,13 @@ function loadProfilefromMail() {
     console.log(isLoadingProfile);
     if (isLoadingProfile) return; // Si déjà en cours, n'exécute pas
     isLoadingProfile = true;
-    const mail = getMailFromURL();
-    console.log(mail);
-    if (!mail) {
-        console.error("Aucun mail trouvée dans l'URL.");
-        isLoadingProfile = false;
-        return;
-    }
+    // const mail = getMailFromURL();
+    // console.log(mail);
+    // if (!mail) {
+    //     console.error("Aucun mail trouvée dans l'URL.");
+    //     isLoadingProfile = false;
+    //     return;
+    // }
     clearProfile();
     //console.log(teamId);
     
@@ -26,10 +26,10 @@ function loadProfilefromMail() {
             firstName = response[0]["first"];
             lastName = response[0]["last"];
             picture = response[0]["picture"];
-            displayInfos(mail, firstName, lastName, picture); // Affiche chaque tâche
+            displayInfos(response[0]["mail"], firstName, lastName, picture); // Affiche chaque tâche
             isLoadingProfile = false;
         },
-        `resource=user&action=getUserByMail&mail=${mail}`  // Paramètres à envoyer dans l'URL
+        `resource=user&action=getUserByMail`  // Paramètres à envoyer dans l'URL
     );
 }
 
