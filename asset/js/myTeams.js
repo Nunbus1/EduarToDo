@@ -198,9 +198,6 @@ function restoreOriginalEventAfterDeletion() {
 // Appel initial pour ajouter les événements
 addClickEventToTeams();
 
-// Ajouter un événement pour le bouton de suppression
-deleteTeamBtn.addEventListener('click', handleDeleteButtonClick);
-
 // Ajoute l'événement pour activer la suppression si le bouton existe
 if (deleteTeamBtn) {
     deleteTeamBtn.addEventListener('click', handleDeleteButtonClick);
