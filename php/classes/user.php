@@ -111,7 +111,7 @@ class User extends Database{
 		if (!$result) {
 			return false;
 		}
-        file_put_contents('php_debug.log', "Résultat de login : " . print_r($result["mail"], true) . "\n", FILE_APPEND);
+        //file_put_contents('php_debug.log', "Résultat de login : " . print_r($result["mail"], true) . "\n", FILE_APPEND);
 		return $result['mail'];
 	}
 }
