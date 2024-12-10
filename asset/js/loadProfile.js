@@ -13,15 +13,17 @@ function loadProfilefromMail() {
     clearProfile();
 
     ajaxRequest(
-        'GET',
-        '../php/request.php/user',
-        (response) => {
-            if (response && response.length > 0) {
-                const { mail, first, last, picture } = response[0];
-                displayInfos(mail, first, last, picture || '../asset/img/cat.jpg');
-            } else {
-                console.error("Erreur : Aucune donnée utilisateur reçue.");
-            }
+        'GET', // Type de requête
+        `../php/request.php/user`, // URL de l'API
+        (response) => { // Callback pour traiter la réponse
+            console.log("Réponse reçue :", response);
+            console.log(response);
+            console.log("Profil chargé pour le mail :", response[0]["first"]);
+            firstName = response[0]["first"];
+            lastName = response[0]["last"];
+            picture = response[0]["picture"];
+            mail = response[0]["mail"];
+            displayInfos(mail, firstName, lastName, picture); // Affiche chaque tâche
             isLoadingProfile = false;
         },
         'resource=user&action=getUserByMail'

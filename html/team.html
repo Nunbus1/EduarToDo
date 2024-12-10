@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../asset/css/header.css" />
     <link rel="stylesheet" href="../asset/css/main.css" />
     <link rel="stylesheet" href="../asset/css/team.css" />
+    <link rel="stylesheet" href="../asset/css/myTeams.css" />
     <link rel="stylesheet" href="../asset/css/popupTask.css" />
     
 
@@ -24,6 +25,7 @@
     <script src="../asset/js/addTask.js" defer></script>
     <script src="../asset/js/moveTask.js" defer></script>
     <script src="../asset/js/popupTask.js" defer></script>
+    <script src="../asset/js/addMember.js" defer></script>
 
 
   
@@ -66,7 +68,7 @@
               <div class="member-circle"></div>
               <div class="member-circle"></div>
             </div>
-            <button class="share">
+            <button class="share" id="shareBtn">
               <img
                 src="../asset/svg/person-fill-add.svg"
                 alt="Share Icon"
@@ -83,6 +85,19 @@
             </div>
           </div>
         </div>
+
+        <div class="popup-overlay" id="addMemberPopup">
+          <div class="popup-content">
+            <h3>Add member</h3>
+              <div class="popup-form">
+                  <input type="email" placeholder="Member email" id="memberMail" />
+                  <div class="popup-actions">
+                      <button id="addMemberBtn" class="popup-button add-member-btn">Add</button>
+                      <button id="cancelAddMemberBtn" class="popup-button cancel-btn">Cancel</button>
+                  </div>
+              </div>
+          </div>
+      </div>
 
         <div class="board">
           <div class="status">

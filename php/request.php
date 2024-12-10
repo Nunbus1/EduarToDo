@@ -80,11 +80,11 @@ if ($requestRessource == 'user') {
             
         case 'getUserByMail' :
             // Vérification qu'on est bien connecté
-            // if (!checkVariable($_GET['mail'], 401)) 
-            //     break;
-        
-            // Récupération des données de l'utilisateur
-            $data = $db->dbInfoUser($login);
+            if (isset($_GET['mail'])) 
+                $data = $db->dbInfoUser($_GET['mail']);
+            else
+                // Récupération des données de l'utilisateur
+                $data = $db->dbInfoUser($login);
             // file_put_contents('php_debug.log',  print_r($data, true), FILE_APPEND);
 
             // Vérification que l'utilisateur existe
@@ -162,12 +162,8 @@ if ($requestRessource == "teams") {
                 //file_put_contents('php_debug.log', "Résultat de la requête SQL : " . print_r($data, true) . "\n", FILE_APPEND);
         
                 // Vérification que l'utilisateur fait bien partie d'au moins une team
-                if ($data) {
-                    sendJsonData(['success' => true, 'teams' => $data], 200);
-                } else {
-                    //file_put_contents('php_debug.log', "Aucune équipe trouvée pour cet utilisateur\n", FILE_APPEND);
-                    sendError(404, 'Aucune équipe trouvée');
-                }
+                sendJsonData(['success' => true, 'teams' => $data], 200);
+                
             } catch (Exception $e) {
                 //file_put_contents('php_debug.log', "Erreur lors de l'exécution de la requête : " . $e->getMessage() . "\n", FILE_APPEND);
                 sendError(500, 'Erreur serveur');
@@ -329,7 +325,12 @@ if ($requestRessource == "part_of") {
 
             $data = $db->dbInfoPartTeam($_GET['id']);
             sendJsonData($data, 200);
-        break;
+            break;
+
+        case 'POST':
+            $data = $db->dbCreateAssociation($_POST['id'], $_POST['mail']);
+            sendJsonData($data, 200);
+            break;
 
     default:
         // Requête non implémentée
