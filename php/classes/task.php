@@ -28,12 +28,7 @@ class Task extends Database {
             'status' => $status,
             'id_team' => $id_team,
         );
-
-        //file_put_contents('php_debug.log', "Requête SQL : $query\nParamètres : " . print_r($params, true), FILE_APPEND);
-
         $result = $this->fetchRequest($query, $params);
-        //file_put_contents('php_debug.log', "Résultat de la requête : " . print_r($result, true), FILE_APPEND);
-
         return $result;
     }
 
