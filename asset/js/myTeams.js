@@ -1,14 +1,15 @@
-// Charge les équipes depuis le serveur et les affiche dans l'interface utilisateur
+/**
+ * Charge les équipes depuis le serveur et les affiche dans l'interface utilisateur.
+ * @param {string} userMail - L'email de l'utilisateur connecté.
+ */
 function loadTeams(userMail) {
     ajaxRequest('GET', `../php/request.php/teams`, (response) => {
         if (response && response.success) {
             const teams = response.teams; 
             const teamsList = document.querySelector('.teams-list');
 
-            // Réinitialise la liste des équipes
             teamsList.innerHTML = '';
 
-            // Ajoute chaque équipe à l'interface utilisateur
             teams.forEach((team) => {
                 const teamElement = document.createElement('div');
                 teamElement.classList.add('t-circle');
@@ -17,14 +18,12 @@ function loadTeams(userMail) {
                 teamsList.appendChild(teamElement);
             });
 
-            // Ajoute un bouton "+" pour ajouter une nouvelle équipe
             const addButton = document.createElement('button');
             addButton.className = 'add-btn';
             addButton.id = 'openAddTeamPopup';
             addButton.textContent = '+';
             teamsList.appendChild(addButton);
 
-            // Ajoute les événements nécessaires
             addButton.addEventListener('click', showPopupTeam);
             addClickEventToTeams();
         } else {
@@ -33,45 +32,48 @@ function loadTeams(userMail) {
     });
 }
 
-// Sélection des éléments nécessaires pour la popup
+// Sélection des éléments nécessaires pour gérer la popup
 const popupOverlay = document.getElementById('addTeamPopup');
 const cancelPopupBtn = document.getElementById('cancelPopupBtn');
 
-// Affiche la popup pour ajouter une nouvelle équipe
+/**
+ * Affiche la popup pour ajouter une nouvelle équipe.
+ */
 function showPopupTeam() {
     popupOverlay.style.display = 'flex';
     console.log('Popup ouverte');
 }
 
-// Ferme la popup pour ajouter une nouvelle équipe
+/**
+ * Ferme la popup pour ajouter une nouvelle équipe.
+ */
 function closePopupTeam() {
     popupOverlay.style.display = 'none';
 }
 
-// Ajoute un événement pour fermer la popup lorsqu'on clique sur "Cancel"
+// Gestion des événements pour fermer la popup
 cancelPopupBtn.addEventListener('click', closePopupTeam);
-
-// Ajoute un événement pour fermer la popup lorsqu'on clique à l'extérieur
 popupOverlay.addEventListener('click', (event) => {
     if (event.target === popupOverlay) {
         closePopupTeam();
     }
 });
 
-// Sélection des éléments pour la création et suppression d'équipes
+// Sélection des éléments nécessaires pour la création et suppression d'équipes
 const createTeamBtn = document.getElementById('createTeamBtn');
 const deleteTeamBtn = document.getElementById('deleteTeamBtn');
 const teamTitleInput = document.getElementById('teamTitle');
 const teamDescriptionInput = document.getElementById('teamDescription');
 
-// Récupère les paramètres de l'URL
+// Récupération de l'email utilisateur à partir de l'URL
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-
-// Extrait l'email de l'utilisateur connecté
 const userMail = urlParams.get('mail'); 
 
-// Valide les champs nécessaires avant de créer une équipe
+/**
+ * Valide les champs nécessaires avant de créer une équipe.
+ * @returns {boolean} - Retourne true si les champs sont valides, sinon false.
+ */
 function validateFields() {
     if (!teamTitleInput.value.trim()) {
         alert('Team Title cannot be empty!');
@@ -84,7 +86,9 @@ function validateFields() {
     return true;
 }
 
-// Crée une nouvelle équipe en envoyant une requête POST
+/**
+ * Crée une nouvelle équipe en envoyant une requête POST.
+ */
 function createTeam() {
     if (!validateFields()) {
         return;
@@ -99,21 +103,21 @@ function createTeam() {
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(teamData[key])}`)
     .join('&');
 
-    // Envoie une requête pour créer la nouvelle équipe
     ajaxRequest(
         'POST',
         '../php/request.php/teams', loadPage, encodedTeamData
     );
 }
 
-// Ajoute l'événement de clic pour la création d'une équipe
+// Ajoute l'événement pour créer une équipe
 createTeamBtn.addEventListener('click', createTeam);
 
-// Ajoute des événements pour rediriger vers les pages des équipes
+/**
+ * Ajoute des événements pour rediriger les utilisateurs vers les pages des équipes.
+ */
 function addClickEventToTeams() {
     const teamElements = document.querySelectorAll('.t-circle');
 
-    // Définit un gestionnaire de clic pour chaque équipe
     const teamClickHandler = (teamElement) => {
         const classes = teamElement.className.split(' ');
         const teamIdClass = classes.find((cls) => cls.startsWith('team-'));
@@ -125,7 +129,6 @@ function addClickEventToTeams() {
         }
     };
 
-    // Ajoute l'événement de clic à chaque élément d'équipe
     teamElements.forEach((teamElement) => {
         const wrappedTeamClickHandler = () => teamClickHandler(teamElement);
         teamElement.addEventListener('click', wrappedTeamClickHandler);
@@ -133,11 +136,12 @@ function addClickEventToTeams() {
     });
 }
 
-// Gère les clics pour activer la suppression d'une équipe
+/**
+ * Gère les clics pour activer la suppression d'une équipe.
+ */
 function handleDeleteButtonClick() {
     var teams = document.querySelectorAll('.t-circle');
 
-    // Ajoute un gestionnaire pour la suppression
     teams.forEach((teamElement) => {
         teamElement.removeEventListener('click', teamElement._teamClickHandler);
 
@@ -148,13 +152,20 @@ function handleDeleteButtonClick() {
     });
 }
 
-// Restaure l'événement original après la suppression d'une équipe
+/**
+ * Restaure l'événement original après la suppression d'une équipe.
+ * @param {HTMLElement} teamElement - Élément représentant l'équipe.
+ */
 function restoreOriginalEvent(teamElement) {
     teamElement.removeEventListener('click', deleteTeam);
     teamElement.addEventListener('click', teamElement._teamClickHandler);
 }
 
-// Extrait l'ID d'une équipe depuis son élément DOM
+/**
+ * Extrait l'ID d'une équipe depuis son élément DOM.
+ * @param {HTMLElement} teamElement - Élément DOM de l'équipe.
+ * @returns {string|null} - Retourne l'ID de l'équipe ou null si introuvable.
+ */
 function getTeamIdFromElement(teamElement) {
     const classes = teamElement.className.split(' ');
     const teamIdClass = classes.find((cls) => cls.startsWith('team-')); 
@@ -166,7 +177,10 @@ function getTeamIdFromElement(teamElement) {
     }
 }
 
-// Supprime une équipe en envoyant une requête DELETE
+/**
+ * Supprime une équipe en envoyant une requête DELETE.
+ * @param {string} teamId - ID de l'équipe à supprimer.
+ */
 function deleteTeam(teamId) {
     console.log(`Suppression de l'équipe avec l'ID : ${teamId}`);
 
@@ -182,7 +196,7 @@ function deleteTeam(teamId) {
     }
 }
 
-// Ajoute des événements pour gérer les équipes
+// Ajoute les événements pour gérer les équipes
 addClickEventToTeams();
 
 // Ajoute l'événement pour activer la suppression si le bouton existe
@@ -190,7 +204,9 @@ if (deleteTeamBtn) {
     deleteTeamBtn.addEventListener('click', handleDeleteButtonClick);
 }
 
-// Initialise la page et charge les équipes
+/**
+ * Initialise la page et charge les équipes.
+ */
 function loadPage() {
     closePopupTeam();
     loadTeams(userMail);
