@@ -1,41 +1,60 @@
+// Ajoute un événement au bouton "Partager" pour ouvrir la popup d'ajout de membre
 document.getElementById('shareBtn').addEventListener('click', openAddPopup);
+
+// Ajoute un événement au bouton "Ajouter un membre" pour déclencher l'ajout d'un utilisateur
 document.getElementById('addMemberBtn').addEventListener('click', addMember);
 
-function openAddPopup(){
+/**
+ * Affiche la popup d'ajout de membre.
+ * Ajoute un événement au bouton "Annuler" pour fermer la popup.
+ */
+function openAddPopup() {
     document.getElementById('addMemberPopup').style.display = 'block';
     document.getElementById('cancelAddMemberBtn').addEventListener('click', closeAddPopup);
 }
 
-function closeAddPopup(){
+/**
+ * Ferme la popup d'ajout de membre.
+ */
+function closeAddPopup() {
     document.getElementById('addMemberPopup').style.display = 'none';
 }
 
+/**
+ * Récupère l'ID de l'équipe depuis l'URL.
+ * @returns {string|null} - Renvoie l'ID de l'équipe ou null si absent.
+ */
 function getTeamFromURL() {
     const params = new URLSearchParams(window.location.search);
-    
-    return params.get('teamId'); // Renvoie l'ID de l'équipe
+    return params.get('teamId');
 }
 
-function addMember(){
-    const mail = document.getElementById('memberMail').value;
-    const id = getTeamFromURL();
+/**
+ * Ajoute un membre à une équipe en utilisant l'email fourni.
+ * Vérifie si l'utilisateur existe, puis l'ajoute à l'équipe si la validation est réussie.
+ */
+function addMember() {
+    const mail = document.getElementById('memberMail').value; // Récupère l'email saisi
+    const id = getTeamFromURL(); // Récupère l'ID de l'équipe depuis l'URL
+
+    // Vérifie si l'utilisateur existe
     ajaxRequest(
-        'GET', // Type de requête
-        `../php/request.php/user`, // URL de l'API
-        (response) => { // Callback pour traiter la réponse
-            if (!response){
-                alert("Cet utilisateur n'eiste pa");
-            }
-            else{
-                ajaxRequest('POST', 
-                `../php/request.php/part_of`,
-                () => {
-                    alert("Utilisateur ajouté avec succès");
-                    closeAddPopup();
-                },
-                `resource=part_of&mail=${mail}&id=${id}`
-                )
-                //alert("Cet utilisateur n'eiste pa");
+        'GET',
+        `../php/request.php/user`,
+        (response) => {
+            if (!response) {
+                alert("Cet utilisateur n'existe pas"); // Alerte si l'utilisateur n'existe pas
+            } else {
+                // Si l'utilisateur existe, l'ajoute à l'équipe
+                ajaxRequest(
+                    'POST',
+                    `../php/request.php/part_of`,
+                    () => {
+                        alert("Utilisateur ajouté avec succès"); // Confirmation d'ajout
+                        closeAddPopup(); // Ferme la popup après l'ajout
+                    },
+                    `resource=part_of&mail=${mail}&id=${id}`
+                );
             }
         },
         `resource=user&action=getUserByMail&mail=${mail}`

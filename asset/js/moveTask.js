@@ -1,9 +1,13 @@
-let draggedTask = null;
+let draggedTask = null; // Référence à la tâche en cours de déplacement
 
-// Initialisation des événements
+/**
+ * Initialise les événements pour les tâches et leurs conteneurs.
+ * Configure le drag-and-drop.
+ */
 function initializeDragAndDrop() {
     const tasks = document.querySelectorAll(".task");
 
+    // Ajoute les événements de drag aux tâches
     tasks.forEach((task) => {
         task.setAttribute("draggable", "true");
         task.addEventListener("dragstart", dragStart);
@@ -11,6 +15,8 @@ function initializeDragAndDrop() {
     });
 
     const tasksContainers = document.querySelectorAll(".Tasks");
+    
+    // Ajoute les événements aux conteneurs pour gérer le drop
     tasksContainers.forEach((container) => {
         container.addEventListener("dragover", dragOver);
         container.addEventListener("dragenter", dragEnter);
@@ -19,26 +25,39 @@ function initializeDragAndDrop() {
     });
 }
 
-// Gestion des événements de drag pour les tâches
+/**
+ * Déclenché au début du drag. Change l'opacité de la tâche pour indiquer le déplacement.
+ * @param {Event} event - Événement dragstart.
+ */
 function dragStart(event) {
     draggedTask = event.target;
     setTimeout(() => {
-        draggedTask.style.opacity = "0.5"; // Ajoute un effet visuel
+        draggedTask.style.opacity = "0.5"
     }, 0);
 }
 
+/**
+ * Déclenché à la fin du drag. Réinitialise l'opacité de la tâche.
+ */
 function dragEnd() {
     if (draggedTask) {
-        draggedTask.style.opacity = "1"; // Réinitialise l’opacité
+        draggedTask.style.opacity = "1";
     }
     draggedTask = null;
 }
 
-// Gestion des événements des conteneurs
+/**
+ * Autorise le drop dans un conteneur.
+ * @param {Event} event - Événement dragover.
+ */
 function dragOver(event) {
-    event.preventDefault(); // Autorise le drop
+    event.preventDefault();
 }
 
+/**
+ * Ajoute un style visuel lorsque la tâche entre dans un conteneur.
+ * @param {Event} event - Événement dragenter.
+ */
 function dragEnter(event) {
     event.preventDefault();
     if (event.target.classList.contains("Tasks")) {
@@ -46,42 +65,46 @@ function dragEnter(event) {
     }
 }
 
+/**
+ * Supprime le style visuel lorsque la tâche quitte un conteneur.
+ * @param {Event} event - Événement dragleave.
+ */
 function dragLeave(event) {
     if (event.target.classList.contains("Tasks")) {
         event.target.classList.remove("hovered");
     }
 }
 
+/**
+ * Gère le drop de la tâche dans un nouveau conteneur et met à jour son statut.
+ * @param {Event} event - Événement drop.
+ */
 function dragDrop(event) {
     event.preventDefault();
 
     if (event.target.classList.contains("Tasks") && draggedTask) {
         event.target.classList.remove("hovered");
-
-        // Ajoute la tâche déplacée au nouveau conteneur
         event.target.appendChild(draggedTask);
 
-        // Récupérer le nouveau statut basé sur le conteneur
         const newStatus = event.target.closest(".status").querySelector(".title-status").textContent.trim();
-
-        // Récupérer l'ID de la tâche depuis draggedTask
         const taskId = draggedTask.getAttribute("data-id");
 
         if (!taskId || !newStatus) {
             console.error("Impossible de récupérer l'ID de la tâche ou le nouveau statut.");
             return;
         }
+
         const data = `resource=task&action=getTaskInfo&id=${taskId}`;
-        // Effectuer une requête GET pour récupérer les détails actuels de la tâche
+        
+        // Requête pour récupérer les détails actuels de la tâche
         ajaxRequest(
             "GET",
             `../php/request.php/task`,
             (response) => {
                 if (response && response.success) {
                     const task = response.task;
-                    const subtasks = response.subtasks;
 
-                    // Mettre à jour uniquement le statut
+                    // Met à jour uniquement le statut de la tâche
                     const updatedTask = {
                         id: task[0].id,
                         name: task[0].task_name,
@@ -91,15 +114,14 @@ function dragDrop(event) {
                         start_date: task[0].start_date,
                         deadline: task[0].deadline,
                     };
-                    console.log(updatedTask);
-                    
-                    // Envoyer la mise à jour via PUT
+
+                    // Requête pour mettre à jour la tâche
                     ajaxRequest(
                         "PUT",
                         `../php/request.php/task/${taskId}`,
                         (response) => {
                             if (response && response.success) {
-                                console.log(`Statut de la tâche ${taskId} mis à jour avec succès : ${newStatus}`);
+ 
                             } else {
                                 console.error("Erreur lors de la mise à jour du statut :", response?.message || "Aucune réponse.");
                             }

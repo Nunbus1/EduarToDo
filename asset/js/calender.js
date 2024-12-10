@@ -1,9 +1,11 @@
-// Fonction pour charger toutes les tâches depuis la base de données
+/**
+ * Charge toutes les tâches depuis la base de données et met à jour l'interface utilisateur.
+ */
 function loadAllTasks() {
     ajaxRequest('GET', '../php/request.php/task', (response) => {
         if (response && response.success) {
-            console.log(response);
-            
+
+            // Transforme les tâches pour les rendre compatibles avec le calendrier et l'affichage
             const tasks = response.tasks.map(task => ({
                 id: task.id,
                 title: task.name,
@@ -20,13 +22,16 @@ function loadAllTasks() {
             displayTasks(tasks);
             attachTaskClickEvents();
         } else {
-            console.error('Erreur lors du chargement des tâches : ', response.message);
-        }},
-        `resource=task&action=getAllTasks`
-    );
+            console.error('Erreur lors du chargement des tâches : ', response?.message || 'Aucune réponse.');
+        }
+    }, `resource=task&action=getAllTasks`);
 }
 
-// Fonction pour ajouter un jour à une date
+/**
+ * Ajoute un jour à une date donnée.
+ * @param {string} date - La date à laquelle ajouter un jour.
+ * @returns {string|null} - La nouvelle date au format ISO ou null si aucune date n'est fournie.
+ */
 function addOneDay(date) {
     if (!date) return null;
     const d = new Date(date);
@@ -34,6 +39,11 @@ function addOneDay(date) {
     return d.toISOString().split('T')[0];
 }
 
+/**
+ * Soustrait un jour à une date donnée.
+ * @param {string} date - La date à laquelle soustraire un jour.
+ * @returns {string|null} - La nouvelle date au format ISO ou null si aucune date n'est fournie.
+ */
 function lessOneDay(date) {
     if (!date) return null;
     const d = new Date(date);
@@ -41,10 +51,13 @@ function lessOneDay(date) {
     return d.toISOString().split('T')[0];
 }
 
-// Fonction pour initialiser ou mettre à jour le calendrier
+/**
+ * Initialise ou met à jour le calendrier avec les tâches fournies.
+ * @param {Array} tasks - Les tâches à afficher dans le calendrier.
+ */
 function initializeCalendar(tasks) {
     if ($('#calendar').length > 0 && $('#calendar').fullCalendar) {
-        $('#calendar').fullCalendar('destroy');
+        $('#calendar').fullCalendar('destroy'); // Réinitialise le calendrier s'il existe
     }
 
     $('#calendar').fullCalendar({
@@ -69,27 +82,34 @@ function initializeCalendar(tasks) {
     });
 }
 
-// Fonction pour déterminer une couleur selon la priorité d'une tâche (optionnel)
+/**
+ * Retourne une couleur en fonction de la priorité d'une tâche.
+ * @param {string} priority - La priorité de la tâche (High, Mid, Low).
+ * @returns {string} - La couleur associée à la priorité.
+ */
 function getTaskColor(priority) {
     switch (priority) {
         case 'High':
-            return '#ff4d4d';
+            return '#ff4d4d'; // Rouge
         case 'Mid':
-            return '#ffa500';
+            return '#ffa500'; // Orange
         case 'Low':
-            return '#4caf50';
+            return '#4caf50'; // Vert
         default:
-            return 'blue';
+            return 'blue'; // Couleur par défaut
     }
 }
 
-// Fonction pour mettre à jour les dates de début et de fin dans la base de données
+/**
+ * Met à jour les dates de début et de fin d'une tâche dans la base de données.
+ * @param {Object} event - L'événement contenant les nouvelles dates.
+ * @param {Function} revertFunc - La fonction pour annuler la mise à jour en cas d'erreur.
+ */
 function updateTaskDates(event, revertFunc) {
-
     ajaxRequest('GET', `../php/request.php/task`, (response) => {
         if (response && response.success) {
             const task = response.task;
-            
+
             const updatedTask = {
                 id: task[0].id,
                 name: task[0].task_name,
@@ -99,10 +119,10 @@ function updateTaskDates(event, revertFunc) {
                 start_date: event.start.format('YYYY-MM-DD'),
                 deadline: lessOneDay(event.end.format('YYYY-MM-DD')),
             };
-            
+
             ajaxRequest('PUT', `../php/request.php/task/${updatedTask.id}`, (updateResponse) => {
                 if (updateResponse && updateResponse.success) {
-                    loadAllTasks();
+                    loadAllTasks(); // Recharge toutes les tâches après une mise à jour réussie
                 } else {
                     console.error('Erreur lors de la mise à jour de la tâche : ', updateResponse?.message || 'Aucune réponse.');
                     alert('Erreur lors de la mise à jour des dates. Annulation...');
@@ -117,7 +137,7 @@ function updateTaskDates(event, revertFunc) {
     }, `resource=task&action=getTaskInfo&id=${event.id}`);
 }
 
-// Charger toutes les tâches une fois le DOM prêt
+// Charge toutes les tâches une fois le DOM prêt
 $(document).ready(function () {
     loadAllTasks();
 });

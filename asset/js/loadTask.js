@@ -1,56 +1,72 @@
+// Indicateur pour éviter les requêtes multiples
 let isLoadingTasks = false;
+
+// Sélection des conteneurs de tâches
 const tasksContainers = document.querySelectorAll(".Tasks");
+
+/**
+ * Charge toutes les tâches pour une équipe spécifique depuis la base de données.
+ * Utilise l'ID de l'équipe présent dans l'URL.
+ */
 function loadTasksForTeam() {
-    if (isLoadingTasks) return; // Si déjà en cours, n'exécute pas
+    if (isLoadingTasks) return;
     isLoadingTasks = true;
+
     const teamId = getTeamFromURL();
     if (!teamId) {
         console.error("Aucune équipe trouvée dans l'URL.");
         isLoadingTasks = false;
         return;
     }
+
     clearTasks();
-    //console.log(teamId);
-    
-    // Utilisation de ajaxRequest
+
+    // Envoie une requête AJAX pour charger les tâches de l'équipe
     ajaxRequest(
-        'GET', // Type de requête
-        "../php/request.php/task", // URL de l'API
-        (response) => { // Callback pour traiter la réponse
-            if (response === undefined)
-                console.log("Aucune tache");
-            else {
-                //console.log(response.tasks);
-                
-                //console.log("Tâches chargées pour l'équipe :", response.tasks);
-                response.tasks.forEach((task) => displayTask(task)); // Affiche chaque tâche
+        'GET', 
+        "../php/request.php/task", 
+        (response) => {
+            if (response === undefined) {
+                console.error("Aucune tâche trouvée.");
+            } else {
+                response.tasks.forEach((task) => displayTask(task));
                 initializeDragAndDrop();
                 attachTaskClickEvents();
                 displayTeamName(response.team);
-            } 
+            }
             isLoadingTasks = false;
         },
-        `resource=task&action=getTasks&id=${teamId}` // Paramètres à envoyer dans l'URL
+        `resource=task&action=getTasks&id=${teamId}`
     );
 }
 
-// Supprime toutes les tâches existantes dans l'interface
+/**
+ * Supprime toutes les tâches actuellement affichées dans l'interface.
+ */
 function clearTasks() {
-    console.log("clear");
     tasksContainers.forEach((container) => {
         container.innerHTML = "";
     });
 }
 
-function displayTeamName(team){
+/**
+ * Met à jour le nom de l'équipe affiché sur la page.
+ * @param {string} team - Nom de l'équipe.
+ */
+function displayTeamName(team) {
     const teamName = document.querySelector(".team-name");
     teamName.textContent = team;
 }
 
+/**
+ * Affiche une tâche dans l'interface utilisateur.
+ * Ajoute la tâche dans le conteneur correspondant à son statut.
+ * @param {Object} task - Objet représentant une tâche.
+ */
 function displayTask(task) {
-    // Trouver le bon conteneur `Tasks` basé sur le status de la tâche
     const statusContainers = document.querySelectorAll(".status");
     let taskContainer = null;
+
     statusContainers.forEach((statusContainer) => {
         const titleStatus = statusContainer.querySelector(".title-status").textContent.trim();
         if (titleStatus === task.status) {
@@ -59,16 +75,16 @@ function displayTask(task) {
     });
 
     if (!taskContainer) {
-        console.error(`Aucun conteneur trouvé pour le status : ${task.status}`);
+        console.error(`Aucun conteneur trouvé pour le statut : ${task.status}`);
         return;
     }
 
-    // Crée un nouvel élément de tâche
+    // Crée un nouvel élément pour la tâche
     const newTaskElement = document.createElement("div");
     newTaskElement.className = "task";
     newTaskElement.setAttribute("draggable", "true");
-    newTaskElement.setAttribute("data-id", task.id); // Attribue l'ID de la tâche à l'élément
-    //console.log(task);
+    newTaskElement.setAttribute("data-id", task.id);
+
     newTaskElement.innerHTML = `
         <div class="upperInfo">
             ${task.name}
@@ -88,45 +104,48 @@ function displayTask(task) {
         </div>
     `;
 
-    // Ajoute la tâche au bon conteneur
+    // Ajoute la tâche au conteneur correspondant
     taskContainer.appendChild(newTaskElement);
 
-    // Réinitialise les événements de drag-and-drop pour inclure la nouvelle tâche
+    // Réinitialise les événements de drag-and-drop
     initializeDragAndDrop();
 }
 
-
-// Met à jour l'URL pour inclure l'ID de la team
+/**
+ * Met à jour l'URL pour inclure l'ID de l'équipe sélectionnée.
+ * @param {string} teamId - ID de l'équipe.
+ */
 function updateTeamInURL(teamId) {
-    const currentUrl = window.location.href.split('?')[0]; // Supprime les éventuels paramètres actuels
+    const currentUrl = window.location.href.split('?')[0];
     const newUrl = `${currentUrl}?teamId=${encodeURIComponent(teamId)}`;
     window.history.pushState({ path: newUrl }, '', newUrl);
 }
 
-// Appelle cette fonction lors du chargement de la page ou quand la team change
-document.addEventListener("DOMContentLoaded", () => {
-    //const activeTeamId = 1;
-    //updateTeamInURL(activeTeamId);
-});
-
+/**
+ * Récupère l'ID de l'équipe depuis l'URL.
+ * @returns {string|null} - L'ID de l'équipe ou null si absent.
+ */
 function getTeamFromURL() {
     const params = new URLSearchParams(window.location.search);
-    //console.log(params.get('teamId'));
-    
-    return params.get('teamId'); // Renvoie l'ID de l'équipe
+    return params.get('teamId');
 }
 
-// Fonction pour fermer la popup
+/**
+ * Ferme la popup après validation ou annulation.
+ * Recharge les tâches associées à l'équipe.
+ */
 function closePopup() {
     if (isEditing) {
         alert("Vous devez valider vos modifications avant de quitter la popup.");
-        return; // Empêche la fermeture
+        return;
     }
     popup.style.display = "none";
     overlay.style.display = "none";
-    loadTasksForTeam(); // Recharge les tâches après fermeture
+    loadTasksForTeam();
 }
 
-// Charge les tâches dès que la page est prête
+// Supprime les anciens événements de chargement des tâches
 document.removeEventListener("DOMContentLoaded", loadTasksForTeam);
+
+// Charge les tâches associées à l'équipe après le chargement complet du DOM
 document.addEventListener("DOMContentLoaded", loadTasksForTeam);
