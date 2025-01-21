@@ -3,7 +3,7 @@
 ## Personas 
 
 ### Alexandra
-Alexandra, 44 ans, est architecte d'intérieur. Après avoir étudié dans une école d'architecture, elle a emménagé à Sherbrooke avec son mari Marius. Les parents d'Alexandra étaient tous les deux ingénieurs, et Marius est Plombier. Alexandra a trois enfants de 6, 9, et 15 ans. Elle a donc besoin d'organiser ses tâches quotidiennes pour mieux s'occuper de sa maison et de ses enfants. Ainis elle a décidé d'utiliser une application permettant d'organiser ses tâches.
+Alexandra, 44 ans, est architecte d'intérieur. Après avoir étudié dans une école d'architecture, elle a emménagé à Sherbrooke avec son mari Marius. Les parents d'Alexandra étaient tous les deux ingénieurs, et Marius est Plombier. Alexandra a trois enfants de 6, 9, et 15 ans. Elle a donc besoin d'organiser ses tâches quotidiennes pour mieux s'occuper de sa maison et de ses enfants. Ainsi elle a décidé d'utiliser une application permettant d'organiser ses tâches.
 
 #### Scénario Alexandra
 Alexandra vit à Sherbrooke avec son mari Marius et ses trois enfants. Lorsqu'elle se lève le matin, Marius est déjà parti. Elle doit donc s'occuper de préparer le petit déjeuner pour elle et ses enfants.
